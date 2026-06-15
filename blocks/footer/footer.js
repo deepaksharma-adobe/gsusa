@@ -228,6 +228,54 @@ function decorateLinkColumns(container) {
 }
 
 /**
+ * Applies footer region classes to each section.
+ * Prefers author-provided section metadata classes; otherwise classifies each
+ * section by its content so the footer renders correctly regardless of how the
+ * source document was authored.
+ * @param {Element} footer The footer container element
+ */
+function tagFooterRegions(footer) {
+  const sections = [...footer.querySelectorAll(':scope > .section')];
+  const regionClasses = ['footer-brand', 'footer-links', 'footer-newsletter', 'footer-wholesale', 'footer-legal'];
+
+  sections.forEach((section) => {
+    // Respect an author-tagged region if present.
+    if (regionClasses.some((c) => section.classList.contains(c))) return;
+
+    const headings = section.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    const lists = section.querySelectorAll('ul');
+    const text = section.textContent.trim();
+    const hasImage = !!section.querySelector('picture, img');
+
+    if (headings.length >= 2 && lists.length >= 2) {
+      // Multiple heading + list pairs => the link columns region.
+      section.classList.add('footer-links');
+    } else if (hasImage && headings.length && /know what's new/i.test(text)) {
+      section.classList.add('footer-newsletter');
+    } else if (/wholesale partners/i.test(text)) {
+      section.classList.add('footer-wholesale');
+    } else if (/©|all rights reserved|privacy policy/i.test(text)) {
+      section.classList.add('footer-legal');
+    } else if (hasImage && !headings.length && !lists.length) {
+      section.classList.add('footer-brand');
+    }
+  });
+
+  // Robots / generic metadata sections should never display in the footer.
+  sections.forEach((section) => {
+    if (section.querySelector('.metadata')) {
+      section.remove();
+      return;
+    }
+    // Published metadata may arrive as plain key/value paragraphs with no class.
+    const isUntagged = !regionClasses.some((c) => section.classList.contains(c));
+    if (isUntagged && /^\s*robots\b/i.test(section.textContent)) {
+      section.remove();
+    }
+  });
+}
+
+/**
  * loads and decorates the footer
  * @param {Element} block The footer block element
  */
@@ -248,7 +296,8 @@ export default async function decorate(block) {
   }
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
-  // Decorate authored footer regions (tagged via section metadata).
+  // Ensure each region has its expected class, then build the link columns.
+  tagFooterRegions(footer);
   const linksRegion = footer.querySelector('.footer-links');
   if (linksRegion) decorateLinkColumns(linksRegion);
 
