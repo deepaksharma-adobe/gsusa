@@ -269,7 +269,7 @@ function tagFooterRegions(footer) {
     }
     // Published metadata may arrive as plain key/value paragraphs with no class.
     const isUntagged = !regionClasses.some((c) => section.classList.contains(c));
-    if (isUntagged && /^\s*robots\b/i.test(section.textContent)) {
+    if (isUntagged && /^robots\b/i.test(section.textContent.trim())) {
       section.remove();
     }
   });
