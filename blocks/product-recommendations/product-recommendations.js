@@ -26,7 +26,7 @@ import { fetchPlaceholders, getProductLink } from '../../scripts/commerce.js';
 import '../../scripts/initializers/recommendations.js';
 import '../../scripts/initializers/wishlist.js';
 
-const isMobile = window.matchMedia('only screen and (max-width: 900px)').matches;
+const isMobile = window.matchMedia('only screen and (max-width: 1279px)').matches;
 
 /**
  * Validates and returns a product view history entry if valid

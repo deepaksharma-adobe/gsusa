@@ -98,7 +98,7 @@
 }
 
 /* Media Queries */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1280px) {
     .block.product-list-page .search__wrapper {
         grid-template-areas:
             "result-info product-sort"

@@ -12,21 +12,49 @@
 
 /* stylelint-disable no-empty-source */
 :root, .dropin-design {
-  /* Adobe Commerce Dropin design tokens */
-  --color-brand-300: #6d6d6d;
-  --color-brand-500: #454545;
-  --color-brand-600: #383838;
-  --color-brand-700: #2b2b2b;
+  /* Adobe Commerce Dropin design tokens — Girl Scouts brand overlay */
+  --color-brand-300: #d5f267; /* GS Star Green */
+  --color-brand-500: #00b451; /* GS Girl Scouts Green */
+  --color-brand-600: #005640; /* GS Forest Green (CTA hover) */
+  --color-brand-700: #044248; /* GS Dark Cyan (active) */
   --color-neutral-50: #fff;
   --color-neutral-100: #fafafa;
   --color-neutral-200: #f5f5f5;
   --color-neutral-300: #e8e8e8;
-  --color-neutral-400: #d6d6d6;
-  --color-neutral-500: #b8b8b8;
+  --color-neutral-400: #d9d9d9; /* GS Cloud */
+  --color-neutral-500: #a8a8a8; /* GS Stone */
   --color-neutral-600: #8f8f8f;
   --color-neutral-700: #666;
-  --color-neutral-800: #3d3d3d;
-  --color-neutral-900: #292929;
+  --color-neutral-800: #2d2e33; /* GS Dark Grey (body text) */
+  --color-neutral-900: #000; /* GS Black */
+
+  /* Girl Scouts brand palette */
+  --color-gs-green: #00b451;
+  --color-gs-forest: #005640;
+  --color-gs-star: #d5f267;
+  --color-gs-green-alt: #008138;
+  --color-gs-dark-cyan: #044248;
+  --color-gs-deep-cyan: #006973;
+  --color-gs-ocean: #004987;
+  --color-gs-deep-purple: #5c1f8b;
+  --color-gs-plum: #af0061;
+  --color-gs-cherry: #9c0000;
+  --color-gs-brown: #763a16;
+  --color-gs-desert: #a86b1d;
+  --color-gs-teal: #00b2be;
+  --color-gs-river: #1496d4;
+  --color-gs-violet: #9e5fd6;
+  --color-gs-fuchsia: #fd329e;
+  --color-gs-poppy: #ee3124;
+  --color-gs-flame: #ff830c;
+  --color-gs-gold: #f7be00;
+  --color-gs-sea-foam: #a3edd6;
+  --color-gs-sky: #a0def1;
+  --color-gs-lilac: #ccb3fa;
+  --color-gs-bubblegum: #f7abd6;
+  --color-gs-peach: #fcb89d;
+  --color-gs-khaki: #d5ca9f;
+  --color-gs-sunshine: #fff441;
   --color-positive-200: #eff5ef;
   --color-positive-500: #7fb078;
   --color-positive-800: #53824c;
@@ -46,20 +74,20 @@
   --color-action-button-hover: var(--color-neutral-300);
   --color-opacity-16: rgb(255 255 255 / 16%);
   --color-opacity-24: rgb(255 255 255 / 24%);
-  --grid-1-columns: 4;
-  --grid-1-margins: 0;
+  --grid-1-columns: 4; /* GS mobile */
+  --grid-1-margins: 20px;
   --grid-1-gutters: 16px;
   --grid-2-columns: 12;
-  --grid-2-margins: 0;
+  --grid-2-margins: 20px;
   --grid-2-gutters: 16px;
-  --grid-3-columns: 12;
-  --grid-3-margins: 0;
+  --grid-3-columns: 12; /* GS desktop */
+  --grid-3-margins: 56px;
   --grid-3-gutters: 24px;
   --grid-4-columns: 12;
-  --grid-4-margins: 0;
+  --grid-4-margins: 56px;
   --grid-4-gutters: 24px;
   --grid-5-columns: 12;
-  --grid-5-margins: 0;
+  --grid-5-margins: 56px;
   --grid-5-gutters: 24px;
   --shape-border-radius-1: 3px;
   --shape-border-radius-2: 8px;
@@ -75,8 +103,10 @@
   --shape-icon-stroke-2: 1.5px;
   --shape-icon-stroke-3: 2px;
   --shape-icon-stroke-4: 4px;
+  --spacing-xxxsmall: 2px;
   --spacing-xxsmall: 4px;
   --spacing-xsmall: 8px;
+  --spacing-xsmall-plus: 12px;
   --spacing-small: 16px;
   --spacing-medium: 24px;
   --spacing-big: 32px;
@@ -88,15 +118,18 @@
   --spacing-huge: 120px;
   --spacing-xhuge: 144px;
   --spacing-xxhuge: 192px;
-  --type-base-font-family: adobe-clean, roboto, roboto-fallback, system-ui, sans-serif;
-  --type-display-1-font: normal normal 300 6rem/7.2rem var(--type-base-font-family);
-  --type-display-1-letter-spacing: 0.04em;
-  --type-display-2-font: normal normal 300 4.8rem/5.6rem var(--type-base-font-family);
-  --type-display-2-letter-spacing: 0.04em;
-  --type-display-3-font: normal normal 300 3.4rem/4rem var(--type-base-font-family);
-  --type-display-3-letter-spacing: 0.04em;
-  --type-headline-1-font: normal normal 400 2.4rem/3.2rem var(--type-base-font-family);
-  --type-headline-1-letter-spacing: 0.04em;
+  --type-base-font-family: "Trefoil Sans", roboto, roboto-fallback, system-ui, sans-serif;
+  --type-display-font-family: "Girl Scout", "Trefoil Sans", roboto, system-ui, sans-serif;
+  --type-display-0-font: normal normal 300 7.2rem/8.6rem var(--type-display-font-family);
+  --type-display-0-letter-spacing: 0.02em;
+  --type-display-1-font: normal normal 300 6rem/7.2rem var(--type-display-font-family);
+  --type-display-1-letter-spacing: 0.02em;
+  --type-display-2-font: normal normal 300 4.8rem/5.8rem var(--type-display-font-family);
+  --type-display-2-letter-spacing: 0.02em;
+  --type-display-3-font: normal normal 300 3.4rem/4rem var(--type-display-font-family);
+  --type-display-3-letter-spacing: 0.02em;
+  --type-headline-1-font: normal normal 700 2.4rem/3.2rem var(--type-display-font-family);
+  --type-headline-1-letter-spacing: 0.02em;
   --type-headline-2-default-font: normal normal 300 2rem/2.4rem var(--type-base-font-family);
   --type-headline-2-default-letter-spacing: 0.04em;
   --type-headline-2-strong-font: normal normal 700 2rem/2.4rem var(--type-base-font-family);
@@ -128,6 +161,15 @@
   --type-fixed-font-family: adobe-clean, "Roboto Mono", menlo, consolas, "Liberation Mono", monospace, system-ui, sans-serif;
   --background-color: var(--color-neutral-50);
   --nav-height: 6.4rem;
+
+  /*
+   * Girl Scouts responsive breakpoints (two-tier, per Figma Grid System).
+   * Mobile: < 1280px  -> --grid-1-* (4 col / 20px margin / 16px gutter)
+   * Desktop: >= 1280px -> --grid-3-* (12 col / 56px margin / 24px gutter)
+   * NOTE: CSS @media cannot read var(); these are reference constants only.
+   * The desktop @media must hardcode 1280px.
+   */
+  --bp-desktop: 1280px;
 }
 
 /* fallback font */
@@ -197,8 +239,8 @@ h6 {
 }
 
 h1 {
-  font: var(--type-display-1-font);
-  letter-spacing: var(--type-display-1-letter-spacing);
+  font: var(--type-display-0-font);
+  letter-spacing: var(--type-display-0-letter-spacing);
 }
 
 h2 {
@@ -467,16 +509,16 @@ main > .section {
 main > .section > div {
   max-width: 1200px;
   margin: auto;
-  padding: 0 var(--spacing-medium);
+  padding: 0 var(--grid-1-margins); /* GS mobile margin: 20px */
 }
 
 main > .section:first-of-type {
   margin-top: 0;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1280px) {
   main > .section > div {
-    padding: 0 var(--spacing-big);
+    padding: 0 var(--grid-3-margins); /* GS desktop margin: 56px */
   }
 }
 
@@ -619,18 +661,13 @@ body.columns main > .section:empty {
   display: none;
 }
 
-@media (min-width: 600px) {
-  body.columns main {
-    padding: var(--spacing-large) var(--spacing-big);
-  }
-}
-
 .dropin-product-item-card {
   border: unset;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1280px) {
   body.columns main {
+    padding: var(--spacing-large) var(--spacing-big);
     flex-flow: row wrap;
   }
 

@@ -37,7 +37,7 @@ header nav[aria-expanded='true'] {
   min-height: 100dvh;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1280px) {
   header .nav-wrapper {
     position: relative;
   }
@@ -136,7 +136,7 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
   transform: rotate(-45deg);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1280px) {
   header nav .nav-hamburger {
     display: none;
     visibility: hidden;
@@ -211,7 +211,7 @@ header nav .nav-sections ul>li:empty {
   display: none;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1280px) {
   header nav .nav-sections {
     display: block;
     visibility: visible;
@@ -443,7 +443,7 @@ header .nav-search-input .search_autocomplete .popover-container {
   width: 100%;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   header nav .nav-tools-wrapper {
     position: relative;
   }
@@ -516,7 +516,7 @@ header .nav-search-input .search_autocomplete .popover-container {
   width: 100%;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .dropdown-wrapper.nav-tools-wrapper .nav-auth-menu-panel {
     width: 398px;
   }
@@ -587,7 +587,7 @@ header .nav-search-input .search_autocomplete .popover-container {
   display: block;
 }
 
-@media (max-width: 899px) {
+@media (max-width: 1279px) {
   header {
     position: relative;
   }
@@ -830,7 +830,7 @@ body:has(.seller-assisted-buying-banner) {
   cursor: not-allowed;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1279px) {
   .seller-assisted-buying-banner {
     gap: var(--spacing-xsmall);
     padding: var(--spacing-small) var(--spacing-medium);

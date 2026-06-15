@@ -71,7 +71,7 @@
   margin-top: var(--spacing-xsmall);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1280px) {
   .product-details__wrapper {
     grid-template-columns: repeat(var(--grid-3-columns), 1fr);
     column-gap: var(--grid-3-gutters);

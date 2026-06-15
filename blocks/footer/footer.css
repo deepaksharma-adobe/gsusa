@@ -1,19 +1,236 @@
+/* stylelint-disable no-descending-specificity */
+
+/* Girl Scouts footer — design tokens (from Figma Foundation + footer frame) */
 footer {
-    background-color: var(--color-neutral-100);
+    --footer-bg: #023729;
+    --footer-card-bg: var(--color-gs-forest);
+    --footer-wholesale-bg: #00ae431a;
+    --footer-wholesale-border: #d5ca9f99;
+    --footer-divider: #4e4e4e;
+    --footer-divider-soft: #e2dbc133;
+    --footer-text: var(--color-neutral-50);
+
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
     font: var(--type-body-2-default-font);
     letter-spacing: var(--type-body-2-default-letter-spacing);
 }
 
 footer .footer > div {
     margin: auto;
-    max-width: 1200px;
-    padding: 40px 24px 24px;
+    max-width: 1280px;
+    padding: var(--spacing-xxbig) var(--spacing-small);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-medium);
 }
 
 footer .footer p {
     margin: 0;
 }
 
+/* Links and legal regions wrap content in a default-content-wrapper; collapse it
+   so the region's own grid/flex governs the columns and legal items directly. */
+footer .footer-links > .default-content-wrapper,
+footer .footer-legal > .default-content-wrapper {
+    display: contents;
+}
+
+footer .footer a {
+    color: var(--footer-text);
+    font: var(--type-body-2-default-font);
+    letter-spacing: var(--type-body-2-default-letter-spacing);
+    text-decoration: none;
+}
+
+footer .footer a:hover {
+    color: var(--footer-text);
+    text-decoration: underline;
+}
+
+/* Brand / logo region */
+footer .footer-brand img {
+    width: 126px;
+    height: auto;
+}
+
+/* Link columns region — mobile-first: stacked accordions */
+footer .footer-links {
+    display: flex;
+    flex-direction: column;
+}
+
+footer .footer-column {
+    display: flex;
+    flex-direction: column;
+    border-bottom: var(--shape-border-width-1) solid var(--footer-divider);
+    padding-bottom: var(--spacing-xsmall);
+}
+
+/* Desktop shows a static title; mobile shows the toggle button. */
+footer .footer-column-title {
+    display: none;
+    font: var(--type-body-1-strong-font);
+    letter-spacing: var(--type-body-1-strong-letter-spacing);
+    color: var(--footer-text);
+    padding: var(--spacing-xsmall) 0;
+}
+
+footer .footer-column-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--spacing-xsmall) 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    text-align: left;
+    color: var(--footer-text);
+    font: normal normal 600 1.8rem/2.5rem var(--type-base-font-family);
+}
+
+footer .footer-column-toggle::after {
+    content: "";
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    background-color: currentcolor;
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-mask: url("../../icons/chevron-down.svg") center / 24px no-repeat;
+    mask: url("../../icons/chevron-down.svg") center / 24px no-repeat;
+    transition: transform 0.2s ease;
+}
+
+footer .footer-column--open .footer-column-toggle::after {
+    transform: rotate(180deg);
+}
+
+footer .footer-column-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+footer .footer-column:not(.footer-column--open) .footer-column-links {
+    display: none;
+}
+
+footer .footer-column-links li {
+    padding: var(--spacing-xsmall-plus) 0;
+}
+
+/* Social icons row */
+footer .footer-social .footer-column-links {
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--spacing-medium);
+    padding-top: var(--spacing-xsmall);
+}
+
+footer .footer-social .footer-column-links li {
+    padding: 0;
+}
+
+footer .footer-social a {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+}
+
+footer .footer-social .icon {
+    width: 24px;
+    height: 24px;
+    color: var(--footer-text);
+}
+
+footer .footer-social .icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Icons resolve to <img> referencing currentColor SVGs; force them white. */
+footer .footer-social .icon img {
+    width: 100%;
+    height: 100%;
+    filter: brightness(0) invert(1);
+}
+
+/* Newsletter card */
+footer .footer-newsletter > div {
+    background-color: var(--footer-card-bg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xsmall);
+}
+
+footer .footer-newsletter img {
+    width: 100%;
+    height: 136px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Pad the textual content, but let the lead image span full width. */
+footer .footer-newsletter h2,
+footer .footer-newsletter h3,
+footer .footer-newsletter h4,
+footer .footer-newsletter p:not(:first-child) {
+    margin: 0;
+    padding: 0 var(--spacing-small);
+}
+
+footer .footer-newsletter h2,
+footer .footer-newsletter h3,
+footer .footer-newsletter h4 {
+    padding-top: var(--spacing-small);
+    font: var(--type-body-1-strong-font);
+    letter-spacing: var(--type-body-1-strong-letter-spacing);
+    color: var(--footer-text);
+}
+
+footer .footer-newsletter p:last-child {
+    padding-bottom: var(--spacing-small);
+}
+
+footer .footer-newsletter a {
+    font: var(--type-body-1-strong-font);
+    letter-spacing: var(--type-body-1-strong-letter-spacing);
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+/* Wholesale partner box */
+footer .footer-wholesale > div {
+    background-color: var(--footer-wholesale-bg);
+    border: var(--shape-border-width-1) solid var(--footer-wholesale-border);
+    padding: var(--spacing-xsmall-plus);
+}
+
+footer .footer-wholesale p {
+    text-transform: uppercase;
+    color: var(--footer-text);
+}
+
+/* Legal bar */
+footer .footer-legal {
+    border-top: var(--shape-border-width-1) solid var(--footer-divider);
+    padding-top: var(--spacing-small);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xsmall);
+}
+
+footer .footer-legal p {
+    text-transform: uppercase;
+}
+
+footer .footer-legal a {
+    text-transform: uppercase;
+}
+
+/* Store switcher (multistore) */
 .storeview-switcher-button {
     background: transparent;
     padding-left: 0;
@@ -66,8 +283,58 @@ footer .footer p {
     margin-bottom: var(--spacing-small);
 }
 
-@media (min-width: 900px) {
+/* Desktop layout (Figma: 1280 frame, 56px side padding, multi-column row) */
+@media (min-width: 1280px) {
     footer .footer > div {
-        padding: 40px 32px 24px;
+        padding: var(--spacing-xxbig) var(--grid-3-margins);
+        display: grid;
+        grid-template-columns: 175px 1fr 272px;
+        gap: var(--spacing-medium);
+        align-items: start;
+    }
+
+    footer .footer-brand {
+        grid-column: 1;
+    }
+
+    footer .footer-links {
+        grid-column: 2;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-medium);
+    }
+
+    /* Local Resources + Follow Us wrap onto a second row under the grid. */
+    footer .footer-column {
+        border-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    footer .footer-column-toggle {
+        display: none;
+    }
+
+    footer .footer-column-title {
+        display: block;
+    }
+
+    footer .footer-column:not(.footer-column--open) .footer-column-links {
+        display: block;
+    }
+
+    footer .footer-social .footer-column-links {
+        padding-top: var(--spacing-xsmall);
+    }
+
+    footer .footer-newsletter,
+    footer .footer-wholesale {
+        grid-column: 3;
+    }
+
+    footer .footer-legal {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
     }
 }
