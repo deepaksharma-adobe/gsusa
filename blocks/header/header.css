@@ -343,6 +343,23 @@ header nav .nav-tools {
   z-index: 3;
 }
 
+/* Tool order per Figma: Search, My List (wishlist), Cart, Profile (account) */
+header nav .nav-tools .search-wrapper {
+  order: 1;
+}
+
+header nav .nav-tools .wishlist-wrapper {
+  order: 2;
+}
+
+header nav .nav-tools .minicart-wrapper {
+  order: 3;
+}
+
+header nav .nav-tools .dropdown-wrapper {
+  order: 4;
+}
+
 header nav .nav-tools-wrapper>button {
   color: var(--color-brand-700);
   background: transparent;
