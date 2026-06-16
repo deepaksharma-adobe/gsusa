@@ -173,10 +173,10 @@ function buildExperienceToggle() {
     <p class="gs-experience-label">Choose your experience</p>
     <div class="gs-experience-toggle">
       <button type="button" class="gs-experience-tab" data-experience="everyone">
-        <span class="icon icon-star"></span><span>For Everyone</span>
+        <span>For Everyone</span>
       </button>
       <button type="button" class="gs-experience-tab" data-experience="leaders">
-        <span class="icon icon-star"></span><span>For Leaders</span>
+        <span>For Leaders</span>
       </button>
     </div>
   `;

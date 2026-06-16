@@ -944,7 +944,6 @@ body:has(.seller-assisted-buying-banner) {
 .gs-experience-tab {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-xsmall);
   padding: var(--spacing-xxsmall) var(--spacing-xsmall);
   border: 0;
   border-radius: var(--shape-border-radius-1);
@@ -953,11 +952,6 @@ body:has(.seller-assisted-buying-banner) {
   font: var(--type-details-caption-2-font);
   cursor: pointer;
   white-space: nowrap;
-}
-
-.gs-experience-tab .icon {
-  width: 20px;
-  height: 20px;
 }
 
 .gs-experience-tab--active {
