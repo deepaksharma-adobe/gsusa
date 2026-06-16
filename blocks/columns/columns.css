@@ -20,14 +20,22 @@
 }
 
 @media (min-width: 1280px) {
+  /* Lay columns out on the GS 12-column grid (Figma Grid System).
+     The row is a 12-track grid using the shared gutter token; each column
+     spans an equal share (12 / N) so they align to the design grid. */
   .columns > div {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+    column-gap: var(--grid-gutter);
     align-items: center;
-    flex-direction: unset;
-    gap: 24px;
   }
 
   .columns > div > div {
-    flex: 1;
     order: unset;
   }
+
+  /* Equal column spans for the common counts (12 / N of 12 tracks). */
+  .columns-2-cols > div > div { grid-column: span 6; }
+  .columns-3-cols > div > div { grid-column: span 4; }
+  .columns-4-cols > div > div { grid-column: span 3; }
 }

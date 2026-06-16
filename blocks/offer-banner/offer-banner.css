@@ -70,10 +70,13 @@
   mask: url('../../icons/close.svg') center / 20px no-repeat;
 }
 
-/* Desktop: align banner content with the nav grid margins (Figma px-56) */
+/* Desktop: full-bleed green band, but keep content on the centered 1280 grid.
+   The side padding grows past 56px on screens wider than the grid frame so the
+   content edges line up with sections/header/footer. */
 @media (min-width: 1280px) {
   .offer-banner {
-    padding: var(--spacing-xsmall) var(--grid-3-margins);
+    padding: var(--spacing-xsmall)
+      max(var(--grid-margin), calc((100% - var(--grid-max-width)) / 2 + var(--grid-margin)));
     gap: var(--spacing-xbig);
   }
 }

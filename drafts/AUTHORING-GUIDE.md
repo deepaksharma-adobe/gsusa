@@ -145,3 +145,52 @@ blocks — author them directly in any page section (no `Menu` key needed). See
    banner + toggle + nav row + mega menu with injected promos; mobile drawer
    accordions work.
 4. Replace placeholder imagery with real artwork.
+
+---
+
+## 5. Responsive grid system (for developers)
+
+The GS layout follows a **two-tier responsive column grid** (Figma node 3:1102).
+This is implemented in `styles/styles.css` — authors don't configure it, but
+developers building blocks should align to it.
+
+| | Mobile (< 1280px) | Desktop (≥ 1280px) |
+|---|---|---|
+| Columns | 4 | 12 |
+| Margin (outer) | 20px | 56px |
+| Gutter | 16px | 24px |
+| Content frame | 320px (within 360) | 1168px (within 1280) |
+
+**Tokens** (auto-switch at the 1280px breakpoint — never branch on the
+breakpoint yourself):
+
+- `--grid-columns` — 4 → 12
+- `--grid-margin` — 20px → 56px
+- `--grid-gutter` — 16px → 24px
+- `--grid-max-width` — 1280px (the section content frame)
+
+Sections (`main > .section > div`) already use these: they cap at
+`--grid-max-width` and pad by `--grid-margin`.
+
+**`.grid-12` utility** — opt a container into the column grid:
+
+```html
+<div class="grid-12">
+  <div class="col-span-4">…</div>
+  <div class="col-span-4">…</div>
+  <div class="col-span-4">…</div>
+  <div class="col-span-6">…</div>
+  <div class="col-span-6">…</div>
+</div>
+```
+
+- Track count and gutter follow the active tier (4 cols / 16px on mobile,
+  12 cols / 24px on desktop).
+- Span helpers: `.col-span-3`, `.col-span-4`, `.col-span-6`, `.col-span-12`.
+  On mobile (4 tracks) spans wider than 4 clamp to the full row.
+- Apply `.grid-12` to a block/section **child** container — not as a standalone
+  block name (EDS would try to load a block module of that name).
+
+**Reference retrofit:** `blocks/columns/columns.css` lays its columns out on the
+12-track grid on desktop (`.columns-2-cols` → span 6, `-3-cols` → span 4,
+`-4-cols` → span 3) and stacks on mobile.

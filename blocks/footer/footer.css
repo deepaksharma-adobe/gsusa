@@ -286,11 +286,21 @@ footer .footer-legal a {
 /* Desktop layout (Figma: 1280 frame, 56px side padding, multi-column row) */
 @media (min-width: 1280px) {
     footer .footer > div {
-        padding: var(--spacing-xxbig) var(--grid-3-margins);
+        box-sizing: border-box;
+        width: 100%;
+        max-width: var(--grid-max-width); /* cap + center on the 1280 grid frame */
+        margin-inline: auto;
+        padding: var(--spacing-xxbig) var(--grid-margin); /* 48px / 56px grid margin */
         display: grid;
         grid-template-columns: 175px 1fr 272px;
-        gap: var(--spacing-medium);
+        gap: var(--grid-gutter); /* 24px grid gutter */
         align-items: start;
+    }
+
+    /* Allow the middle (links) track to shrink so the grid respects max-width
+       instead of expanding to its content's intrinsic min-width. */
+    footer .footer > div > * {
+        min-width: 0;
     }
 
     footer .footer-brand {
@@ -301,7 +311,7 @@ footer .footer-legal a {
         grid-column: 2;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing-medium);
+        gap: var(--grid-gutter); /* 24px grid gutter */
     }
 
     /* Local Resources + Follow Us wrap onto a second row under the grid. */

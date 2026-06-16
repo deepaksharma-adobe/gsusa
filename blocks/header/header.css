@@ -238,10 +238,19 @@ header nav .nav-sections ul>li:empty {
     position: relative;
   }
 
-  /* Keep the nav row's beige bar above the mega panel that drops below it */
+  /* Keep the nav row's beige bar above the mega panel that drops below it.
+     The band paints full-bleed to the viewport via a pseudo-element while the
+     links stay on the centered grid. */
   header nav .nav-sections .default-content-wrapper {
     position: relative;
     z-index: 2;
+  }
+
+  header nav .nav-sections .default-content-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0 calc(50% - 50vw);
+    z-index: -1;
     background-color: var(--gs-header-nav-bg);
   }
 
@@ -297,11 +306,11 @@ header nav .nav-sections ul>li:empty {
     background-color: var(--color-neutral-50);
     box-sizing: border-box;
     border: 1px solid var(--gs-toggle-bg);
-    left: calc(-1 * var(--grid-3-margins));
-    right: calc(-1 * var(--grid-3-margins));
+    left: calc(-1 * var(--grid-margin));
+    right: calc(-1 * var(--grid-margin));
     max-height: none;
     min-height: 0;
-    padding: var(--spacing-big) var(--grid-3-margins);
+    padding: var(--spacing-big) var(--grid-margin);
     position: absolute;
     top: 100%;
     width: auto;
@@ -1083,8 +1092,9 @@ body:has(.seller-assisted-buying-banner) {
       / 1fr auto 1fr;
     align-items: center;
     gap: var(--spacing-medium) var(--spacing-medium);
-    max-width: none;
-    padding: var(--spacing-small) var(--grid-3-margins) 0;
+    max-width: var(--grid-max-width); /* cap + center on the 1280 grid frame */
+    margin: 0 auto;
+    padding: var(--spacing-small) var(--grid-margin) 0; /* 56px grid margin */
     height: auto;
   }
 
@@ -1113,12 +1123,10 @@ body:has(.seller-assisted-buying-banner) {
     gap: var(--spacing-medium);
   }
 
-  /* Nav row: full-bleed beige band below the top bar */
+  /* Nav row: content stays on the centered grid; the full-bleed beige band is
+     painted by the .default-content-wrapper::before above. */
   header nav .nav-sections {
     grid-area: sections;
-    background-color: var(--gs-header-nav-bg);
-    margin: 0 calc(-1 * var(--grid-3-margins));
-    padding: 0 var(--grid-3-margins);
   }
 
   header nav .nav-sections ul {

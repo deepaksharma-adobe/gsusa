@@ -170,6 +170,24 @@
    * The desktop @media must hardcode 1280px.
    */
   --bp-desktop: 1280px;
+
+  /*
+   * Responsive grid aliases — resolve to the active tier so consumers
+   * (.grid-12, sections, blocks) never branch on the breakpoint themselves.
+   * Defaults below are the mobile tier; the desktop @media overrides them.
+   */
+  --grid-columns: var(--grid-1-columns); /* 4 mobile */
+  --grid-margin: var(--grid-1-margins); /* 20px mobile */
+  --grid-gutter: var(--grid-1-gutters); /* 16px mobile */
+  --grid-max-width: 1280px; /* Figma frame; 1168px content within 56px margins */
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --grid-columns: var(--grid-3-columns); /* 12 desktop */
+    --grid-margin: var(--grid-3-margins); /* 56px desktop */
+    --grid-gutter: var(--grid-3-gutters); /* 24px desktop */
+  }
 }
 
 /* fallback font */
@@ -506,19 +524,36 @@ main > .section {
 }
 
 main > .section > div {
-  max-width: 1200px;
+  max-width: var(--grid-max-width); /* 1280px Figma frame -> 1168px content */
   margin: auto;
-  padding: 0 var(--grid-1-margins); /* GS mobile margin: 20px */
+  padding: 0 var(--grid-margin); /* 20px mobile -> 56px desktop (auto via alias) */
 }
 
 main > .section:first-of-type {
   margin-top: 0;
 }
 
+/*
+ * Responsive 12-column grid utility (Figma Grid System, node 3:1102).
+ * Opt in by adding `grid-12` to a container; children use `col-span-*`.
+ * Track count + gutter auto-switch at 1280px via the alias tokens
+ * (4 cols / 16px gutter mobile -> 12 cols / 24px gutter desktop).
+ */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  gap: var(--grid-gutter);
+}
+
+/* Column-span helpers. On mobile the grid only has 4 tracks, so spans wider
+   than 4 clamp to the full row (span all 4) to avoid overflow. */
+.grid-12 > .col-span-3 { grid-column: span 3; }
+.grid-12 > .col-span-4 { grid-column: span 4; }
+.grid-12 > .col-span-6 { grid-column: span 4; }
+.grid-12 > .col-span-12 { grid-column: 1 / -1; }
+
 @media (min-width: 1280px) {
-  main > .section > div {
-    padding: 0 var(--grid-3-margins); /* GS desktop margin: 56px */
-  }
+  .grid-12 > .col-span-6 { grid-column: span 6; }
 }
 
 /* section metadata - styles - start */
