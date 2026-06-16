@@ -301,8 +301,16 @@ export default async function decorate(block) {
     if (section) section.classList.add(`nav-${c}`);
   });
 
+  // The authored nav may omit the tools section; ensure one exists so the
+  // search/wishlist/cart/account tools always have a host element.
+  if (!nav.querySelector('.nav-tools')) {
+    const toolsSection = document.createElement('div');
+    toolsSection.classList.add('nav-tools');
+    nav.append(toolsSection);
+  }
+
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
+  const brandLink = navBrand?.querySelector('.button');
   if (brandLink) {
     brandLink.className = '';
     brandLink.closest('.button-container').className = '';
@@ -310,7 +318,8 @@ export default async function decorate(block) {
 
   // For Everyone / For Leaders experience toggle (top-bar left)
   const experienceToggle = buildExperienceToggle();
-  nav.insertBefore(experienceToggle, navBrand);
+  if (navBrand) nav.insertBefore(experienceToggle, navBrand);
+  else nav.prepend(experienceToggle);
 
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
