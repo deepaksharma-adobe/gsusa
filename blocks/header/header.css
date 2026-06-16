@@ -253,21 +253,23 @@ header nav .nav-sections ul>li:empty {
     align-self: center;
   }
 
+  /* GS hover underline: a tab-style indicator at the bottom of the nav
+     cell (matches Figma), transparent by default, animates to forest-green */
   header nav .nav-sections .default-content-wrapper>ul>li,
   header nav .nav-sections .nav-drop {
     border-radius: 4px;
     padding: 0 var(--spacing-small);
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease;
   }
 
   header nav .nav-sections .default-content-wrapper>ul>li a {
     text-decoration: none;
   }
 
-  /* GS hover underline: transparent by default, animates to forest-green */
   header nav .nav-sections .default-content-wrapper>ul>li>p,
   header nav .nav-sections .default-content-wrapper>ul>li>a {
-    border-bottom: 2px solid transparent;
-    transition: color 0.2s ease, border-color 0.2s ease;
+    transition: color 0.2s ease;
   }
 
   header nav .nav-sections ul {
@@ -342,10 +344,11 @@ header nav .nav-sections ul>li:empty {
     max-width: var(--desktop-item-panel-max-width);
   }
 
-  /* GS hover: forest-green text, no grey box (matches Figma) */
+  /* GS hover: forest-green text + bottom-edge underline, no grey box */
   header nav .nav-sections .default-content-wrapper>ul>li:hover,
   header nav .nav-sections .nav-drop[aria-expanded='true'] {
     background-color: transparent;
+    border-bottom-color: var(--color-gs-forest);
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
@@ -354,7 +357,6 @@ header nav .nav-sections ul>li:empty {
   header nav .nav-sections .default-content-wrapper>ul>li.nav-drop[aria-expanded='true']>p,
   header nav .nav-sections .default-content-wrapper>ul>li.nav-drop[aria-expanded='true']>a {
     color: var(--color-gs-forest);
-    border-bottom-color: var(--color-gs-forest);
   }
 
   /* ----- Desktop mega menu (grouped columns + promo card) ----- */
