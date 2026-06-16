@@ -926,6 +926,20 @@ body:has(.seller-assisted-buying-banner) {
 }
 
 /* Experience toggle (For Everyone / For Leaders) */
+.gs-experience {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xsmall);
+}
+
+/* "Choose your experience" label — mobile drawer only */
+.gs-experience-label {
+  display: none;
+  font: var(--type-body-2-default-font);
+  color: var(--color-neutral-900);
+}
+
 .gs-experience-toggle {
   display: inline-flex;
   align-items: center;
@@ -997,7 +1011,7 @@ body:has(.seller-assisted-buying-banner) {
     grid-area: toggle;
   }
 
-  header nav .gs-experience-toggle {
+  header nav .gs-experience {
     grid-area: toggle;
     justify-self: start;
   }
@@ -1045,28 +1059,53 @@ body:has(.seller-assisted-buying-banner) {
   header nav .nav-sections .default-content-wrapper > ul > li.nav-account {
     display: none;
   }
+
+  /* Store Locator button is a mobile-drawer affordance only */
+  header nav .nav-store-locator {
+    display: none;
+  }
 }
 
 /* Mobile/tablet drawer: experience toggle visible, chevron accordions */
 @media (max-width: 1279px) {
-  header nav .gs-experience-toggle {
+  header nav .gs-experience {
     grid-area: brand;
     justify-self: center;
     margin: var(--spacing-small) auto;
   }
 
-  header nav[aria-expanded='false'] .gs-experience-toggle {
+  header nav[aria-expanded='false'] .gs-experience {
     display: none;
+  }
+
+  header nav .gs-experience-label {
+    display: block;
   }
 
   header nav .gs-currency {
     display: none;
   }
 
-  /* Drawer nav links: dark grey per Figma, not the global green link color */
+  /* Nav list sits on the beige band per Figma */
+  header nav .nav-sections {
+    background-color: var(--gs-header-nav-bg);
+    padding: var(--spacing-small);
+    box-sizing: border-box;
+  }
+
+  header nav .nav-sections ul {
+    gap: 0;
+  }
+
+  /* Drawer nav links: dark grey, 18px semibold heading, per-item divider */
   header nav .nav-sections ul > li,
   header nav .nav-sections ul > li a {
     color: var(--color-neutral-800);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li {
+    border-bottom: var(--shape-border-width-1) solid var(--gs-header-border);
+    font: normal normal 600 1.8rem/2.5rem var(--type-base-font-family);
   }
 
   header nav .nav-sections ul > li.nav-drop::before {
@@ -1077,6 +1116,24 @@ body:has(.seller-assisted-buying-banner) {
     /* stylelint-disable-next-line property-no-vendor-prefix */
     -webkit-mask: url('../../icons/chevron-down.svg') center / 20px no-repeat;
     mask: url('../../icons/chevron-down.svg') center / 20px no-repeat;
+  }
+
+  /* Store Locator secondary button at the bottom of the drawer */
+  header nav .nav-store-locator {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xsmall);
+    margin-top: var(--spacing-small);
+    padding: var(--spacing-xsmall);
+    border: var(--shape-border-width-1) solid var(--color-gs-forest);
+    color: var(--color-gs-forest);
+    font: var(--type-body-2-default-font);
+    text-decoration: none;
+  }
+
+  header nav .nav-store-locator .icon {
+    width: 20px;
+    height: 20px;
   }
 }
 

@@ -167,28 +167,31 @@ function buildPromoBanner() {
  */
 function buildExperienceToggle() {
   const current = localStorage.getItem(EXPERIENCE_KEY) || 'everyone';
-  const toggle = document.createElement('div');
-  toggle.className = 'gs-experience-toggle';
-  toggle.innerHTML = `
-    <button type="button" class="gs-experience-tab" data-experience="everyone">
-      <span class="icon icon-star"></span><span>For Everyone</span>
-    </button>
-    <button type="button" class="gs-experience-tab" data-experience="leaders">
-      <span class="icon icon-star"></span><span>For Leaders</span>
-    </button>
+  const wrapper = document.createElement('div');
+  wrapper.className = 'gs-experience';
+  wrapper.innerHTML = `
+    <p class="gs-experience-label">Choose your experience</p>
+    <div class="gs-experience-toggle">
+      <button type="button" class="gs-experience-tab" data-experience="everyone">
+        <span class="icon icon-star"></span><span>For Everyone</span>
+      </button>
+      <button type="button" class="gs-experience-tab" data-experience="leaders">
+        <span class="icon icon-star"></span><span>For Leaders</span>
+      </button>
+    </div>
   `;
   const setActive = (value) => {
-    toggle.querySelectorAll('.gs-experience-tab').forEach((tab) => {
+    wrapper.querySelectorAll('.gs-experience-tab').forEach((tab) => {
       tab.classList.toggle('gs-experience-tab--active', tab.dataset.experience === value);
     });
     localStorage.setItem(EXPERIENCE_KEY, value);
   };
-  toggle.querySelectorAll('.gs-experience-tab').forEach((tab) => {
+  wrapper.querySelectorAll('.gs-experience-tab').forEach((tab) => {
     tab.addEventListener('click', () => setActive(tab.dataset.experience));
   });
   setActive(current);
-  decorateIcons(toggle);
-  return toggle;
+  decorateIcons(wrapper);
+  return wrapper;
 }
 
 /**
@@ -309,6 +312,14 @@ export default async function decorate(block) {
           }
         });
       });
+
+    // Store Locator secondary action, appended after the nav list.
+    const storeLocator = document.createElement('a');
+    storeLocator.className = 'nav-store-locator';
+    storeLocator.href = '/store-locator';
+    storeLocator.innerHTML = '<span class="icon icon-star"></span><span>Store Locator</span>';
+    decorateIcons(storeLocator);
+    navSections.querySelector('.default-content-wrapper')?.append(storeLocator);
   }
 
   const navTools = nav.querySelector('.nav-tools');
