@@ -268,12 +268,13 @@ header nav .nav-sections ul>li:empty {
     background-color: var(--color-neutral-50);
     box-sizing: border-box;
     left: 0;
-    max-height: var(--desktop-panel-max-height);
-    min-height: var(--desktop-panel-min-height);
-    padding: var(--spacing-xbig);
+    max-height: none;
+    min-height: 0;
+    padding: var(--spacing-big) var(--grid-3-margins);
     position: absolute;
     top: var(--spacing-large);
     width: 100%;
+    box-shadow: var(--shape-shadow-3);
   }
 
   header nav .nav-sections .default-content-wrapper>ul>li .submenu-header {
@@ -313,6 +314,103 @@ header nav .nav-sections ul>li:empty {
   header nav .nav-sections .default-content-wrapper>ul>li:hover,
   header nav .nav-sections .nav-drop[aria-expanded='true'] {
     background-color: var(--color-neutral-200);
+  }
+
+  /* ----- Desktop mega menu (grouped columns + promo card) ----- */
+
+  /* The cloned submenu list becomes the row of group columns + promo */
+  header nav .nav-sections .nav-drop[aria-expanded='true'] .submenu-wrapper>ul {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    gap: var(--spacing-xxbig);
+    width: auto;
+    max-width: 1280px;
+    max-height: none;
+    min-height: 0;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  /* Suppress the boilerplate caret on the mega panel lists */
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul::before,
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li>ul::before {
+    content: none;
+  }
+
+  /* Each top-level item is a column */
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 175px;
+    min-width: 0;
+    max-width: none;
+    padding: 0;
+  }
+
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li:hover {
+    background: none;
+  }
+
+  /* Group heading */
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li>a {
+    font: var(--type-body-1-strong-font);
+    letter-spacing: var(--type-body-1-strong-letter-spacing);
+    color: var(--color-neutral-900);
+    padding: var(--spacing-xsmall-plus) var(--spacing-xxsmall);
+  }
+
+  /* Group links: always-visible vertical list inside the panel */
+  header nav .nav-sections .nav-drop[aria-expanded='true'] .submenu-wrapper>ul>li>ul {
+    display: flex;
+    flex-flow: column nowrap;
+    position: static;
+    width: auto;
+    max-height: none;
+    min-height: 0;
+    margin: 0;
+    overflow: visible;
+  }
+
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li>ul::before {
+    content: none;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li>ul>li {
+    min-width: 0;
+    max-width: none;
+    padding: var(--spacing-xsmall) var(--spacing-xxsmall);
+  }
+
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li>ul>li a {
+    font: var(--type-body-2-default-font);
+    letter-spacing: var(--type-body-2-default-letter-spacing);
+    color: var(--color-neutral-800);
+  }
+
+  /* Promotional card on the right */
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li.nav-promo {
+    flex: 0 0 372px;
+    margin-left: auto;
+  }
+
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li.nav-promo a {
+    display: block;
+    position: relative;
+    padding: 0;
+    border-radius: var(--shape-border-radius-2);
+    overflow: hidden;
+    font: var(--type-display-3-font);
+    letter-spacing: var(--type-display-3-letter-spacing);
+    color: var(--color-neutral-900);
+  }
+
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li.nav-promo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: var(--spacing-small);
   }
 }
 
