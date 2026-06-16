@@ -131,34 +131,6 @@ subMenuHeader.classList.add('submenu-header');
 subMenuHeader.innerHTML = '<h5 class="back-link">All Categories</h5><hr />';
 
 const EXPERIENCE_KEY = 'gs-experience';
-const PROMO_DISMISSED_KEY = 'gs-promo-dismissed';
-
-/**
- * Builds the dismissible promo offer banner shown above the header.
- * Dismissal is persisted in localStorage so it stays hidden across visits.
- * @returns {Element|null} The banner element, or null if previously dismissed
- */
-function buildPromoBanner() {
-  if (localStorage.getItem(PROMO_DISMISSED_KEY) === 'true') return null;
-
-  const banner = document.createElement('div');
-  banner.className = 'gs-promo-banner';
-  banner.innerHTML = `
-    <div class="gs-promo-banner__content">
-      <span class="icon icon-star"></span>
-      <p class="gs-promo-banner__message">Free Gift with purchase of a Uniform – Use Code: FREEPURPLEBAG</p>
-      <a class="gs-promo-banner__redeem" href="/sale">Redeem Now</a>
-    </div>
-    <a class="gs-promo-banner__terms" href="/terms">Terms &amp; Conditions</a>
-    <button type="button" class="gs-promo-banner__close" aria-label="Dismiss offer"></button>
-  `;
-  banner.querySelector('.gs-promo-banner__close').addEventListener('click', () => {
-    banner.remove();
-    localStorage.setItem(PROMO_DISMISSED_KEY, 'true');
-  });
-  decorateIcons(banner);
-  return banner;
-}
 
 /**
  * Builds the "For Everyone / For Leaders" experience toggle.
@@ -280,14 +252,19 @@ export default async function decorate(block) {
     document.body.insertAdjacentElement('afterbegin', sellerAssistedBuyingBanner);
   }
 
-  // Promo offer banner (dismissible) above the header
-  const promoBanner = buildPromoBanner();
-  if (promoBanner) block.insertAdjacentElement('beforebegin', promoBanner);
-
   // load nav as fragment
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
+
+  // Authored offer banner (dismissible) — pulled out of the nav fragment and
+  // relocated above the header. Its own block handles dismissal/persistence.
+  const offerBanner = fragment.querySelector('.offer-banner');
+  if (offerBanner) {
+    offerBanner.closest('.section')?.remove();
+    if (offerBanner.isConnected) offerBanner.remove();
+    block.insertAdjacentElement('beforebegin', offerBanner);
+  }
 
   // decorate nav DOM
   block.textContent = '';
