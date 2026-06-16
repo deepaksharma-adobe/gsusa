@@ -296,6 +296,7 @@ header nav .nav-sections ul>li:empty {
   header nav .nav-sections .default-content-wrapper>ul>li[aria-expanded='true'] .submenu-wrapper {
     background-color: var(--color-neutral-50);
     box-sizing: border-box;
+    border: 1px solid var(--gs-toggle-bg);
     left: calc(-1 * var(--grid-3-margins));
     right: calc(-1 * var(--grid-3-margins));
     max-height: none;
@@ -305,7 +306,7 @@ header nav .nav-sections ul>li:empty {
     top: 100%;
     width: auto;
     z-index: 1;
-    box-shadow: var(--shape-shadow-3);
+    box-shadow: 0 6px 10px 0 rgb(0 0 0 / 10%);
     animation: gs-megamenu-in 0.2s ease;
   }
 
@@ -365,7 +366,7 @@ header nav .nav-sections ul>li:empty {
     display: flex;
     flex-flow: row nowrap;
     align-items: flex-start;
-    gap: var(--spacing-xxbig);
+    gap: var(--spacing-medium);
     width: auto;
     max-width: 1280px;
     max-height: none;
@@ -380,11 +381,11 @@ header nav .nav-sections ul>li:empty {
     content: none;
   }
 
-  /* Each top-level item is a column */
+  /* Each top-level item is a column (Figma: fixed 175px, no shrink) */
   header nav .nav-sections .nav-drop .submenu-wrapper>ul>li {
     display: flex;
     flex-direction: column;
-    flex: 0 1 175px;
+    flex: 0 0 175px;
     min-width: 0;
     max-width: none;
     padding: 0;
@@ -414,6 +415,7 @@ header nav .nav-sections ul>li:empty {
     width: auto;
     max-height: none;
     min-height: 0;
+    gap: 0;
     margin: 0;
     overflow: visible;
   }
@@ -426,7 +428,7 @@ header nav .nav-sections ul>li:empty {
   header nav .nav-sections .nav-drop .submenu-wrapper>ul>li>ul>li {
     min-width: 0;
     max-width: none;
-    padding: var(--spacing-xsmall) var(--spacing-xxsmall);
+    padding: var(--spacing-xsmall-plus) var(--spacing-xxsmall);
   }
 
   /* Group sub-link (Figma: Trefoil Sans 14/20 regular #000) */
