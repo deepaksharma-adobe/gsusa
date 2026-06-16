@@ -1,0 +1,59 @@
+/* Promo Tile block — vertical 3:5 image-bg collection tile with overlaid heading + arrow CTA */
+.promo-tile {
+  width: 272px;
+  max-width: 100%;
+}
+
+.promo-tile .promo-tile__card {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 5;
+  border-radius: var(--shape-border-radius-1);
+  overflow: hidden;
+  text-decoration: none;
+  background-color: var(--color-neutral-200);
+}
+
+.promo-tile .promo-tile__media,
+.promo-tile .promo-tile__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.promo-tile .promo-tile__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-small);
+  padding: var(--spacing-big);
+}
+
+.promo-tile .promo-tile__heading {
+  margin: 0;
+  font: var(--type-display-3-font);
+  letter-spacing: var(--type-display-3-letter-spacing);
+  color: var(--color-gs-brown);
+}
+
+.promo-tile .promo-tile__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xxsmall);
+  font: var(--type-body-1-strong-font);
+  letter-spacing: var(--type-body-1-strong-letter-spacing);
+  color: var(--color-gs-forest);
+}
+
+.promo-tile .promo-tile__cta::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-color: currentcolor;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-mask: url('../../icons/chevron-right.svg') center / 16px no-repeat;
+  mask: url('../../icons/chevron-right.svg') center / 16px no-repeat;
+}

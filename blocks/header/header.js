@@ -241,9 +241,9 @@ async function decorateMegaMenuPromos(navSections) {
   const fragment = await loadFragment(promosPath);
   if (!fragment) return;
 
-  // Group decorated promo-banner blocks by their menu key.
+  // Group any decorated promo block (banner | feature | tile) by its menu key.
   const promosByMenu = new Map();
-  fragment.querySelectorAll('.promo-banner[data-menu]').forEach((promo) => {
+  fragment.querySelectorAll('.promo-banner[data-menu], .promo-feature[data-menu], .promo-tile[data-menu]').forEach((promo) => {
     const key = promo.dataset.menu;
     if (!promosByMenu.has(key)) promosByMenu.set(key, []);
     promosByMenu.get(key).push(promo);

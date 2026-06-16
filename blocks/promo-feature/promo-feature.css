@@ -1,0 +1,71 @@
+/* Promo Feature block — image + colored content panel + heading + subtext + CTA button */
+.promo-feature {
+  --promo-feature-panel-bg: #f7be0026; /* gold tint, default */
+
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  max-width: 100%;
+  border-radius: var(--shape-border-radius-2);
+  overflow: hidden;
+}
+
+.promo-feature--forest {
+  --promo-feature-panel-bg: #00564026;
+}
+
+.promo-feature--peach {
+  --promo-feature-panel-bg: #fcb89d40;
+}
+
+.promo-feature--sunshine {
+  --promo-feature-panel-bg: #fff44140;
+}
+
+.promo-feature .promo-feature__media img {
+  display: block;
+  width: 100%;
+  height: 213px;
+  object-fit: cover;
+}
+
+.promo-feature .promo-feature__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-small);
+  padding: var(--spacing-small);
+  background-color: var(--promo-feature-panel-bg);
+  text-align: center;
+}
+
+.promo-feature .promo-feature__heading {
+  margin: 0;
+  font: var(--type-display-3-font);
+  letter-spacing: var(--type-display-3-letter-spacing);
+  color: var(--color-neutral-800);
+}
+
+.promo-feature .promo-feature__subtext {
+  margin: 0;
+  font: var(--type-body-1-default-font);
+  letter-spacing: var(--type-body-1-default-letter-spacing);
+  color: var(--color-neutral-800);
+}
+
+/* Solid CTA button (forest green) — overrides the global button accent */
+.promo-feature a.promo-feature__cta.button {
+  margin: 0;
+  padding: var(--spacing-xsmall) var(--spacing-small);
+  border: 0;
+  border-radius: var(--shape-border-radius-1);
+  background-color: var(--color-gs-forest);
+  color: var(--color-neutral-50);
+  font: var(--type-body-2-strong-font);
+  letter-spacing: var(--type-body-2-strong-letter-spacing);
+  text-transform: uppercase;
+}
+
+.promo-feature a.promo-feature__cta.button:hover {
+  background-color: var(--color-gs-dark-cyan);
+}
