@@ -794,7 +794,7 @@ header .nav-search-input .search_autocomplete .popover-container {
   header nav[aria-expanded='true'] .nav-brand {
     grid-area: brand;
     display: block;
-    place-self: center;
+    place-self: center start;
     padding-top: var(--spacing-small);
   }
 
