@@ -258,12 +258,12 @@ export default async function decorate(block) {
   const fragment = await loadFragment(navPath);
 
   // Authored offer banner (dismissible) — pulled out of the nav fragment and
-  // relocated above the header. Its own block handles dismissal/persistence.
+  // pinned above the nav inside the header wrapper (so it stays on top of the
+  // fixed mobile header without leaving a gap). Inserted into navWrapper below.
   const offerBanner = fragment.querySelector('.offer-banner');
   if (offerBanner) {
     offerBanner.closest('.section')?.remove();
     if (offerBanner.isConnected) offerBanner.remove();
-    block.insertAdjacentElement('beforebegin', offerBanner);
   }
 
   // decorate nav DOM
@@ -616,8 +616,20 @@ export default async function decorate(block) {
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
+  if (offerBanner) navWrapper.append(offerBanner);
   navWrapper.append(nav);
   block.append(navWrapper);
+
+  // On mobile the wrapper is fixed (out of flow), so the header element must
+  // reserve its full height — otherwise the offer banner overlaps page content.
+  // Keep them in sync as the banner wraps, dismisses, or the viewport resizes.
+  if (offerBanner) {
+    const syncHeaderHeight = () => {
+      block.parentElement.style.height = isDesktop.matches ? '' : `${navWrapper.offsetHeight}px`;
+    };
+    new ResizeObserver(syncHeaderHeight).observe(navWrapper);
+    isDesktop.addEventListener('change', syncHeaderHeight);
+  }
 
   navWrapper.addEventListener('mouseout', (e) => {
     if (isDesktop.matches && !nav.contains(e.relatedTarget)) {
