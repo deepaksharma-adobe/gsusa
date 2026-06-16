@@ -972,26 +972,6 @@ body:has(.seller-assisted-buying-banner) {
   color: var(--color-neutral-50);
 }
 
-/* Currency selector (static) */
-.gs-currency {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-xxsmall);
-  font: var(--type-body-2-default-font);
-  text-transform: uppercase;
-  color: var(--color-neutral-900);
-}
-
-.gs-currency .icon-flag-us {
-  width: 24px;
-  height: 24px;
-}
-
-.gs-currency .icon-chevron-down {
-  width: 20px;
-  height: 20px;
-}
-
 /* Desktop: two-row layout (top bar + nav row) */
 @media (min-width: 1280px) {
   header nav#nav {
@@ -1059,11 +1039,6 @@ body:has(.seller-assisted-buying-banner) {
   header nav .nav-sections .default-content-wrapper > ul > li.nav-account {
     display: none;
   }
-
-  /* Store Locator button is a mobile-drawer affordance only */
-  header nav .nav-store-locator {
-    display: none;
-  }
 }
 
 /* Mobile/tablet drawer: experience toggle visible, chevron accordions */
@@ -1080,10 +1055,6 @@ body:has(.seller-assisted-buying-banner) {
 
   header nav .gs-experience-label {
     display: block;
-  }
-
-  header nav .gs-currency {
-    display: none;
   }
 
   /* Nav list sits on the beige band per Figma */
@@ -1116,24 +1087,6 @@ body:has(.seller-assisted-buying-banner) {
     /* stylelint-disable-next-line property-no-vendor-prefix */
     -webkit-mask: url('../../icons/chevron-down.svg') center / 20px no-repeat;
     mask: url('../../icons/chevron-down.svg') center / 20px no-repeat;
-  }
-
-  /* Store Locator secondary button at the bottom of the drawer */
-  header nav .nav-store-locator {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xsmall);
-    margin-top: var(--spacing-small);
-    padding: var(--spacing-xsmall);
-    border: var(--shape-border-width-1) solid var(--color-gs-forest);
-    color: var(--color-gs-forest);
-    font: var(--type-body-2-default-font);
-    text-decoration: none;
-  }
-
-  header nav .nav-store-locator .icon {
-    width: 20px;
-    height: 20px;
   }
 }
 

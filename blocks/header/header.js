@@ -195,22 +195,6 @@ function buildExperienceToggle() {
 }
 
 /**
- * Builds the static currency selector (flag + USD + chevron).
- * @returns {Element} The currency selector element
- */
-function buildCurrencySelector() {
-  const currency = document.createElement('div');
-  currency.className = 'gs-currency';
-  currency.innerHTML = `
-    <span class="icon icon-flag-us"></span>
-    <span class="gs-currency__code">USD</span>
-    <span class="icon icon-chevron-down"></span>
-  `;
-  decorateIcons(currency);
-  return currency;
-}
-
-/**
  * Sets up the submenu
  * @param {navSection} navSection The nav section element
  */
@@ -312,20 +296,9 @@ export default async function decorate(block) {
           }
         });
       });
-
-    // Store Locator secondary action, appended after the nav list.
-    const storeLocator = document.createElement('a');
-    storeLocator.className = 'nav-store-locator';
-    storeLocator.href = '/store-locator';
-    storeLocator.innerHTML = '<span class="icon icon-star"></span><span>Store Locator</span>';
-    decorateIcons(storeLocator);
-    navSections.querySelector('.default-content-wrapper')?.append(storeLocator);
   }
 
   const navTools = nav.querySelector('.nav-tools');
-
-  // Static currency selector (top-bar right, before the tool icons)
-  navTools.append(buildCurrencySelector());
 
   /** Wishlist */
   const wishlist = document.createRange().createContextualFragment(`
