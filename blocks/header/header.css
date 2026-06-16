@@ -389,28 +389,46 @@ header nav .nav-sections ul>li:empty {
     color: var(--color-neutral-800);
   }
 
-  /* Promotional card on the right */
+  /* Authored promo banners pinned to the right of the mega panel */
   header nav .nav-sections .nav-drop .submenu-wrapper>ul>li.nav-promo {
-    flex: 0 0 372px;
+    flex: 0 0 auto;
+    flex-direction: row;
+    gap: var(--spacing-medium);
     margin-left: auto;
-  }
-
-  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li.nav-promo a {
-    display: block;
-    position: relative;
     padding: 0;
-    border-radius: var(--shape-border-radius-2);
-    overflow: hidden;
-    font: var(--type-display-3-font);
-    letter-spacing: var(--type-display-3-letter-spacing);
-    color: var(--color-neutral-900);
   }
 
-  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li.nav-promo img {
+  header nav .nav-sections .nav-drop .submenu-wrapper .nav-promo-banner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xsmall-plus);
+    width: 175px;
+    padding: 0;
+    text-decoration: none;
+  }
+
+  /* Colored image card */
+  header nav .nav-sections .nav-drop .submenu-wrapper .nav-promo-banner img {
     display: block;
     width: 100%;
-    height: auto;
-    margin-bottom: var(--spacing-small);
+    height: 231px;
+    object-fit: cover;
+    border-radius: var(--shape-border-radius-2);
+  }
+
+  header nav .nav-sections .nav-drop .submenu-wrapper .nav-promo-banner--violet img {
+    background-color: var(--color-gs-violet);
+  }
+
+  header nav .nav-sections .nav-drop .submenu-wrapper .nav-promo-banner--khaki img {
+    background-color: var(--color-gs-khaki);
+  }
+
+  /* Bold caption below the card */
+  header nav .nav-sections .nav-drop .submenu-wrapper .nav-promo-banner span {
+    font: normal normal 600 1.8rem/2.3rem var(--type-base-font-family);
+    color: var(--color-neutral-900);
+    white-space: normal;
   }
 }
 
