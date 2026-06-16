@@ -900,6 +900,20 @@ header .nav-search-input .search_autocomplete .popover-container {
     color: var(--color-neutral-800);
   }
 
+  /* Injected promo: full-width at the bottom of the open accordion */
+  header nav .nav-sections ul>li.nav-drop.active ul>li.nav-promo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-medium);
+    width: 100%;
+    padding: var(--spacing-small) 0;
+  }
+
+  header nav .nav-sections ul>li.nav-drop.active ul>li.nav-promo .promo-banner,
+  header nav .nav-sections ul>li.nav-drop.active ul>li.nav-promo .promo-banner__card {
+    width: 100%;
+  }
+
   /* stylelint-disable-next-line no-descending-specificity */
   header nav .nav-sections ul li:empty {
     display: none;

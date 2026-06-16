@@ -48,6 +48,10 @@ export default function decorate(block) {
     card.append(media.cloneNode(true));
   }
 
+  // Text overlay: heading + optional CTA, stacked over the card art.
+  const content = document.createElement('span');
+  content.className = 'promo-banner__content';
+
   // Caption — first content row with text but no image and no link.
   const captionRow = contentRows.find((row) => !row.querySelector('img, picture, a')
     && row.textContent.trim());
@@ -55,8 +59,18 @@ export default function decorate(block) {
     const span = document.createElement('span');
     span.className = 'promo-banner__caption';
     span.textContent = captionRow.textContent.trim();
-    card.append(span);
+    content.append(span);
   }
+
+  // CTA — render the authored link label as a styled call-to-action.
+  if (link && link.textContent.trim()) {
+    const cta = document.createElement('span');
+    cta.className = 'promo-banner__cta';
+    cta.textContent = link.textContent.trim();
+    content.append(cta);
+  }
+
+  if (content.childElementCount) card.append(content);
 
   block.textContent = '';
   block.append(card);

@@ -43,18 +43,53 @@
   background-color: var(--color-gs-forest);
 }
 
-/* Variant: large hero card (e.g. "New Arrivals") */
+/* Variant: large hero card (e.g. "New Arrivals") — Figma node 2697:350121.
+   1:1 art (372x372, 4px radius) with the heading + CTA overlaid top-left. */
 .promo-banner.large .promo-banner__card {
+  position: relative;
   width: 372px;
+  gap: 0;
 }
 
 .promo-banner.large .promo-banner__card img {
-  height: 272px;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  background-color: #fdfefe;
+  border-radius: var(--shape-border-radius-1);
+}
+
+.promo-banner.large .promo-banner__content {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .promo-banner.large .promo-banner__caption {
-  font: var(--type-display-3-font);
-  letter-spacing: var(--type-display-3-letter-spacing);
+  font: normal normal 300 3.6rem/4.3rem var(--type-display-font-family);
+  color: var(--color-neutral-800);
+}
+
+.promo-banner.large .promo-banner__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xxsmall);
+  width: fit-content;
+  font: normal normal 500 1.6rem/1.9rem var(--type-base-font-family);
+  color: var(--color-gs-forest);
+}
+
+.promo-banner.large .promo-banner__cta::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-gs-forest);
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-mask: url('../../icons/chevron-right.svg') center / 16px no-repeat;
+  mask: url('../../icons/chevron-right.svg') center / 16px no-repeat;
 }
 
 /* Variant: offer badge card (e.g. "$15 Off") */
