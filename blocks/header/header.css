@@ -4,6 +4,12 @@
   --desktop-large-panel-width: 900px;
   --desktop-panel-min-height: 200px;
   --desktop-panel-max-height: 600px;
+
+  /* Girl Scouts header tokens (from Figma header frame) */
+  --gs-header-nav-bg: #e2dbc138;
+  --gs-header-border: var(--color-neutral-400);
+  --gs-promo-bg: var(--color-gs-star);
+  --gs-toggle-bg: #f6f3ec;
 }
 
 /* header and nav layout */
@@ -358,8 +364,8 @@ header nav .nav-tools button.nav-cart-button[data-count]::after {
   position: absolute;
   top: 0;
   right: -2px;
-  background-color: var(--color-brand-700);
-  color: var(--color-neutral-100);
+  background-color: var(--color-gs-forest);
+  color: var(--color-neutral-50);
   border-radius: 50%;
   width: 1.75em;
   height: 1.75em;
@@ -854,6 +860,239 @@ body:has(.seller-assisted-buying-banner) {
   .seller-assisted-buying-banner__close-button span {
     line-height: 1.1;
     display: inline-block;
+  }
+}
+
+/* ===========================================================================
+   Girl Scouts header — promo banner, top bar, nav row, drawer
+   =========================================================================== */
+
+/* Promo offer banner */
+.gs-promo-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-small);
+  background-color: var(--gs-promo-bg);
+  color: var(--color-neutral-900);
+  padding: var(--spacing-xsmall) var(--spacing-small);
+  font: var(--type-body-2-default-font);
+  letter-spacing: var(--type-body-2-default-letter-spacing);
+}
+
+.gs-promo-banner__content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xsmall);
+  flex: 1;
+  min-width: 0;
+}
+
+.gs-promo-banner__message {
+  margin: 0;
+  font-weight: 500;
+}
+
+.gs-promo-banner__redeem {
+  color: var(--color-gs-forest);
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.gs-promo-banner__terms {
+  color: var(--color-gs-forest);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.gs-promo-banner__close {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border: 0;
+  background: currentcolor;
+  cursor: pointer;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-mask: url('../../icons/close.svg') center / 20px no-repeat;
+  mask: url('../../icons/close.svg') center / 20px no-repeat;
+}
+
+.gs-promo-banner .icon-star {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Experience toggle (For Everyone / For Leaders) */
+.gs-experience-toggle {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--gs-header-border);
+  border-radius: var(--shape-border-radius-2);
+  background-color: var(--gs-toggle-bg);
+}
+
+.gs-experience-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xsmall);
+  padding: var(--spacing-xxsmall) var(--spacing-xsmall);
+  border: 0;
+  border-radius: var(--shape-border-radius-1);
+  background: transparent;
+  color: var(--color-neutral-800);
+  font: var(--type-details-caption-2-font);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.gs-experience-tab .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.gs-experience-tab--active {
+  background-color: var(--color-gs-forest);
+  color: var(--color-neutral-50);
+}
+
+/* Currency selector (static) */
+.gs-currency {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xxsmall);
+  font: var(--type-body-2-default-font);
+  text-transform: uppercase;
+  color: var(--color-neutral-900);
+}
+
+.gs-currency .icon-flag-us {
+  width: 24px;
+  height: 24px;
+}
+
+.gs-currency .icon-chevron-down {
+  width: 20px;
+  height: 20px;
+}
+
+/* Desktop: two-row layout (top bar + nav row) */
+@media (min-width: 1280px) {
+  header nav#nav {
+    display: grid;
+    grid-template:
+      'toggle brand tools' auto
+      'sections sections sections' auto
+      / 1fr auto 1fr;
+    align-items: center;
+    gap: var(--spacing-medium) var(--spacing-medium);
+    max-width: none;
+    padding: var(--spacing-small) var(--grid-3-margins) 0;
+    height: auto;
+  }
+
+  header nav .nav-hamburger {
+    grid-area: toggle;
+  }
+
+  header nav .gs-experience-toggle {
+    grid-area: toggle;
+    justify-self: start;
+  }
+
+  header nav .nav-brand {
+    grid-area: brand;
+    justify-self: center;
+  }
+
+  header nav .nav-brand img {
+    width: 154px;
+    height: auto;
+  }
+
+  header nav .nav-tools {
+    grid-area: tools;
+    justify-self: end;
+    gap: var(--spacing-medium);
+  }
+
+  /* Nav row: full-bleed beige band below the top bar */
+  header nav .nav-sections {
+    grid-area: sections;
+    background-color: var(--gs-header-nav-bg);
+    margin: 0 calc(-1 * var(--grid-3-margins));
+    padding: 0 var(--grid-3-margins);
+  }
+
+  header nav .nav-sections ul {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-medium);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li {
+    padding: var(--spacing-xsmall-plus) var(--spacing-xxsmall);
+    font: var(--type-body-1-default-font);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li a {
+    color: var(--color-neutral-900);
+  }
+
+  /* Account is surfaced via the auth dropdown in tools, not the nav bar */
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-account {
+    display: none;
+  }
+}
+
+/* Mobile/tablet drawer: experience toggle visible, chevron accordions */
+@media (max-width: 1279px) {
+  header nav .gs-experience-toggle {
+    grid-area: brand;
+    justify-self: center;
+    margin: var(--spacing-small) auto;
+  }
+
+  header nav[aria-expanded='false'] .gs-experience-toggle {
+    display: none;
+  }
+
+  header nav .gs-currency {
+    display: none;
+  }
+
+  /* Drawer nav links: dark grey per Figma, not the global green link color */
+  header nav .nav-sections ul > li,
+  header nav .nav-sections ul > li a {
+    color: var(--color-neutral-800);
+  }
+
+  header nav .nav-sections ul > li.nav-drop::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    background: currentcolor;
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-mask: url('../../icons/chevron-down.svg') center / 20px no-repeat;
+    mask: url('../../icons/chevron-down.svg') center / 20px no-repeat;
+  }
+}
+
+/* Promo banner: stack message and actions on narrow screens */
+@media (max-width: 1279px) {
+  .gs-promo-banner {
+    flex-wrap: wrap;
+    gap: var(--spacing-xxsmall) var(--spacing-xsmall);
+  }
+
+  .gs-promo-banner__content {
+    flex-wrap: wrap;
+  }
+
+  .gs-promo-banner__terms {
+    display: none;
   }
 }
 

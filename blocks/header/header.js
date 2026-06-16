@@ -2,7 +2,7 @@
 import { events } from '@dropins/tools/event-bus.js';
 
 import { tryRenderAemAssetsImage } from '@dropins/tools/lib/aem/assets.js';
-import { getMetadata } from '../../scripts/aem.js';
+import { getMetadata, decorateIcons } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import { fetchPlaceholders, getProductLink, rootLink } from '../../scripts/commerce.js';
 
@@ -130,6 +130,83 @@ const subMenuHeader = document.createElement('div');
 subMenuHeader.classList.add('submenu-header');
 subMenuHeader.innerHTML = '<h5 class="back-link">All Categories</h5><hr />';
 
+const EXPERIENCE_KEY = 'gs-experience';
+const PROMO_DISMISSED_KEY = 'gs-promo-dismissed';
+
+/**
+ * Builds the dismissible promo offer banner shown above the header.
+ * Dismissal is persisted in localStorage so it stays hidden across visits.
+ * @returns {Element|null} The banner element, or null if previously dismissed
+ */
+function buildPromoBanner() {
+  if (localStorage.getItem(PROMO_DISMISSED_KEY) === 'true') return null;
+
+  const banner = document.createElement('div');
+  banner.className = 'gs-promo-banner';
+  banner.innerHTML = `
+    <div class="gs-promo-banner__content">
+      <span class="icon icon-star"></span>
+      <p class="gs-promo-banner__message">Free Gift with purchase of a Uniform – Use Code: FREEPURPLEBAG</p>
+      <a class="gs-promo-banner__redeem" href="/sale">Redeem Now</a>
+    </div>
+    <a class="gs-promo-banner__terms" href="/terms">Terms &amp; Conditions</a>
+    <button type="button" class="gs-promo-banner__close" aria-label="Dismiss offer"></button>
+  `;
+  banner.querySelector('.gs-promo-banner__close').addEventListener('click', () => {
+    banner.remove();
+    localStorage.setItem(PROMO_DISMISSED_KEY, 'true');
+  });
+  decorateIcons(banner);
+  return banner;
+}
+
+/**
+ * Builds the "For Everyone / For Leaders" experience toggle.
+ * Visual + persisted state only — no routing.
+ * @returns {Element} The toggle element
+ */
+function buildExperienceToggle() {
+  const current = localStorage.getItem(EXPERIENCE_KEY) || 'everyone';
+  const toggle = document.createElement('div');
+  toggle.className = 'gs-experience-toggle';
+  toggle.innerHTML = `
+    <button type="button" class="gs-experience-tab" data-experience="everyone">
+      <span class="icon icon-star"></span><span>For Everyone</span>
+    </button>
+    <button type="button" class="gs-experience-tab" data-experience="leaders">
+      <span class="icon icon-star"></span><span>For Leaders</span>
+    </button>
+  `;
+  const setActive = (value) => {
+    toggle.querySelectorAll('.gs-experience-tab').forEach((tab) => {
+      tab.classList.toggle('gs-experience-tab--active', tab.dataset.experience === value);
+    });
+    localStorage.setItem(EXPERIENCE_KEY, value);
+  };
+  toggle.querySelectorAll('.gs-experience-tab').forEach((tab) => {
+    tab.addEventListener('click', () => setActive(tab.dataset.experience));
+  });
+  setActive(current);
+  decorateIcons(toggle);
+  return toggle;
+}
+
+/**
+ * Builds the static currency selector (flag + USD + chevron).
+ * @returns {Element} The currency selector element
+ */
+function buildCurrencySelector() {
+  const currency = document.createElement('div');
+  currency.className = 'gs-currency';
+  currency.innerHTML = `
+    <span class="icon icon-flag-us"></span>
+    <span class="gs-currency__code">USD</span>
+    <span class="icon icon-chevron-down"></span>
+  `;
+  decorateIcons(currency);
+  return currency;
+}
+
 /**
  * Sets up the submenu
  * @param {navSection} navSection The nav section element
@@ -169,6 +246,10 @@ export default async function decorate(block) {
     document.body.insertAdjacentElement('afterbegin', sellerAssistedBuyingBanner);
   }
 
+  // Promo offer banner (dismissible) above the header
+  const promoBanner = buildPromoBanner();
+  if (promoBanner) block.insertAdjacentElement('beforebegin', promoBanner);
+
   // load nav as fragment
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
@@ -193,11 +274,21 @@ export default async function decorate(block) {
     brandLink.closest('.button-container').className = '';
   }
 
+  // For Everyone / For Leaders experience toggle (top-bar left)
+  const experienceToggle = buildExperienceToggle();
+  nav.insertBefore(experienceToggle, navBrand);
+
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
     navSections
       .querySelectorAll(':scope .default-content-wrapper > ul > li')
       .forEach((navSection) => {
+        // The "Account" entry is surfaced through the auth dropdown in the
+        // tools area; flag it so it can be hidden from the desktop nav bar.
+        const navLabel = navSection.firstElementChild?.textContent?.trim() || '';
+        if (/^account$/i.test(navLabel)) {
+          navSection.classList.add('nav-account');
+        }
         if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
         setupSubmenu(navSection);
         navSection.addEventListener('click', (event) => {
@@ -221,6 +312,9 @@ export default async function decorate(block) {
   }
 
   const navTools = nav.querySelector('.nav-tools');
+
+  // Static currency selector (top-bar right, before the tool icons)
+  navTools.append(buildCurrencySelector());
 
   /** Wishlist */
   const wishlist = document.createRange().createContextualFragment(`
