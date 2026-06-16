@@ -394,14 +394,17 @@ header nav .nav-sections ul>li:empty {
     background: none;
   }
 
-  /* Group heading */
-  /* stylelint-disable-next-line no-descending-specificity */
-  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li>a {
-    font: var(--type-body-1-strong-font);
-    letter-spacing: var(--type-body-1-strong-letter-spacing);
-    color: var(--color-neutral-900);
+  /* Group heading (Figma: Trefoil Sans 16/21 semibold #2d2e33) */
+  /* stylelint-disable no-descending-specificity */
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li>a,
+  header nav .nav-sections .nav-drop .submenu-wrapper>ul>li>p>a {
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 600;
+    color: var(--color-neutral-800);
     padding: var(--spacing-xsmall-plus) var(--spacing-xxsmall);
   }
+  /* stylelint-enable no-descending-specificity */
 
   /* Group links: always-visible vertical list inside the panel */
   header nav .nav-sections .nav-drop[aria-expanded='true'] .submenu-wrapper>ul>li>ul {
@@ -426,11 +429,13 @@ header nav .nav-sections ul>li:empty {
     padding: var(--spacing-xsmall) var(--spacing-xxsmall);
   }
 
+  /* Group sub-link (Figma: Trefoil Sans 14/20 regular #000) */
   /* stylelint-disable-next-line no-descending-specificity */
   header nav .nav-sections .nav-drop .submenu-wrapper>ul>li>ul>li a {
-    font: var(--type-body-2-default-font);
-    letter-spacing: var(--type-body-2-default-letter-spacing);
-    color: var(--color-neutral-800);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--color-neutral-900);
     transition: color 0.2s ease;
   }
 
