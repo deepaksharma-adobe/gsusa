@@ -223,6 +223,14 @@ header nav .nav-sections ul>li:empty {
     display: block;
     visibility: visible;
     white-space: nowrap;
+    position: relative;
+  }
+
+  /* Keep the nav row's beige bar above the mega panel that drops below it */
+  header nav .nav-sections .default-content-wrapper {
+    position: relative;
+    z-index: 2;
+    background-color: var(--gs-header-nav-bg);
   }
 
   header nav[aria-expanded='true'] .nav-sections {
@@ -264,16 +272,19 @@ header nav .nav-sections ul>li:empty {
     flex: 0 1 auto;
   }
 
+  /* Mega panel drops below the nav row (anchored to .nav-sections) */
   header nav .nav-sections .default-content-wrapper>ul>li[aria-expanded='true'] .submenu-wrapper {
     background-color: var(--color-neutral-50);
     box-sizing: border-box;
-    left: 0;
+    left: calc(-1 * var(--grid-3-margins));
+    right: calc(-1 * var(--grid-3-margins));
     max-height: none;
     min-height: 0;
     padding: var(--spacing-big) var(--grid-3-margins);
     position: absolute;
-    top: var(--spacing-large);
-    width: 100%;
+    top: 100%;
+    width: auto;
+    z-index: 1;
     box-shadow: var(--shape-shadow-3);
   }
 
