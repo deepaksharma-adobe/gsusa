@@ -257,7 +257,6 @@ header nav .nav-sections ul>li:empty {
      cell (matches Figma), transparent by default, animates to forest-green */
   header nav .nav-sections .default-content-wrapper>ul>li,
   header nav .nav-sections .nav-drop {
-    border-radius: 4px;
     padding: 0 var(--spacing-small);
     border-bottom: 2px solid transparent;
     transition: border-color 0.2s ease;
@@ -1037,16 +1036,22 @@ body:has(.seller-assisted-buying-banner) {
   font-weight: 500;
 }
 
-.gs-promo-banner__redeem {
+.gs-promo-banner__redeem,
+.gs-promo-banner__redeem:any-link {
   color: var(--color-gs-forest);
+  font-size: 14px;
+  line-height: 18px;
   font-weight: 600;
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
 }
 
-.gs-promo-banner__terms {
+.gs-promo-banner__terms,
+.gs-promo-banner__terms:any-link {
   color: var(--color-gs-forest);
+  font-size: 12px;
+  line-height: 17px;
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -1098,7 +1103,7 @@ body:has(.seller-assisted-buying-banner) {
   align-items: center;
   padding: var(--spacing-xxsmall) var(--spacing-xsmall);
   border: 0;
-  border-radius: var(--shape-border-radius-1);
+  border-radius: 6px;
   background: transparent;
   color: var(--color-neutral-800);
   font: var(--type-details-caption-2-font);
@@ -1113,6 +1118,12 @@ body:has(.seller-assisted-buying-banner) {
 
 /* Desktop: two-row layout (top bar + nav row) */
 @media (min-width: 1280px) {
+  /* Align banner content with the nav grid margins (Figma px-56) */
+  .gs-promo-banner {
+    padding: var(--spacing-xsmall) var(--grid-3-margins);
+    gap: var(--spacing-xxbig);
+  }
+
   header nav#nav {
     display: grid;
     grid-template:
