@@ -99,3 +99,15 @@ for your personalized Experience
 +==========+==============+
 | Style    | footer-legal |
 +----------+--------------+
+
+---
+
+Page-level metadata for the fragment. Use a **Metadata** block (not Section
+Metadata) so `Robots` becomes a `<meta name="robots">` directive in the head
+rather than visible footer text.
+
++-----------------------------+
+| Metadata                    |
++==========+==================+
+| Robots   | noindex, nofollow |
++----------+------------------+
