@@ -2,7 +2,7 @@
 import { events } from '@dropins/tools/event-bus.js';
 
 import { tryRenderAemAssetsImage } from '@dropins/tools/lib/aem/assets.js';
-import { getMetadata, decorateIcons } from '../../scripts/aem.js';
+import { getMetadata, decorateIcons, toClassName } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import { fetchPlaceholders, getProductLink, rootLink } from '../../scripts/commerce.js';
 
@@ -223,6 +223,53 @@ function setupSubmenu(navSection) {
 }
 
 /**
+ * Loads authored promo banners and tags each to its mega-menu item.
+ *
+ * Promos are authored independently in the /nav-promos fragment as
+ * `promo-banner` blocks, each carrying a `Menu` key that matches a nav item's
+ * stable slug (toClassName of its label). Banners are grouped by that key and
+ * injected into the matching item's submenu wrapper, so nav links can stay
+ * API-driven while promos are managed separately.
+ *
+ * @param {Element} navSections The decorated `.nav-sections` element
+ */
+async function decorateMegaMenuPromos(navSections) {
+  if (!navSections) return;
+
+  const promosMeta = getMetadata('nav-promos');
+  const promosPath = promosMeta ? new URL(promosMeta, window.location).pathname : '/nav-promos';
+  const fragment = await loadFragment(promosPath);
+  if (!fragment) return;
+
+  // Group decorated promo-banner blocks by their menu key.
+  const promosByMenu = new Map();
+  fragment.querySelectorAll('.promo-banner[data-menu]').forEach((promo) => {
+    const key = promo.dataset.menu;
+    if (!promosByMenu.has(key)) promosByMenu.set(key, []);
+    promosByMenu.get(key).push(promo);
+  });
+  if (!promosByMenu.size) return;
+
+  navSections
+    .querySelectorAll(':scope .default-content-wrapper > ul > li.nav-drop')
+    .forEach((navSection) => {
+      const label = navSection.querySelector(':scope > a, :scope > p, :scope > span')?.textContent
+        || navSection.firstChild?.textContent
+        || '';
+      const promos = promosByMenu.get(toClassName(label.trim()));
+      if (!promos) return;
+
+      const list = navSection.querySelector('.submenu-wrapper > ul');
+      if (!list) return;
+
+      const promoItem = document.createElement('li');
+      promoItem.className = 'nav-promo';
+      promos.forEach((promo) => promoItem.append(promo.cloneNode(true)));
+      list.append(promoItem);
+    });
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -296,6 +343,9 @@ export default async function decorate(block) {
           }
         });
       });
+
+    // Inject authored promo banners into matching mega-menu items.
+    decorateMegaMenuPromos(navSections);
   }
 
   const navTools = nav.querySelector('.nav-tools');

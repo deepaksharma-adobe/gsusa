@@ -1,0 +1,76 @@
+/* Promo Banner block — variant-driven (small | large | offer) */
+.promo-banner {
+  --promo-card-height: 231px;
+}
+
+.promo-banner .promo-banner__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xsmall-plus);
+  width: 175px;
+  text-decoration: none;
+  color: var(--color-neutral-900);
+}
+
+.promo-banner .promo-banner__card img {
+  display: block;
+  width: 100%;
+  height: var(--promo-card-height);
+  object-fit: cover;
+  border-radius: var(--shape-border-radius-2);
+}
+
+.promo-banner .promo-banner__caption {
+  font: normal normal 600 1.8rem/2.3rem var(--type-base-font-family);
+  color: var(--color-neutral-900);
+  white-space: normal;
+}
+
+/* Color modifiers (tint behind transparent card art) */
+.promo-banner--violet .promo-banner__card img {
+  background-color: var(--color-gs-violet);
+}
+
+.promo-banner--khaki .promo-banner__card img {
+  background-color: var(--color-gs-khaki);
+}
+
+.promo-banner--peach .promo-banner__card img {
+  background-color: var(--color-gs-peach);
+}
+
+.promo-banner--forest .promo-banner__card img {
+  background-color: var(--color-gs-forest);
+}
+
+/* Variant: large hero card (e.g. "New Arrivals") */
+.promo-banner.large .promo-banner__card {
+  width: 372px;
+}
+
+.promo-banner.large .promo-banner__card img {
+  height: 272px;
+}
+
+.promo-banner.large .promo-banner__caption {
+  font: var(--type-display-3-font);
+  letter-spacing: var(--type-display-3-letter-spacing);
+}
+
+/* Variant: offer badge card (e.g. "$15 Off") */
+.promo-banner.offer .promo-banner__card {
+  position: relative;
+}
+
+.promo-banner.offer .promo-banner__card::before {
+  content: attr(data-badge);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  padding: var(--spacing-xxsmall) var(--spacing-xsmall);
+  background-color: var(--color-gs-forest);
+  color: var(--color-neutral-50);
+  font: var(--type-details-caption-1-font);
+  border-radius: 0 0 var(--shape-border-radius-2) 0;
+}
