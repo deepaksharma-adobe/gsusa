@@ -150,24 +150,25 @@ blocks — author them directly in any page section (no `Menu` key needed). See
 
 ## 5. Responsive grid system (for developers)
 
-The GS layout follows a **two-tier responsive column grid** (Figma node 3:1102).
-This is implemented in `styles/styles.css` — authors don't configure it, but
-developers building blocks should align to it.
+The GS layout follows a **three-tier responsive column grid** (Figma node 3:1102
+desktop/mobile + tablet PDP frames). This is implemented in `styles/styles.css`
+— authors don't configure it, but developers building blocks should align to it.
 
-| | Mobile (< 1280px) | Desktop (≥ 1280px) |
-|---|---|---|
-| Columns | 4 | 12 |
-| Margin (outer) | 20px | 56px |
-| Gutter | 16px | 24px |
-| Content frame | 320px (within 360) | 1168px (within 1280) |
+| | Mobile (< 768px) | Tablet (768–1279px) | Desktop (≥ 1280px) |
+|---|---|---|---|
+| Columns | 4 | 12 | 12 |
+| Margin (outer) | 20px | 20px | 56px |
+| Gutter | 16px | 16px | 24px |
+| Content frame | 320px (within 360) | within 20px margins | 1168px (within 1280) |
 
-**Tokens** (auto-switch at the 1280px breakpoint — never branch on the
-breakpoint yourself):
+**Tokens** (auto-switch at the 768px and 1280px breakpoints — never branch on
+the breakpoint yourself):
 
-- `--grid-columns` — 4 → 12
-- `--grid-margin` — 20px → 56px
-- `--grid-gutter` — 16px → 24px
+- `--grid-columns` — 4 (mobile) → 12 (tablet) → 12 (desktop)
+- `--grid-margin` — 20px → 20px → 56px
+- `--grid-gutter` — 16px → 16px → 24px
 - `--grid-max-width` — 1280px (the section content frame)
+- `--bp-tablet` (768px), `--bp-desktop` (1280px) — reference constants
 
 Sections (`main > .section > div`) already use these: they cap at
 `--grid-max-width` and pad by `--grid-margin`.
@@ -185,9 +186,10 @@ Sections (`main > .section > div`) already use these: they cap at
 ```
 
 - Track count and gutter follow the active tier (4 cols / 16px on mobile,
-  12 cols / 24px on desktop).
+  12 cols / 16px on tablet, 12 cols / 24px on desktop).
 - Span helpers: `.col-span-3`, `.col-span-4`, `.col-span-6`, `.col-span-12`.
-  On mobile (4 tracks) spans wider than 4 clamp to the full row.
+  On mobile (4 tracks) spans wider than 4 clamp to the full row; from tablet
+  (768px, 12 tracks) up they take their true width.
 - Apply `.grid-12` to a block/section **child** container — not as a standalone
   block name (EDS would try to load a block module of that name).
 
