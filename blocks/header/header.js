@@ -620,16 +620,23 @@ export default async function decorate(block) {
   navWrapper.append(nav);
   block.append(navWrapper);
 
-  // On mobile the wrapper is fixed (out of flow), so the header element must
-  // reserve its full height — otherwise the offer banner overlaps page content.
-  // Keep them in sync as the banner wraps, dismisses, or the viewport resizes.
-  if (offerBanner) {
-    const syncHeaderHeight = () => {
-      block.parentElement.style.height = isDesktop.matches ? '' : `${navWrapper.offsetHeight}px`;
-    };
-    new ResizeObserver(syncHeaderHeight).observe(navWrapper);
-    isDesktop.addEventListener('change', syncHeaderHeight);
-  }
+  // The GS header (offer banner + top bar + nav band) is taller than the
+  // boilerplate's reserved --nav-height, and on mobile the wrapper is fixed
+  // (out of flow). Reserve the wrapper's real height on the <header> element so
+  // page content never sits under the header (overlap) and doesn't jump when
+  // the header decorates in the lazy phase (CLS). Keep it in sync as the banner
+  // wraps/dismisses or the viewport resizes. Skip while the mobile drawer is
+  // open (the wrapper then fills the viewport and must not reserve that height).
+  const syncHeaderHeight = () => {
+    if (nav.getAttribute('aria-expanded') === 'true' && !isDesktop.matches) return;
+    // Set min-height (not height) so the reservation can only grow to fit the
+    // real header, never shrink below the CSS --gs-header-reserve floor — that
+    // way the header decoration can't pull page content upward (CLS).
+    block.parentElement.style.minHeight = `${navWrapper.offsetHeight}px`;
+  };
+  syncHeaderHeight();
+  new ResizeObserver(syncHeaderHeight).observe(navWrapper);
+  isDesktop.addEventListener('change', syncHeaderHeight);
 
   navWrapper.addEventListener('mouseout', (e) => {
     if (isDesktop.matches && !nav.contains(e.relatedTarget)) {

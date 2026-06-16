@@ -233,7 +233,19 @@ body:not(.appear) {
 
 header {
   grid-row: 1;
-  height: var(--nav-height);
+
+  /* Reserve the GS header's real rendered height up-front (eager styles, so it
+     applies at first paint before the lazy-loaded header block decorates) to
+     avoid layout shift / CLS. Mobile: offer banner + single-row top bar.
+     JS later syncs the exact value via min-height (grow-only). */
+  min-height: 176px;
+}
+
+@media (min-width: 1280px) {
+  header {
+    /* Desktop: offer banner (~40) + top bar (~80) + nav band (~62). */
+    min-height: 182px;
+  }
 }
 
 main {
