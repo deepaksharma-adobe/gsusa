@@ -322,9 +322,18 @@ header nav .nav-sections ul>li:empty {
     max-width: var(--desktop-item-panel-max-width);
   }
 
+  /* GS hover: forest-green text, no grey box (matches Figma) */
   header nav .nav-sections .default-content-wrapper>ul>li:hover,
   header nav .nav-sections .nav-drop[aria-expanded='true'] {
-    background-color: var(--color-neutral-200);
+    background-color: transparent;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections .default-content-wrapper>ul>li:hover>a,
+  header nav .nav-sections .default-content-wrapper>ul>li:hover>p,
+  header nav .nav-sections .default-content-wrapper>ul>li.nav-drop[aria-expanded='true']>p,
+  header nav .nav-sections .default-content-wrapper>ul>li.nav-drop[aria-expanded='true']>a {
+    color: var(--color-gs-forest);
   }
 
   /* ----- Desktop mega menu (grouped columns + promo card) ----- */
@@ -364,6 +373,7 @@ header nav .nav-sections ul>li:empty {
   }
 
   /* Group heading */
+  /* stylelint-disable-next-line no-descending-specificity */
   header nav .nav-sections .nav-drop .submenu-wrapper>ul>li>a {
     font: var(--type-body-1-strong-font);
     letter-spacing: var(--type-body-1-strong-letter-spacing);
@@ -394,6 +404,7 @@ header nav .nav-sections ul>li:empty {
     padding: var(--spacing-xsmall) var(--spacing-xxsmall);
   }
 
+  /* stylelint-disable-next-line no-descending-specificity */
   header nav .nav-sections .nav-drop .submenu-wrapper>ul>li>ul>li a {
     font: var(--type-body-2-default-font);
     letter-spacing: var(--type-body-2-default-letter-spacing);
