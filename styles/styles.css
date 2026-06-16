@@ -182,6 +182,77 @@
   --grid-margin: var(--grid-1-margins); /* 20px mobile */
   --grid-gutter: var(--grid-1-gutters); /* 16px mobile */
   --grid-max-width: 1280px; /* Figma frame; 1168px content within 56px margins */
+
+  /* ===== Girl Scouts button foundation (Figma button system) ===== */
+
+  /* Button sizing */
+  --btn-height-sm: 36px;
+  --btn-height-md: 44px;
+  --btn-height-lg: 52px;
+  --btn-padding-x-sm: 16px;
+  --btn-padding-x-md: 24px;
+  --btn-padding-x-lg: 32px;
+  --btn-radius-sm: 6px;
+  --btn-radius-md: 6px;
+  --btn-radius-lg: 8px;
+
+  /* Button typography */
+  --btn-font-family: var(--type-base-font-family);
+  --btn-font-weight: 600; /* SemiBold */
+  --btn-font-size-sm: 1.4rem; /* 14px */
+  --btn-font-size-md: 1.6rem; /* 16px */
+  --btn-font-size-lg: 1.6rem; /* 16px */
+  --btn-line-height: 1.3;
+  --btn-text-transform: uppercase;
+  --btn-letter-spacing: 0;
+
+  /* Primary button — Green */
+  --btn-primary-bg: #00b451; /* Girl Scouts Green */
+  --btn-primary-bg-hover: #005640; /* Forest Green */
+  --btn-primary-bg-active: #023729; /* Deep active */
+  --btn-primary-text: #fff;
+  --btn-primary-border: transparent;
+
+  /* Secondary button — outlined Green */
+  --btn-secondary-bg: transparent;
+  --btn-secondary-bg-hover: #d9f3e3; /* light green tint */
+  --btn-secondary-bg-active: #d9f3e3;
+  --btn-secondary-text: #00b451;
+  --btn-secondary-text-hover: #005640;
+  --btn-secondary-border: #00b451;
+  --btn-secondary-border-hover: #005640;
+
+  /* Primary Text button — no border, no bg */
+  --btn-text-primary-bg: transparent;
+  --btn-text-primary-text: #00b451;
+  --btn-text-primary-hover: #005640;
+  --btn-text-primary-underline: underline;
+
+  /* Secondary Text button */
+  --btn-text-secondary-bg: transparent;
+  --btn-text-secondary-text: #005640;
+  --btn-text-secondary-hover: #023729;
+  --btn-text-secondary-underline: underline;
+
+  /* Colour variants */
+  --btn-violet-bg: #5c1f8b;
+  --btn-violet-bg-hover: #4a1870;
+  --btn-violet-text: #fff;
+  --btn-black-bg: #000;
+  --btn-black-bg-hover: #2d2e33;
+  --btn-black-text: #fff;
+  --btn-light-bg: #f6f3ec;
+  --btn-light-bg-hover: #ede8dc;
+  --btn-light-text: #000;
+  --btn-white-bg: #fff;
+  --btn-white-bg-hover: #f6f3ec;
+  --btn-white-text: #00b451;
+
+  /* Disabled */
+  --btn-disabled-bg: #d9d9d9;
+  --btn-disabled-text: #a8a8a8;
+  --btn-disabled-border: transparent;
+  --btn-disabled-cursor: not-allowed;
 }
 
 @media (min-width: 768px) {
@@ -373,6 +444,7 @@ p.button-wrapper {
   margin: var(--spacing-small) 0;
 }
 
+/* Base button — Primary Large (default) */
 main a.button:any-link,
 button.button {
   box-sizing: border-box;
@@ -380,85 +452,142 @@ button.button {
   align-items: center;
   justify-content: center;
   max-width: 100%;
+  height: var(--btn-height-lg);
   margin: 0;
-  border: var(--shape-border-width-3) solid transparent;
-  border-radius: var(--shape-border-radius-3);
-  padding: 0.5em 1.2em;
-  font: var(--type-button-2-font);
-  letter-spacing: var(--type-button-2-letter-spacing);
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.25;
+  padding: 0 var(--btn-padding-x-lg);
+  border: 2px solid var(--btn-primary-border);
+  border-radius: var(--btn-radius-lg);
+  font-family: var(--btn-font-family);
+  font-size: var(--btn-font-size-lg);
+  font-weight: var(--btn-font-weight);
+  line-height: var(--btn-line-height);
+  letter-spacing: var(--btn-letter-spacing);
+  text-transform: var(--btn-text-transform);
   text-decoration: none;
-  background-color: var(--color-brand-500);
-  color: var(--color-neutral-50);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-a.button[aria-disabled="true"],
-button.button:disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
 main a.button:hover,
-main a.button:focus,
+main a.button:focus-visible,
 button.button:hover,
-button.button:focus {
-  background-color: var(--color-brand-600);
-  cursor: pointer;
+button.button:focus-visible {
+  background-color: var(--btn-primary-bg-hover);
 }
 
-main a.button.disabled,
-button.button:disabled,
-button.button:disabled:hover {
-  background-color: var(--color-neutral-300);
-  cursor: unset;
+main a.button:active,
+button.button:active {
+  background-color: var(--btn-primary-bg-active);
 }
 
+/* Primary (explicit) — same as base */
 a.button.primary,
 button.button.primary {
-  border-color: var(--color-brand-500);
-  background-color: var(--color-brand-500);
-  color: var(--color-neutral-50);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border-color: var(--btn-primary-border);
 }
 
 a.button.primary:hover,
 a.button.primary:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: var(--color-brand-600);
-  background-color: var(--color-brand-600);
+  background-color: var(--btn-primary-bg-hover);
 }
 
-a.button.primary[aria-disabled="true"],
-a.button.primary[aria-disabled="true"]:hover,
-a.button.primary[aria-disabled="true"]:focus-visible,
-button.button.primary:disabled,
-button.button.primary:disabled:hover,
-button.button.primary:disabled:focus-visible {
-  background-color: var(--color-neutral-300);
-  border-color: var(--color-neutral-300);
-  color: var(--color-neutral-50);
+a.button.primary:active,
+button.button.primary:active {
+  background-color: var(--btn-primary-bg-active);
 }
 
+/* Secondary — outlined Green */
 main a.button.secondary,
 button.button.secondary {
-  background-color: unset;
-  border: var(--shape-border-width-3) solid currentcolor;
-  color: var(--color-brand-500);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border: 2px solid var(--btn-secondary-border);
 }
 
 main a.button.secondary:hover,
 main a.button.secondary:focus-visible,
 button.button.secondary:hover,
 button.button.secondary:focus-visible {
-  color: var(--color-brand-600);
+  background-color: var(--btn-secondary-bg-hover);
+  color: var(--btn-secondary-text-hover);
+  border-color: var(--btn-secondary-border-hover);
 }
 
+main a.button.secondary:active,
+button.button.secondary:active {
+  background-color: var(--btn-secondary-bg-active);
+}
+
+/* Accent — Violet */
+a.button.accent,
+button.button.accent {
+  background-color: var(--btn-violet-bg);
+  color: var(--btn-violet-text);
+  border-color: transparent;
+}
+
+a.button.accent:hover,
+a.button.accent:focus-visible,
+button.button.accent:hover,
+button.button.accent:focus-visible {
+  background-color: var(--btn-violet-bg-hover);
+}
+
+/* Text link button */
+a.button.text,
+button.button.text {
+  height: auto;
+  padding: 0;
+  border: none;
+  background-color: var(--btn-text-primary-bg);
+  color: var(--btn-text-primary-text);
+  text-decoration: var(--btn-text-primary-underline);
+}
+
+a.button.text:hover,
+a.button.text:focus-visible,
+button.button.text:hover,
+button.button.text:focus-visible {
+  background-color: var(--btn-text-primary-bg);
+  color: var(--btn-text-primary-hover);
+}
+
+/* Disabled state */
+a.button[aria-disabled="true"],
+button.button:disabled {
+  background-color: var(--btn-disabled-bg);
+  color: var(--btn-disabled-text);
+  border-color: var(--btn-disabled-border);
+  cursor: var(--btn-disabled-cursor);
+  pointer-events: none;
+}
+
+/* Size utilities — authors add class to section/block.
+   Scoped under main so specificity matches the base button rule and the
+   size override actually wins on anchor buttons. */
+main .btn-sm a.button,
+main .btn-sm button.button {
+  height: var(--btn-height-sm);
+  padding: 0 var(--btn-padding-x-sm);
+  border-radius: var(--btn-radius-sm);
+  font-size: var(--btn-font-size-sm);
+}
+
+main .btn-md a.button,
+main .btn-md button.button {
+  height: var(--btn-height-md);
+  padding: 0 var(--btn-padding-x-md);
+  border-radius: var(--btn-radius-md);
+  font-size: var(--btn-font-size-md);
+}
 
 main input:hover {
   border: var(--shape-border-width-1) solid var(--color-neutral-700);
@@ -479,44 +608,6 @@ main blockquote p::before {
 main blockquote p::after {
   content: '\201D';
   line-height: 0;
-}
-
-a.button.secondary[aria-disabled="true"],
-a.button.secondary[aria-disabled="true"]:hover,
-a.button.secondary[aria-disabled="true"]:focus-visible,
-button.button.secondary:disabled,
-button.button.secondary:disabled:hover,
-button.button.secondary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-/* high-impact call-to-action */
-a.button.accent,
-button.button.accent {
-  border-color: var(--link-color);
-  background-color: var(--link-color);
-  color: var(--background-color);
-}
-
-a.button.accent:hover,
-a.button.accent:focus-visible,
-button.button.accent:hover,
-button.button.accent:focus-visible {
-  border-color: var(--link-hover-color);
-  background-color: var(--link-hover-color);
-}
-
-a.button.accent[aria-disabled="true"],
-a.button.accent[aria-disabled="true"]:hover,
-a.button.accent[aria-disabled="true"]:focus-visible,
-button.button.accent:disabled,
-button.button.accent:disabled:hover,
-button.button.accent:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
 }
 
 main img {
