@@ -22,7 +22,8 @@ branch). Replace placeholder art where noted.
 | `gs-logo-header.png` | nav logo | committed |
 | `gs-logo.png` | footer logo | committed |
 | Social SVGs: `facebook, x, youtube, instagram, linkedin, whatsapp` | footer "Follow Us On" | committed |
-| `star.svg`, `account.svg` | header toggle/promo, account icon | committed |
+| `star.svg`, `account.svg` | header toggle, account icon | committed |
+| `sparkle.svg` | offer-banner (violet 4-point sparkle) | committed |
 | `footer-newsletter.jpg` | footer newsletter + **all promo placeholders** | **placeholder** — replace with real promo/newsletter photos |
 | Promo art: New Arrivals, Customise Uniform, Kit Bag, $15 Off, Uniforms Collection | `/nav-promos`, sections | **needs real artwork** |
 
@@ -53,7 +54,7 @@ Reference: `drafts/footer.md` and `drafts/footer.plain.html`.
 
 ## 2. `/nav` document
 
-Three top-level sections (brand, nav list, empty tools placeholder):
+Four top-level sections (brand, nav list, empty tools placeholder, offer banner):
 
 1. **Brand** — a link to `/` wrapping the nav logo image.
 2. **Nav list** — a single bulleted list with these items, in order:
@@ -69,11 +70,32 @@ Three top-level sections (brand, nav list, empty tools placeholder):
    - **Account** has a nested list: Log in, Registration, My Account, Combined Auth.
      (It is hidden from the desktop nav bar and surfaced via the account dropdown.)
 3. **Tools** — an empty `<div>` (the block injects search/wishlist/cart/account).
+4. **Offer banner** — an `offer-banner` block (see below). The header pulls it
+   out of the nav fragment and pins it **on top of** the header (above the nav
+   row), on both desktop and mobile.
 
 Notes:
 - Nav links are intended to be API-driven in production; this document supplies
   the structure and the "New" mega-menu grouping.
 - Reference: `drafts/nav.plain.html`.
+
+### 2a. `offer-banner` block (dismissible promo strip on top of the header)
+
+Author this as the **last section** of `/nav` (after the empty tools `<div>`).
+It is a two-row block:
+
+| offer-banner |
+|---|
+| Free Gift with purchase of a Uniform – Use Code: FREEPURPLEBAG [Redeem Now](/sale) |
+| [Terms & Conditions](/terms) |
+
+- **Row 1** = the message text plus the **Redeem** call-to-action link.
+- **Row 2** = the **Terms & Conditions** link (hidden on mobile/tablet).
+- The block adds the violet sparkle icon, the green band (`#d5f267`), and a
+  dismiss (×) button. Dismissal is remembered in the browser (localStorage).
+- To change the offer, edit the message text / link targets. To remove the
+  banner entirely, delete this section.
+- Reference: the `offer-banner` block in `drafts/nav.plain.html`.
 
 ---
 
@@ -89,8 +111,13 @@ matching mega-menu panel.
 | Block | Variant (name suffix) | Use |
 |---|---|---|
 | `promo-banner` | _(none)_ small card; `offer` badge card | compact card, nav promos |
+| `promo-banner large` | _(adds `large`)_ | full 1:1 (372×372) hero card with the heading + **arrow CTA** overlaid top-left (e.g. "New Arrivals" → "Shop All Collection ›") |
 | `promo-feature` | color: `gold`/`forest`/`peach`/`sunshine` | image + panel + heading + subtext + **button** |
 | `promo-tile` | _(none)_ | vertical 3:5 image-bg tile + heading + arrow CTA |
+
+For the `large` promo, the heading uses the Girl Scout display font and the CTA
+link label renders in forest green with a chevron arrow. It is full-width inside
+the mobile mega-menu accordion.
 
 **Authoring a promo block** (table rows):
 - `Menu` | the target nav slug (e.g. `new`)
