@@ -228,7 +228,7 @@
 
   /* Button sizing */
   --btn-height-sm: 36px;
-  --btn-height-md: 44px;
+  --btn-height-md: 46px;
   --btn-height-lg: 52px;
   --btn-padding-x-sm: 16px;
   --btn-padding-x-md: 24px;
@@ -248,8 +248,8 @@
   --btn-letter-spacing: 0;
 
   /* Primary button — Green */
-  --btn-primary-bg: #00b451; /* Girl Scouts Green */
-  --btn-primary-bg-hover: #005640; /* Forest Green */
+  --btn-primary-bg: #005640; /* Forest Green (Figma Default; brand-500 #00b451 stays brand/accent identity) */
+  --btn-primary-bg-hover: #023729; /* Very dark green (Figma Hover) */
   --btn-primary-bg-active: #023729; /* Deep active */
   --btn-primary-text: #fff;
   --btn-primary-border: transparent;
@@ -260,13 +260,14 @@
   --btn-secondary-bg-active: #d9f3e3;
   --btn-secondary-text: #005640;
   --btn-secondary-text-hover: #005640;
+  --btn-secondary-text-on-hover: #fff; /* white text when hover fills solid forest green (Figma) */
   --btn-secondary-border: #005640;
   --btn-secondary-border-hover: #005640;
 
   /* Primary Text button — no border, no bg */
   --btn-text-primary-bg: transparent;
   --btn-text-primary-text: #005640;
-  --btn-text-primary-hover: #005640;
+  --btn-text-primary-hover: #023729; /* darker green on hover (Figma) */
   --btn-text-primary-underline: underline;
 
   /* Secondary Text button */
@@ -296,9 +297,10 @@
 
   /* White-on-Dark button — white bg, green text, for dark backgrounds */
   --btn-white-on-dark-bg: #fff;
-  --btn-white-on-dark-bg-hover: #f6f3ec;
+  --btn-white-on-dark-bg-hover: #00b451; /* fills bright GS Green on hover (Figma) */
   --btn-white-on-dark-bg-active: #e8f7ee;
   --btn-white-on-dark-text: #005640;
+  --btn-white-on-dark-text-hover: #fff; /* white text on green hover fill */
   --btn-white-on-dark-border: transparent;
 
   /* Secondary Light — outlined cream, for use on dark backgrounds */
@@ -878,8 +880,8 @@ main a.button.secondary:hover,
 main a.button.secondary:focus-visible,
 button.button.secondary:hover,
 button.button.secondary:focus-visible {
-  background-color: var(--btn-secondary-bg-hover);
-  color: var(--btn-secondary-text-hover);
+  background-color: var(--btn-secondary-border-hover); /* solid Forest Green fill (Figma) */
+  color: var(--btn-secondary-text-on-hover); /* white text on dark fill */
   border-color: var(--btn-secondary-border-hover);
 }
 
@@ -937,6 +939,7 @@ main a.button.white-on-dark:focus-visible,
 button.button.white-on-dark:hover,
 button.button.white-on-dark:focus-visible {
   background-color: var(--btn-white-on-dark-bg-hover);
+  color: var(--btn-white-on-dark-text-hover);
 }
 
 main a.button.white-on-dark:active,
@@ -1381,11 +1384,12 @@ main .section[data-margin="hero"] {
 }
 
 /* ===== Dropin buttons follow the GS button style =====
-   Commerce dropins inject their own .dropin-button CSS (colour already GS via
-   --color-brand-*). These overrides align SHAPE + TYPOGRAPHY to the --btn-*
-   system: radius, uppercase, weight, height/padding and centered text.
-   Scoped under .dropin-design to outrank the injected dropin rules; colour,
-   variant borders and disabled states are left to the dropin CSS. */
+   Commerce dropins inject their own .dropin-button CSS. These overrides align
+   SHAPE + TYPOGRAPHY (radius, uppercase, weight, height/padding, centered) AND
+   COLOUR to the --btn-* system: primary tracks --btn-primary-* (forest green
+   #005640), secondary uses --btn-secondary-* (Option B — --color-brand-500
+   stays brand identity for links/form accents). Scoped under .dropin-design to
+   outrank the injected rules; disabled states are left to the dropin CSS. */
 .dropin-design .dropin-button,
 .dropin-design a.dropin-button {
   height: var(--btn-height-lg);
@@ -1400,11 +1404,35 @@ main .section[data-margin="hero"] {
   text-align: center;
 }
 
-/* Secondary/tertiary keep the dropin's transparent bg + border colour, but
-   the border width should match the GS 2px outline. */
+/* Colour alignment (Option B): keep --color-brand-500 (#00b451) as brand
+   identity, but point dropin PRIMARY buttons at the GS button bg (#005640)
+   so they match EDS .button.primary. Default/hover/active track --btn-*. */
+.dropin-design .dropin-button.dropin-button--primary {
+  background-color: var(--btn-primary-bg);
+}
+
+.dropin-design .dropin-button.dropin-button--primary:hover,
+.dropin-design .dropin-button.dropin-button--primary:focus {
+  background-color: var(--btn-primary-bg-hover);
+}
+
+.dropin-design .dropin-button.dropin-button--primary:active {
+  background-color: var(--btn-primary-bg-active);
+}
+
+/* Secondary: 2px GS outline; border + text follow the GS secondary tokens
+   (forest green) instead of brand-500 bright green. */
 .dropin-design .dropin-button--secondary {
   border-width: 2px;
+  border-color: var(--btn-secondary-border);
   padding: 0 var(--btn-padding-x-lg);
+  color: var(--btn-secondary-text);
+}
+
+.dropin-design .dropin-button--secondary:hover,
+.dropin-design .dropin-button--secondary:focus-visible {
+  border-color: var(--btn-secondary-border-hover);
+  color: var(--btn-secondary-text-hover);
 }
 
 /* Medium size maps to the GS .btn-md step */
