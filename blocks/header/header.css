@@ -524,6 +524,7 @@ header nav .nav-tools button.nav-cart-button {
   background-image: url('../../icons/cart.svg');
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 24px;
   position: relative;
 }
 
@@ -547,6 +548,7 @@ header nav .nav-tools button.nav-wishlist-button {
   background-image: url('../../icons/heart.svg');
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 24px;
   position: relative;
 }
 
@@ -555,6 +557,15 @@ header nav .nav-tools button.nav-search-button {
   background-image: url('../../icons/search.svg');
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 24px;
+}
+
+header nav .nav-tools button.nav-dropdown-button {
+  font-size: 0;
+  background-image: url('../../icons/account.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 24px;
 }
 
 header .nav-search-panel {

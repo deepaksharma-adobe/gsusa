@@ -20,16 +20,14 @@
   min-width: 0;
 }
 
-.offer-banner .icon-sparkle {
+.offer-banner__sparkle {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-}
-
-.offer-banner .icon-sparkle img,
-.offer-banner .icon-sparkle svg {
-  width: 18px;
-  height: 18px;
+  background-color: var(--color-gs-violet);
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-mask: url('../../icons/sparkle.svg') center / contain no-repeat;
+  mask: url('../../icons/sparkle.svg') center / contain no-repeat;
 }
 
 .offer-banner__message {

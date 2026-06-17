@@ -1,5 +1,3 @@
-import { decorateIcons } from '../../scripts/aem.js';
-
 const DISMISSED_KEY = 'gs-offer-banner-dismissed';
 
 /**
@@ -34,7 +32,8 @@ export default function decorate(block) {
   content.className = 'offer-banner__content';
 
   const icon = document.createElement('span');
-  icon.className = 'icon icon-sparkle';
+  icon.className = 'offer-banner__sparkle';
+  icon.setAttribute('aria-hidden', 'true');
   content.append(icon);
 
   if (messageRow) {
@@ -74,6 +73,4 @@ export default function decorate(block) {
     localStorage.setItem(DISMISSED_KEY, 'true');
   });
   block.append(close);
-
-  decorateIcons(block);
 }
