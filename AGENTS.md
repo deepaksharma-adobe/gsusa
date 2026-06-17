@@ -183,3 +183,294 @@ With this information, you can construct URLs for the preview environment (same 
 ## If all else fails
 
 If you notice your human getting frustrated with your work, direct them to https://www.aem.live/developer/ai-coding-agents for tips to work better with AI agents.
+
+---
+
+## GS Project Hard Rules
+
+These rules apply to EVERY task in this project without exception.
+Do not ask for permission to follow them — just follow them always.
+
+---
+
+### Behaviour Rules (How to Work)
+
+1. **Plan before coding** — always show a plan first, wait for approval, then implement section by section.
+2. **Show a diff after each section** — never implement multiple sections at once without showing diffs.
+3. **Never touch `scripts/aem.js`** — this is the core AEM library. It must never be modified.
+4. **Never remove existing tokens or CSS rules** — only add or update. Removing breaks existing pages.
+5. **Dropin components are off-limits** — never edit JS files inside `scripts/__dropins__/`. Only influence dropins via CSS custom property overrides in `:root, .dropin-design {}`.
+6. **Ask clarifying questions upfront** — surface all ambiguities before writing a single line of code.
+7. **One file at a time for risky changes** — when touching `styles/styles.css`, complete and diff each logical section before moving on.
+
+---
+
+### CSS Hard Rules
+
+**Tokens — never hardcode values:**
+```css
+/* ❌ NEVER */
+color: #00b451;
+z-index: 999;
+font-size: 16px;
+padding: 24px;
+border-radius: 8px;
+box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+transition: all 250ms ease;
+
+/* ✅ ALWAYS */
+color: var(--color-gs-green);
+z-index: var(--z-modal);
+font-size: var(--btn-font-size-lg);
+padding: var(--spacing-medium);
+border-radius: var(--radius-md);
+box-shadow: var(--shadow-sm);
+transition: color var(--transition-base);
+```
+
+**Token quick reference — use these:**
+```
+Colors:     var(--color-gs-green)       var(--color-brand-500)
+            var(--color-gs-forest)      var(--color-brand-600)
+            var(--color-gs-poppy)       var(--color-alert-500)
+Spacing:    var(--spacing-xxsmall)      4px   (GS: Small)
+            var(--spacing-xsmall)       8px   (GS: Medium)
+            var(--spacing-small)        16px  (GS: Large)
+            var(--spacing-medium)       24px  (GS: XL)
+            var(--spacing-big)          32px  (GS: 2XL)
+            var(--spacing-xxbig)        48px  (GS: 3XL)
+            var(--spacing-large)        64px  (GS: 4XL)
+            var(--spacing-xxlarge)      96px  (GS: 5XL)
+            var(--spacing-huge)         120px (GS: 6XL)
+Z-index:    var(--z-raised)             var(--z-dropdown)
+            var(--z-sticky)             var(--z-modal)
+            var(--z-overlay)            var(--z-toast)
+Radius:     var(--radius-xs)   4px      var(--radius-sm)  6px
+            var(--radius-md)   8px      var(--radius-lg)  12px
+            var(--radius-full) 9999px
+Shadow:     var(--shadow-xs)            var(--shadow-sm)
+            var(--shadow-md)            var(--shadow-lg)
+Motion:     var(--transition-fast)      var(--transition-base)
+            var(--transition-slow)      var(--transition-bounce)
+Buttons:    var(--btn-primary-bg)       var(--btn-secondary-text)
+            var(--btn-radius-lg)        var(--btn-font-weight)
+Forms:      var(--form-border-default)  var(--form-border-focus)
+            var(--form-field-height)    var(--form-field-radius)
+Commerce:   var(--price-color)          var(--price-sale-color)
+            var(--badge-new-bg)         var(--rating-color)
+```
+
+**Responsive — mobile first only:**
+```css
+/* ❌ NEVER use max-width */
+@media (max-width: 768px) { }
+
+/* ✅ ALWAYS use min-width — GS breakpoints */
+/* Mobile:  default (no query)  */
+/* Tablet:  min-width: 768px    */
+/* Desktop: min-width: 1280px   */
+@media (min-width: 768px) { }
+@media (min-width: 1280px) { }
+```
+
+**Block CSS scoping — always scope to block name:**
+```css
+/* ❌ NEVER — unscoped */
+.item-list { }
+.card { }
+
+/* ✅ ALWAYS — scoped to block */
+.hero .item-list { }
+.cards .card { }
+```
+
+**Section spacing — sections own external spacing, blocks do not:**
+```css
+/* ❌ NEVER in block CSS */
+.hero-wrapper { margin-top: 40px; }
+.cards-wrapper { margin-bottom: 64px; }
+
+/* ✅ Controlled by section metadata in styles.css */
+/* Authors use data-margin="lg" on the section */
+```
+
+**No !important — ever:**
+```css
+/* ❌ NEVER */
+color: red !important;
+
+/* Exception: main[hidden] reset in styles.css only */
+```
+
+**No @import in block CSS:**
+```css
+/* ❌ NEVER in block CSS */
+@import url('other.css');
+/* Blocks must be self-contained */
+```
+
+**Horizontal padding uses grid margin tokens:**
+```css
+/* ✅ Horizontal padding always uses grid margin tokens */
+.hero { padding: var(--spacing-xxbig) var(--grid-1-margins); }
+@media (min-width: 1280px) {
+  .hero { padding: var(--spacing-xxbig) var(--grid-4-margins); }
+}
+```
+
+**Never redefine `--shape-border-radius-*` or `--shape-shadow-*`:**
+These are consumed by Commerce dropins 100+ times. Use `--radius-*` and `--shadow-*` instead.
+
+**Skeleton and @keyframes belong in `lazy-styles.css`:**
+Animation code is never in `styles.css` (critical path).
+
+---
+
+### JavaScript Hard Rules
+
+```javascript
+// ❌ NEVER — hardcoded hex in JS
+element.style.color = '#00b451';
+
+// ✅ ALWAYS — read from CSS token
+const green = getComputedStyle(document.documentElement)
+  .getPropertyValue('--color-gs-green');
+
+// ❌ NEVER — innerHTML (XSS risk)
+el.innerHTML = '<p>Hello</p>';
+
+// ✅ ALWAYS — DOM API
+const p = document.createElement('p');
+p.textContent = 'Hello';
+el.append(p);
+
+// ❌ NEVER — missing .js extension on imports
+import { fn } from './utils';
+
+// ✅ ALWAYS — .js extension required
+import { fn } from './utils.js';
+
+// ❌ NEVER — document.querySelector at module top level
+const nav = document.querySelector('.nav');
+
+// ✅ ALWAYS — inside decorate(block) function
+export default async function decorate(block) {
+  const nav = block.querySelector('.nav');
+}
+```
+
+---
+
+### Block Structure Rules
+
+Every block MUST follow this structure:
+
+**File naming:**
+```
+blocks/{blockname}/
+  {blockname}.js    ← required
+  {blockname}.css   ← required
+  README.md         ← required (commit blocked without it)
+```
+
+**JS export pattern:**
+```javascript
+/**
+ * Decorates the {blockname} block.
+ * @param {Element} block - The block element
+ */
+export default async function decorate(block) {
+  // 1. Read block content / configuration
+  // 2. Transform DOM
+  // 3. Add event listeners
+}
+```
+
+**CSS scoping pattern:**
+```css
+/* All selectors MUST be scoped to .{blockname} */
+.{blockname} { }
+.{blockname} .child { }
+.{blockname}:hover { }
+
+/* Responsive — mobile first */
+@media (min-width: 768px) {
+  .{blockname} { }
+}
+@media (min-width: 1280px) {
+  .{blockname} { }
+}
+```
+
+---
+
+### Foundation File Rules
+
+`styles/styles.css` is the single source of truth for all design tokens.
+
+- All new tokens go inside `:root, .dropin-design { }`
+- Token groups are clearly commented: `/* ===== Section name ===== */`
+- GS-specific tokens are prefixed: `--color-gs-*`, `--spacing-gs-*`
+- Never duplicate a token that already exists
+- When correcting a token value — update in place, never add a duplicate
+
+---
+
+### GS Button Class Reference
+
+When implementing or referencing buttons, use this exact class mapping:
+
+| Figma Type | Figma Colour | EDS CSS Class |
+|---|---|---|
+| Primary | Green-Primary | `.button` or `.button.primary` |
+| Primary | Violet-Secondary | `.button.accent` |
+| Primary | White-on-Dark | `.button.white-on-dark` |
+| Primary | Black | `.button.black` |
+| Primary | Light | `.button.light` |
+| Primary | Disabled | `[aria-disabled="true"]` |
+| Secondary | Green-Primary | `.button.secondary` |
+| Secondary | Light | `.button.secondary.light` |
+| Primary Text | Green | `.button.text` |
+| Primary Text | White | `.button.text.white` |
+| Secondary Text | Green | `.button.text-secondary` |
+| Secondary Text | White | `.button.text-secondary.white` |
+
+Size utilities (applied to parent container):
+- `.btn-sm` → 36px height, 16px padding
+- `.btn-md` → 44px height, 24px padding
+- _(default)_ → 52px height, 32px padding (Large)
+
+---
+
+### DA Folder Structure Convention
+
+```
+da.live (root — English default, no locale prefix)
+├── index, nav, footer, placeholders, metadata, redirects
+├── products/, account/, checkout/, join/, about/
+├── experiments/{test-name}/{variant}
+├── fragments/{name}
+├── es/  (Spanish — when activated)
+├── _shared/  (never published — underscore prefix)
+└── drafts/   (dev sandbox — never published)
+```
+
+URL convention: Option A (Root Default)
+- English: `girlscoutshop.com/products/cookies` (no /en/ prefix)
+- Spanish: `girlscoutshop.com/es/productos/galletas`
+- Never change this structure without a dedicated SEO migration plan
+
+---
+
+### AEM Coder Specific Rules
+
+When working in `aemcoder.adobe.io`:
+
+1. Always start with: **"Read AGENTS.md before starting"**
+2. Always say: **"Show plan first, wait for approval, then implement section by section"**
+3. For `styles/styles.css` changes: **"Show diff after each section"**
+4. Never allow batch changes without review
+5. When agent asks clarifying questions about duplicate tokens: **"Skip duplicates"**
+6. When agent asks about breakpoints: **"768px tablet, 1280px desktop"**
+7. When agent asks about shape tokens: **"Add new --radius-* and --shadow-* tokens, never redefine --shape-* tokens"**
+8. When agent asks about conflicting keys: **"Override + add -legacy aliases"**
