@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foundation Style Guide — Girl Scouts EDS</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="/styles/styles.css" />
+  <link rel="stylesheet" href="/styles/lazy-styles.css" />
+  <style>
+    /* Style-guide-only helper classes (not part of the design system).
+       Inline styles elsewhere on this page are intentional token demos. */
+    body { display: block; }
+
+    .sg-topbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-sticky);
+      background: var(--color-gs-forest);
+      color: var(--color-neutral-50);
+      padding: var(--spacing-xsmall) var(--spacing-medium);
+      font: var(--type-body-2-strong-font);
+      letter-spacing: var(--type-body-2-strong-letter-spacing);
+    }
+
+    .sg-note {
+      margin: var(--spacing-small) 0 0;
+      color: var(--color-neutral-700);
+      font: var(--type-body-2-default-font);
+    }
+
+    .sg-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-medium);
+    }
+
+    .swatch { width: 120px; }
+
+    .swatch__color {
+      width: 80px;
+      height: 80px;
+      background-color: var(--swatch-color);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-neutral-300);
+    }
+
+    .swatch__name,
+    .swatch__value,
+    .swatch__usage {
+      margin: var(--spacing-xxsmall) 0 0;
+      font: var(--type-details-caption-1-font);
+      word-break: break-all;
+    }
+
+    .swatch__value { color: var(--color-neutral-700); }
+    .swatch__usage { color: var(--color-neutral-600); font-style: italic; }
+
+    .type-example { margin: 0 0 var(--spacing-medium); }
+
+    .type-label,
+    .component-label {
+      margin: 0 0 var(--spacing-xxsmall);
+      color: var(--color-neutral-600);
+      font: var(--type-details-caption-1-font);
+    }
+
+    .type-example p:last-child { margin: 0; }
+
+    .spacing-example {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-medium);
+      margin: 0 0 var(--spacing-xsmall);
+    }
+
+    .spacing-bar { background: var(--color-gs-green); height: 8px; }
+
+    .sg-stack { display: flex; flex-wrap: wrap; gap: var(--spacing-big); align-items: flex-start; }
+
+    .form-example { max-width: 375px; margin: 0 0 var(--spacing-medium); }
+
+    .shadow-example {
+      width: 200px;
+      background: var(--color-neutral-50);
+      border: 1px solid var(--color-neutral-200);
+    }
+
+    .badge {
+      display: inline-block;
+      font: var(--type-details-caption-1-font);
+    }
+
+    .rating { font-size: var(--rating-size); line-height: 1; }
+    .rating__full { color: var(--rating-color); }
+    .rating__empty { color: var(--rating-empty-color); }
+
+    .motion-example {
+      display: inline-block;
+      padding: var(--spacing-small) var(--spacing-medium);
+      background: var(--color-gs-green);
+      color: var(--color-neutral-50);
+      border-radius: var(--radius-sm);
+      font: var(--type-body-2-strong-font);
+      cursor: pointer;
+    }
+
+    .motion-example:hover { transform: translateY(-6px) scale(1.03); }
+
+    .sg-table { border-collapse: collapse; width: 100%; max-width: 640px; }
+    .sg-table th,
+    .sg-table td {
+      border: 1px solid var(--color-neutral-300);
+      padding: var(--spacing-xsmall) var(--spacing-small);
+      text-align: left;
+      font: var(--type-body-2-default-font);
+    }
+    .sg-table th { background: var(--color-neutral-100); font-weight: 700; }
+
+    .price-original { text-decoration: line-through; }
+  </style>
+</head>
+<body class="appear">
+  <header></header>
+  <main>
+    <div class="sg-topbar">Foundation Style Guide — for development reference only</div>
+
+    <div class="section">
+      <h1>Foundation Style Guide</h1>
+      <p>Live reference for every design token and UI component in this Edge Delivery project. Hover and tab through the examples to see interactive states.</p>
+      <p class="sg-note">All tokens defined in <code>styles/styles.css</code>. This page lives in <code>drafts/</code> for local development only — do not publish.</p>
+    </div>
+
+    <!-- SECTION 1 — COLORS -->
+    <div class="section">
+      <h2>1 — Colors</h2>
+      <p>Every colour token rendered as a live swatch. Background comes from the token via <code>--swatch-color</code>.</p>
+
+      <h3>Brand Colors</h3>
+      <div class="sg-grid">
+        <div class="swatch" style="--swatch-color: var(--color-brand-300)">
+          <div class="swatch__color"></div>
+          <p class="swatch__name">--color-brand-300</p>
+          <p class="swatch__value">#d5f267</p>
+          <p class="swatch__usage">Star Green</p>
+        </div>
+        <div class="swatch" style="--swatch-color: var(--color-brand-500)">
+          <div class="swatch__color"></div>
+          <p class="swatch__name">--color-brand-500</p>
+          <p class="swatch__value">#00b451</p>
+          <p class="swatch__usage">Primary CTA</p>
+        </div>
+        <div class="swatch" style="--swatch-color: var(--color-brand-600)">
+          <div class="swatch__color"></div>
+          <p class="swatch__name">--color-brand-600</p>
+          <p class="swatch__value">#005640</p>
+          <p class="swatch__usage">CTA hover</p>
+        </div>
+        <div class="swatch" style="--swatch-color: var(--color-brand-700)">
+          <div class="swatch__color"></div>
+          <p class="swatch__name">--color-brand-700</p>
+          <p class="swatch__value">#044248</p>
+          <p class="swatch__usage">Active</p>
+        </div>
+      </div>
+
+      <h3>GS Palette</h3>
+      <div class="sg-grid">
+        <div class="swatch" style="--swatch-color: var(--color-gs-green)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-green</p><p class="swatch__value">#00b451</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-forest)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-forest</p><p class="swatch__value">#005640</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-star)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-star</p><p class="swatch__value">#d5f267</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-green-alt)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-green-alt</p><p class="swatch__value">#008138</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-dark-cyan)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-dark-cyan</p><p class="swatch__value">#044248</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-deep-cyan)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-deep-cyan</p><p class="swatch__value">#006973</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-ocean)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-ocean</p><p class="swatch__value">#004987</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-deep-purple)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-deep-purple</p><p class="swatch__value">#5c1f8b</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-plum)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-plum</p><p class="swatch__value">#af0061</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-cherry)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-cherry</p><p class="swatch__value">#9c0000</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-brown)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-brown</p><p class="swatch__value">#763a16</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-desert)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-desert</p><p class="swatch__value">#a86b1d</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-teal)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-teal</p><p class="swatch__value">#00b2be</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-river)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-river</p><p class="swatch__value">#1496d4</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-violet)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-violet</p><p class="swatch__value">#9e5fd6</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-fuchsia)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-fuchsia</p><p class="swatch__value">#fd329e</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-poppy)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-poppy</p><p class="swatch__value">#ee3124</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-flame)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-flame</p><p class="swatch__value">#ff830c</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-gold)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-gold</p><p class="swatch__value">#f7be00</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-sea-foam)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-sea-foam</p><p class="swatch__value">#a3edd6</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-sky)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-sky</p><p class="swatch__value">#a0def1</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-lilac)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-lilac</p><p class="swatch__value">#ccb3fa</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-bubblegum)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-bubblegum</p><p class="swatch__value">#f7abd6</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-peach)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-peach</p><p class="swatch__value">#fcb89d</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-khaki)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-khaki</p><p class="swatch__value">#d5ca9f</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-gs-sunshine)"><div class="swatch__color"></div><p class="swatch__name">--color-gs-sunshine</p><p class="swatch__value">#fff441</p></div>
+      </div>
+
+      <h3>Semantic Colors</h3>
+      <div class="sg-grid">
+        <div class="swatch" style="--swatch-color: var(--color-positive-200)"><div class="swatch__color"></div><p class="swatch__name">--color-positive-200</p><p class="swatch__value">#eff5ef</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-positive-500)"><div class="swatch__color"></div><p class="swatch__name">--color-positive-500</p><p class="swatch__value">#7fb078</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-positive-800)"><div class="swatch__color"></div><p class="swatch__name">--color-positive-800</p><p class="swatch__value">#53824c</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-informational-200)"><div class="swatch__color"></div><p class="swatch__name">--color-informational-200</p><p class="swatch__value">#eeeffb</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-informational-500)"><div class="swatch__color"></div><p class="swatch__name">--color-informational-500</p><p class="swatch__value">#6978d9</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-informational-800)"><div class="swatch__color"></div><p class="swatch__name">--color-informational-800</p><p class="swatch__value">#5d6dd6</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-warning-200)"><div class="swatch__color"></div><p class="swatch__name">--color-warning-200</p><p class="swatch__value">#fdf3e9</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-warning-500)"><div class="swatch__color"></div><p class="swatch__name">--color-warning-500</p><p class="swatch__value">#e79f5c</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-warning-800)"><div class="swatch__color"></div><p class="swatch__name">--color-warning-800</p><p class="swatch__value">#cc7a2e</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-alert-200)"><div class="swatch__color"></div><p class="swatch__name">--color-alert-200</p><p class="swatch__value">#ffebeb</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-alert-500)"><div class="swatch__color"></div><p class="swatch__name">--color-alert-500</p><p class="swatch__value">#ee3124</p></div>
+        <div class="swatch" style="--swatch-color: var(--color-alert-800)"><div class="swatch__color"></div><p class="swatch__name">--color-alert-800</p><p class="swatch__value">#c35050</p></div>
+      </div>
+    </div>
+
+    <!-- SECTION 2 — TYPOGRAPHY -->
+    <div class="section">
+      <h2>2 — Typography</h2>
+      <p>Each type token rendered as live text with its token name above.</p>
+
+      <div class="type-example"><p class="type-label">--type-display-0-font</p><p style="font: var(--type-display-0-font)">The quick brown fox</p></div>
+      <div class="type-example"><p class="type-label">--type-display-1-font</p><p style="font: var(--type-display-1-font)">The quick brown fox</p></div>
+      <div class="type-example"><p class="type-label">--type-display-2-font</p><p style="font: var(--type-display-2-font)">The quick brown fox</p></div>
+      <div class="type-example"><p class="type-label">--type-display-3-font</p><p style="font: var(--type-display-3-font)">The quick brown fox</p></div>
+      <div class="type-example"><p class="type-label">--type-headline-1-font</p><p style="font: var(--type-headline-1-font)">The quick brown fox</p></div>
+      <div class="type-example"><p class="type-label">--type-headline-2-default-font</p><p style="font: var(--type-headline-2-default-font)">The quick brown fox</p></div>
+      <div class="type-example"><p class="type-label">--type-headline-2-strong-font</p><p style="font: var(--type-headline-2-strong-font)">The quick brown fox</p></div>
+      <div class="type-example"><p class="type-label">--type-body-1-default-font</p><p style="font: var(--type-body-1-default-font)">The quick brown fox jumps over the lazy dog</p></div>
+      <div class="type-example"><p class="type-label">--type-body-1-strong-font</p><p style="font: var(--type-body-1-strong-font)">The quick brown fox jumps over the lazy dog</p></div>
+      <div class="type-example"><p class="type-label">--type-body-2-default-font</p><p style="font: var(--type-body-2-default-font)">The quick brown fox jumps over the lazy dog</p></div>
+      <div class="type-example"><p class="type-label">--type-body-2-strong-font</p><p style="font: var(--type-body-2-strong-font)">The quick brown fox jumps over the lazy dog</p></div>
+      <div class="type-example"><p class="type-label">--type-details-caption-1-font</p><p style="font: var(--type-details-caption-1-font)">The quick brown fox</p></div>
+      <div class="type-example"><p class="type-label">--type-details-caption-2-font</p><p style="font: var(--type-details-caption-2-font)">The quick brown fox</p></div>
+      <div class="type-example"><p class="type-label">--type-details-overline-font</p><p style="font: var(--type-details-overline-font)">THE QUICK BROWN FOX</p></div>
+      <div class="type-example"><p class="type-label">--type-button-1-font</p><p style="font: var(--type-button-1-font)">The quick brown fox</p></div>
+      <div class="type-example"><p class="type-label">--type-button-2-font</p><p style="font: var(--type-button-2-font)">The quick brown fox</p></div>
+
+      <h3>Font families</h3>
+      <ul>
+        <li><strong>"Girl Scout"</strong> (display / headings) — status: <strong>PENDING</strong> — .woff2 files not yet on disk, falls back to Trefoil Sans.</li>
+        <li><strong>"Trefoil Sans"</strong> (body / UI) — status: <strong>ACTIVE</strong>.</li>
+        <li>Fallback chain: Trefoil Sans → Roboto → system-ui.</li>
+      </ul>
+    </div>
+
+    <!-- SECTION 3 — SPACING -->
+    <div class="section">
+      <h2>3 — Spacing</h2>
+      <p>Spacing scale from smallest to largest. Bar width is driven by the live token.</p>
+
+      <div class="spacing-example"><div class="spacing-bar" style="width: var(--spacing-none)"></div><span>--spacing-none — 0px — GS: None</span></div>
+      <div class="spacing-example"><div class="spacing-bar" style="width: var(--spacing-2xs)"></div><span>--spacing-2xs — 2px — GS: Extra Small</span></div>
+      <div class="spacing-example"><div class="spacing-bar" style="width: var(--spacing-xxsmall)"></div><span>--spacing-xxsmall — 4px — GS: Small</span></div>
+      <div class="spacing-example"><div class="spacing-bar" style="width: var(--spacing-xsmall)"></div><span>--spacing-xsmall — 8px — GS: Medium</span></div>
+      <div class="spacing-example"><div class="spacing-bar" style="width: var(--spacing-small)"></div><span>--spacing-small — 16px — GS: Large</span></div>
+      <div class="spacing-example"><div class="spacing-bar" style="width: var(--spacing-medium)"></div><span>--spacing-medium — 24px — GS: Extra Large (XL)</span></div>
+      <div class="spacing-example"><div class="spacing-bar" style="width: var(--spacing-big)"></div><span>--spacing-big — 32px — GS: 2X Large (2XL)</span></div>
+      <div class="spacing-example"><div class="spacing-bar" style="width: var(--spacing-xxbig)"></div><span>--spacing-xxbig — 48px — GS: 3X Large (3XL)</span></div>
+      <div class="spacing-example"><div class="spacing-bar" style="width: var(--spacing-large)"></div><span>--spacing-large — 64px — GS: 4X Large (4XL)</span></div>
+      <div class="spacing-example"><div class="spacing-bar" style="width: var(--spacing-xxlarge)"></div><span>--spacing-xxlarge — 96px — GS: 5X Large (5XL)</span></div>
+      <div class="spacing-example"><div class="spacing-bar" style="width: var(--spacing-huge)"></div><span>--spacing-huge — 120px — GS: 6X Large (6XL)</span></div>
+    </div>
+
+    <!-- SECTION 4 — BUTTONS -->
+    <div class="section">
+      <h2>4 — Buttons</h2>
+      <p>Live button variants. Hover over buttons to see state changes; tab to them to see the focus ring.</p>
+
+      <p class="component-label">.button (default = Primary Large)</p>
+      <p class="button-wrapper"><a class="button" href="#0">Shop Now</a></p>
+
+      <p class="component-label">.button.primary</p>
+      <p class="button-wrapper"><a class="button primary" href="#0">Shop Now</a></p>
+
+      <p class="component-label">.button.secondary</p>
+      <p class="button-wrapper"><a class="button secondary" href="#0">Learn More</a></p>
+
+      <p class="component-label">.button.accent (Violet)</p>
+      <p class="button-wrapper"><a class="button accent" href="#0">Donate</a></p>
+
+      <p class="component-label">.button.text</p>
+      <p class="button-wrapper"><a class="button text" href="#0">Read more</a></p>
+
+      <p class="component-label">.btn-sm (small)</p>
+      <p class="button-wrapper btn-sm"><a class="button primary" href="#0">Small</a></p>
+
+      <p class="component-label">.btn-md (medium)</p>
+      <p class="button-wrapper btn-md"><a class="button primary" href="#0">Medium</a></p>
+
+      <p class="component-label">Disabled — aria-disabled="true"</p>
+      <p class="button-wrapper">
+        <a class="button primary" href="#0" aria-disabled="true">Primary</a>
+        <a class="button secondary" href="#0" aria-disabled="true">Secondary</a>
+        <a class="button accent" href="#0" aria-disabled="true">Accent</a>
+      </p>
+    </div>
+
+    <!-- SECTION 5 — FORMS -->
+    <div class="section">
+      <h2>5 — Forms</h2>
+      <p>Native form elements across states. Hover and tab through each to see hover/focus styling.</p>
+
+      <div class="form-example">
+        <p class="component-label">Input — Default</p>
+        <label for="ex-default">Full name</label>
+        <input id="ex-default" type="text" placeholder="Placeholder" />
+      </div>
+
+      <div class="form-example">
+        <p class="component-label">Input — Hover (hover to see) / Focus (tab to see)</p>
+        <label for="ex-focus">Email address</label>
+        <input id="ex-focus" type="email" placeholder="you@example.com" />
+      </div>
+
+      <div class="form-example">
+        <p class="component-label">Input — Filled</p>
+        <label for="ex-filled">City</label>
+        <input id="ex-filled" type="text" value="Savannah" />
+      </div>
+
+      <div class="form-example">
+        <p class="component-label">Input — Error state</p>
+        <label for="ex-error">Email address</label>
+        <input id="ex-error" type="email" value="invalid-email" aria-invalid="true" aria-describedby="ex-error-msg" />
+        <p id="ex-error-msg" style="color: var(--color-alert-500); font-size: var(--badge-font-size)">Please enter a valid email</p>
+      </div>
+
+      <div class="form-example">
+        <p class="component-label">Input — Disabled</p>
+        <label for="ex-disabled">Membership ID</label>
+        <input id="ex-disabled" type="text" value="GS-000-000" disabled />
+      </div>
+
+      <div class="form-example">
+        <p class="component-label">Textarea</p>
+        <label for="ex-textarea">Message</label>
+        <textarea id="ex-textarea" placeholder="Tell us more"></textarea>
+      </div>
+
+      <div class="form-example">
+        <p class="component-label">Select</p>
+        <label for="ex-select">Council</label>
+        <select id="ex-select">
+          <option>Choose a council</option>
+          <option>Greater Atlanta</option>
+          <option>Northern California</option>
+        </select>
+      </div>
+
+      <div class="form-example">
+        <p class="component-label">Checkbox / Radio / Toggle</p>
+        <label><input type="checkbox" /> Subscribe to updates</label><br />
+        <label><input type="checkbox" checked /> Pre-checked option</label><br />
+        <label><input type="radio" name="ex-radio" /> Option A</label>
+        <label><input type="radio" name="ex-radio" checked /> Option B</label><br />
+        <label><input type="checkbox" role="switch" /> Toggle setting</label><br />
+        <label><input type="checkbox" disabled /> Disabled checkbox</label>
+      </div>
+    </div>
+
+    <!-- SECTION 6 — SHADOWS & RADIUS -->
+    <div class="section">
+      <h2>6 — Shadows &amp; Radius</h2>
+      <p>Shadow tokens as cards, radius tokens as squares.</p>
+
+      <h3>Shadows</h3>
+      <div class="sg-stack">
+        <div class="shadow-example" style="box-shadow: var(--shadow-xs); border-radius: var(--radius-md); padding: var(--spacing-medium)"><p>--shadow-xs</p></div>
+        <div class="shadow-example" style="box-shadow: var(--shadow-sm); border-radius: var(--radius-md); padding: var(--spacing-medium)"><p>--shadow-sm</p></div>
+        <div class="shadow-example" style="box-shadow: var(--shadow-md); border-radius: var(--radius-md); padding: var(--spacing-medium)"><p>--shadow-md</p></div>
+        <div class="shadow-example" style="box-shadow: var(--shadow-lg); border-radius: var(--radius-md); padding: var(--spacing-medium)"><p>--shadow-lg</p></div>
+        <div class="shadow-example" style="box-shadow: var(--shadow-xl); border-radius: var(--radius-md); padding: var(--spacing-medium)"><p>--shadow-xl</p></div>
+      </div>
+
+      <h3>Radius</h3>
+      <div class="sg-stack">
+        <div><div style="border-radius: var(--radius-none); width: 80px; height: 80px; background: var(--color-gs-green)"></div><p>--radius-none (0)</p></div>
+        <div><div style="border-radius: var(--radius-xs); width: 80px; height: 80px; background: var(--color-gs-green)"></div><p>--radius-xs (4px)</p></div>
+        <div><div style="border-radius: var(--radius-sm); width: 80px; height: 80px; background: var(--color-gs-green)"></div><p>--radius-sm (6px)</p></div>
+        <div><div style="border-radius: var(--radius-md); width: 80px; height: 80px; background: var(--color-gs-green)"></div><p>--radius-md (8px)</p></div>
+        <div><div style="border-radius: var(--radius-lg); width: 80px; height: 80px; background: var(--color-gs-green)"></div><p>--radius-lg (12px)</p></div>
+        <div><div style="border-radius: var(--radius-xl); width: 80px; height: 80px; background: var(--color-gs-green)"></div><p>--radius-xl (16px)</p></div>
+        <div><div style="border-radius: var(--radius-full); width: 80px; height: 80px; background: var(--color-gs-green)"></div><p>--radius-full (9999px)</p></div>
+      </div>
+    </div>
+
+    <!-- SECTION 7 — BADGES & COMMERCE -->
+    <div class="section">
+      <h2>7 — Badges &amp; Commerce Tokens</h2>
+      <p>Commerce display tokens: product badges, price treatments and star rating.</p>
+
+      <h3>Badges</h3>
+      <p>
+        <span class="badge" style="background: var(--badge-new-bg); color: var(--badge-new-text); border-radius: var(--badge-border-radius); padding: var(--badge-padding); font-weight: var(--badge-font-weight)">New</span>
+        <span class="badge" style="background: var(--badge-sale-bg); color: var(--badge-sale-text); border-radius: var(--badge-border-radius); padding: var(--badge-padding); font-weight: var(--badge-font-weight)">Sale</span>
+        <span class="badge" style="background: var(--badge-soldout-bg); color: var(--badge-soldout-text); border-radius: var(--badge-border-radius); padding: var(--badge-padding); font-weight: var(--badge-font-weight)">Sold Out</span>
+        <span class="badge" style="background: var(--badge-loyalty-bg); color: var(--badge-loyalty-text); border-radius: var(--badge-border-radius); padding: var(--badge-padding); font-weight: var(--badge-font-weight)">Loyalty</span>
+        <span class="badge" style="background: var(--badge-member-bg); color: var(--badge-member-text); border-radius: var(--badge-border-radius); padding: var(--badge-padding); font-weight: var(--badge-font-weight)">Member</span>
+      </p>
+
+      <h3>Price display</h3>
+      <p style="color: var(--price-color); font: var(--price-font)">$24.99</p>
+      <p class="price-original" style="color: var(--price-original-color)">$34.99</p>
+      <p style="color: var(--price-sale-color)">$19.99 SALE</p>
+      <p style="color: var(--price-member-color)">$18.99 Member Price</p>
+      <p style="color: var(--price-loyalty-color)">$18.99 Loyalty Price</p>
+
+      <h3>Star rating</h3>
+      <p class="rating" aria-label="Rated 4 out of 5 stars">
+        <span class="rating__full">&#9733;&#9733;&#9733;&#9733;</span><span class="rating__empty">&#9733;</span>
+      </p>
+    </div>
+
+    <!-- SECTION 8 — Z-INDEX & MOTION -->
+    <div class="section">
+      <h2>8 — Z-Index &amp; Motion Reference</h2>
+
+      <h3>Z-Index scale</h3>
+      <table class="sg-table">
+        <thead><tr><th>Token</th><th>Value</th><th>Use case</th></tr></thead>
+        <tbody>
+          <tr><td>--z-below</td><td>-1</td><td>Background elements</td></tr>
+          <tr><td>--z-base</td><td>0</td><td>Default flow</td></tr>
+          <tr><td>--z-raised</td><td>10</td><td>Cards on hover, tooltips</td></tr>
+          <tr><td>--z-dropdown</td><td>100</td><td>Nav dropdowns, select menus</td></tr>
+          <tr><td>--z-sticky</td><td>200</td><td>Sticky header</td></tr>
+          <tr><td>--z-overlay</td><td>300</td><td>Modal / drawer backdrop</td></tr>
+          <tr><td>--z-modal</td><td>400</td><td>Modal content, mini-cart</td></tr>
+          <tr><td>--z-toast</td><td>500</td><td>Notification toasts</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Motion tokens</h3>
+      <p>Hover each box to see its transition speed.</p>
+      <div class="sg-stack">
+        <div class="motion-example" tabindex="0" style="transition: transform var(--transition-fast)">Fast (150ms)</div>
+        <div class="motion-example" tabindex="0" style="transition: transform var(--transition-base)">Base (250ms)</div>
+        <div class="motion-example" tabindex="0" style="transition: transform var(--transition-slow)">Slow (400ms)</div>
+        <div class="motion-example" tabindex="0" style="transition: transform var(--transition-bounce)">Bounce (300ms spring)</div>
+      </div>
+    </div>
+
+    <!-- SECTION 9 — SKELETON -->
+    <div class="section">
+      <h2>9 — Skeleton Loading</h2>
+      <p>Skeleton loading state — used while dropin content fetches.</p>
+      <div class="skeleton" style="height: 200px; width: 100%"></div>
+      <div class="skeleton" style="height: 20px; width: 60%; margin-top: var(--spacing-small)"></div>
+      <div class="skeleton" style="height: 20px; width: 40%; margin-top: var(--spacing-xsmall)"></div>
+    </div>
+
+    <!-- SECTION 10 — QUICK REFERENCE -->
+    <div class="section">
+      <h2>10 — Token Quick Reference</h2>
+      <p>Copy-paste reference for the most-used tokens.</p>
+      <pre><code>/* Colors */
+--color-gs-green:    #00b451   /* Primary CTA */
+--color-gs-forest:   #005640   /* Hover */
+--color-gs-poppy:    #ee3124   /* Error / sale */
+--color-gs-gold:     #f7be00   /* Rating */
+
+/* Spacing (GS scale) */
+--spacing-xxsmall:   4px        /* GS: Small */
+--spacing-small:     16px       /* GS: Large */
+--spacing-medium:    24px       /* GS: XL */
+--spacing-large:     64px       /* GS: 4XL */
+
+/* Radius / Shadow */
+--radius-sm:   6px      --shadow-sm:  card default
+--radius-md:   8px      --shadow-md:  card hover
+--radius-full: 9999px   --shadow-lg:  modal / drawer
+
+/* Motion */
+--transition-fast:   150ms ease
+--transition-base:   250ms ease
+--transition-slow:   400ms ease
+
+/* Use in blocks */
+.my-block {
+  color: var(--color-gs-green);
+  padding: var(--spacing-medium);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: color var(--transition-base);
+}</code></pre>
+    </div>
+  </main>
+  <footer></footer>
+</body>
+</html>
