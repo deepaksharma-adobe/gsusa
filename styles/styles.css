@@ -336,13 +336,13 @@
   /* Field typography */
   --form-field-font-family: var(--type-base-font-family);
   --form-field-font-size: 1.4rem; /* 14px */
-  --form-field-line-height: 20px;
+  --form-field-line-height: 1.4;
   --form-label-font-size: 1.4rem;            /* 14px — standard label above field */
-  --form-label-line-height: 20px;
+  --form-label-line-height: 1.4;
   --form-label-font-size-floating: 1.2rem;   /* 12px — floated inside field */
   --form-label-line-height-floating: 1.68rem;/* 16.8px — Figma body-extra-small LH */
   --form-help-font-size: 1.2rem; /* 12px */
-  --form-help-line-height: 17px;
+  --form-help-line-height: 1.4;
 
   /* Field colours */
   --form-field-bg: #fff;
