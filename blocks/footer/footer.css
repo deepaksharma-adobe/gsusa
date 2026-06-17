@@ -1,24 +1,43 @@
 /* stylelint-disable no-descending-specificity */
 
-/* Girl Scouts footer — design tokens (from Figma Foundation + footer frame) */
+/* Girl Scouts footer — Figma Guest/Caregivers Desktop 5168:208610 + Mobile 5650:138173 */
 footer {
-    --footer-bg: #023729;
+    --footer-bg: var(--btn-primary-bg-hover);
     --footer-card-bg: var(--color-gs-forest);
-    --footer-wholesale-bg: #00ae431a;
-    --footer-wholesale-border: #d5ca9f99;
-    --footer-divider: #4e4e4e;
-    --footer-divider-soft: #e2dbc133;
+    --footer-wholesale-bg: color-mix(in srgb, var(--color-brand-500) 10%, transparent);
+    --footer-wholesale-border: color-mix(in srgb, var(--color-gs-khaki) 60%, transparent);
+    --footer-divider: var(--btn-black-bg);
+    --footer-divider-soft: color-mix(in srgb, var(--color-gs-khaki) 20%, transparent);
     --footer-text: var(--color-neutral-50);
+    --footer-icon-hover-opacity: 0.8;
+    --footer-brand-col-width: 175px;
+    --footer-sidebar-width: 272px;
+    --footer-row2-col-width: 207px;
+    --footer-logo-width: 126px;
+    --footer-newsletter-image-height: 136px;
+    --footer-icon-size: var(--spacing-medium);
+    --footer-toggle-icon-size: var(--spacing-big);
+    --footer-cta-icon-size: var(--spacing-small);
+    --footer-font-medium-strong: normal var(--btn-font-weight) 1.6rem/1.4 var(--type-base-font-family);
+    --footer-font-medium-default: normal 400 1.6rem/1.4 var(--type-base-font-family);
+    --footer-font-small-default: normal 400 1.4rem/1.4 var(--type-base-font-family);
+    --footer-font-small-caps: normal 400 1.4rem/1.3 var(--type-base-font-family);
+    --footer-font-cta: normal var(--btn-font-weight) 1.6rem/1.3 var(--type-base-font-family);
+    --footer-font-large-strong: normal var(--btn-font-weight) 1.8rem/1.4 var(--type-base-font-family);
+    --footer-letter-spacing: var(--btn-letter-spacing);
 
     background-color: var(--footer-bg);
     color: var(--footer-text);
-    font: var(--type-body-2-default-font);
-    letter-spacing: var(--type-body-2-default-letter-spacing);
+    font-family: var(--type-base-font-family);
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: var(--footer-letter-spacing);
 }
 
 footer .footer > div {
     margin: auto;
-    max-width: 1280px;
+    max-width: var(--grid-max-width);
     padding: var(--spacing-xxbig) var(--spacing-small);
     display: flex;
     flex-direction: column;
@@ -29,32 +48,67 @@ footer .footer p {
     margin: 0;
 }
 
-/* Links and legal regions wrap content in a default-content-wrapper; collapse it
-   so the region's own grid/flex governs the columns and legal items directly. */
 footer .footer-links > .default-content-wrapper,
 footer .footer-legal > .default-content-wrapper {
     display: contents;
 }
 
-footer .footer a {
+footer .footer a:any-link {
     color: var(--footer-text);
-    font: normal normal 400 1.6rem/2.2rem var(--type-base-font-family); /* Figma: Trefoil Sans 400, 16/22 */
-    letter-spacing: var(--type-body-2-default-letter-spacing);
     text-decoration: none;
+    transition: color var(--transition-base), opacity var(--transition-base), box-shadow var(--transition-base);
 }
 
-footer .footer a:hover {
+footer .footer strong {
+    font-weight: var(--btn-font-weight);
+}
+
+footer .footer :is(h2, h3, h4) {
+    margin: 0;
+    font-family: var(--type-base-font-family);
+}
+
+footer .footer .footer-column-links a:any-link {
+    font: var(--footer-font-small-default);
+    letter-spacing: var(--footer-letter-spacing);
+}
+
+footer .footer .footer-legal-links a:any-link {
+    font: var(--footer-font-medium-default);
+    letter-spacing: var(--footer-letter-spacing);
+}
+
+footer .footer a.footer-newsletter-cta:any-link {
+    font: var(--footer-font-cta);
+    letter-spacing: var(--footer-letter-spacing);
+}
+
+/* Mobile — Figma Footer_Link hover: white text + underline */
+footer .footer .footer-column:not(.footer-social) .footer-column-links a:any-link:hover,
+footer .footer .footer-column:not(.footer-social) .footer-column-links a:any-link:focus-visible,
+footer .footer .footer-legal-links a:any-link:hover,
+footer .footer .footer-legal-links a:any-link:focus-visible,
+footer .footer .footer-wholesale a:any-link:hover,
+footer .footer .footer-wholesale a:any-link:focus-visible {
     color: var(--footer-text);
     text-decoration: underline;
 }
 
-/* Brand / logo region */
+footer .footer-social .footer-column-links a:any-link:hover,
+footer .footer-social .footer-column-links a:any-link:focus-visible {
+    color: var(--footer-text);
+    opacity: var(--footer-icon-hover-opacity);
+    text-decoration: none;
+    box-shadow: none;
+}
+
+/* Brand / logo — Figma 126×42 */
 footer .footer-brand img {
-    width: 126px;
+    width: var(--footer-logo-width);
     height: auto;
 }
 
-/* Link columns region — mobile-first: stacked accordions */
+/* Link columns — mobile accordions */
 footer .footer-links {
     display: flex;
     flex-direction: column;
@@ -63,17 +117,17 @@ footer .footer-links {
 footer .footer-column {
     display: flex;
     flex-direction: column;
+    gap: var(--spacing-xxsmall);
     border-bottom: var(--shape-border-width-1) solid var(--footer-divider);
     padding-bottom: var(--spacing-xsmall);
 }
 
-/* Desktop shows a static title; mobile shows the toggle button. */
 footer .footer-column-title {
     display: none;
-    font: normal normal 600 1.6rem/2.2rem var(--type-base-font-family); /* Figma: Trefoil Sans 600, 16/22 */
-    letter-spacing: var(--type-body-2-default-letter-spacing);
+    font: var(--footer-font-medium-strong);
+    letter-spacing: var(--footer-letter-spacing);
     color: var(--footer-text);
-    padding: var(--spacing-xsmall) 0;
+    padding: 0;
 }
 
 footer .footer-column-toggle {
@@ -81,25 +135,26 @@ footer .footer-column-toggle {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: var(--spacing-xsmall) 0;
+    padding: var(--spacing-xxsmall) 0;
     background: none;
     border: 0;
     cursor: pointer;
     text-align: left;
     color: var(--footer-text);
-    font: normal normal 600 1.8rem/2.5rem var(--type-base-font-family);
+    font: var(--footer-font-large-strong);
+    letter-spacing: var(--footer-letter-spacing);
 }
 
 footer .footer-column-toggle::after {
     content: "";
-    width: 32px;
-    height: 32px;
+    width: var(--footer-toggle-icon-size);
+    height: var(--footer-toggle-icon-size);
     flex-shrink: 0;
     background-color: currentcolor;
     /* stylelint-disable-next-line property-no-vendor-prefix */
-    -webkit-mask: url("../../icons/chevron-down.svg") center / 24px no-repeat;
-    mask: url("../../icons/chevron-down.svg") center / 24px no-repeat;
-    transition: transform 0.2s ease;
+    -webkit-mask: url("../../icons/chevron-down.svg") center / var(--footer-icon-size) no-repeat;
+    mask: url("../../icons/chevron-down.svg") center / var(--footer-icon-size) no-repeat;
+    transition: transform var(--transition-fast);
 }
 
 footer .footer-column--open .footer-column-toggle::after {
@@ -113,15 +168,34 @@ footer .footer-column-links {
     overflow: hidden;
 }
 
-footer .footer-column:not(.footer-column--open) .footer-column-links {
+footer .footer-column:not(.footer-column--open):not(.footer-social) .footer-column-links {
     display: none;
 }
 
 footer .footer-column-links li {
-    padding: var(--spacing-xsmall) 0; /* Figma: 8px vertical per link row */
+    padding: 0;
 }
 
-/* Social icons row */
+footer .footer-column-links a {
+    display: inline-block;
+    padding: var(--spacing-xsmall-plus) 0;
+}
+
+/* Follow Us — always visible on mobile (not accordion) */
+footer .footer-social {
+    border-bottom: 0;
+    padding: var(--spacing-xsmall) 0;
+}
+
+footer .footer-social .footer-column-toggle {
+    display: none;
+}
+
+footer .footer-social .footer-column-title {
+    display: block;
+    padding: 0;
+}
+
 footer .footer-social .footer-column-links {
     display: flex;
     flex-flow: row wrap;
@@ -135,98 +209,178 @@ footer .footer-social .footer-column-links li {
 
 footer .footer-social a {
     display: inline-flex;
-    width: 24px;
-    height: 24px;
+    width: var(--footer-icon-size);
+    height: var(--footer-icon-size);
 }
 
 footer .footer-social .icon {
-    width: 24px;
-    height: 24px;
-    color: var(--footer-text);
+    width: var(--footer-icon-size);
+    height: var(--footer-icon-size);
 }
 
-footer .footer-social .icon svg {
-    width: 100%;
-    height: 100%;
-}
-
-/* Icons resolve to <img> referencing currentColor SVGs; force them white. */
 footer .footer-social .icon img {
     width: 100%;
     height: 100%;
     filter: brightness(0) invert(1);
 }
 
-/* Newsletter card */
-footer .footer-newsletter > div {
+/* Newsletter card — Figma 2722:357789 / 2722:357954 */
+footer .footer-newsletter,
+footer .footer-newsletter .default-content-wrapper {
+    width: 100%;
+    min-width: 0;
+}
+
+footer .footer-newsletter-card {
     background-color: var(--footer-card-bg);
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xsmall);
-}
-
-footer .footer-newsletter img {
     width: 100%;
-    height: 136px;
-    object-fit: cover;
-    display: block;
+    min-width: 0;
+    overflow: hidden;
 }
 
-/* Pad the textual content, but let the lead image span full width. */
-footer .footer-newsletter h2,
-footer .footer-newsletter h3,
-footer .footer-newsletter h4,
-footer .footer-newsletter p:not(:first-child) {
-    margin: 0;
-    padding: 0 var(--spacing-small);
+footer .footer-newsletter-media {
+    display: block;
+    width: 100%;
+    height: var(--footer-newsletter-image-height);
+    flex-shrink: 0;
+    overflow: hidden;
+    line-height: 0;
+}
+
+footer .footer-newsletter-media :is(picture, img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+}
+
+footer .footer-newsletter-media img {
+    object-fit: cover;
+    object-position: center;
+}
+
+footer .footer-newsletter-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xsmall);
+    padding: var(--spacing-small);
 }
 
 footer .footer-newsletter h2,
 footer .footer-newsletter h3,
 footer .footer-newsletter h4 {
-    padding-top: var(--spacing-small);
-    font: var(--type-body-1-strong-font);
-    letter-spacing: var(--type-body-1-strong-letter-spacing);
+    margin: 0;
+    font: var(--footer-font-medium-strong);
+    letter-spacing: var(--footer-letter-spacing);
     color: var(--footer-text);
 }
 
-footer .footer-newsletter p:last-child {
-    padding-bottom: var(--spacing-small);
+footer .footer-newsletter .footer-newsletter-desc {
+    font: var(--footer-font-small-default);
+    letter-spacing: var(--footer-letter-spacing);
 }
 
-footer .footer-newsletter a {
-    font: var(--type-body-1-strong-font);
-    letter-spacing: var(--type-body-1-strong-letter-spacing);
+footer .footer-newsletter-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xxsmall);
     text-transform: uppercase;
     text-decoration: underline;
 }
 
-/* Wholesale partner box */
-footer .footer-wholesale > div {
+footer .footer-newsletter-cta:any-link:hover,
+footer .footer-newsletter-cta:any-link:focus-visible {
+    color: var(--footer-text);
+    text-decoration: underline;
+}
+
+/* Tighten newsletter to Follow Us block — Figma mobile pt 16px */
+footer .footer-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-medium);
+    width: 100%;
+    min-width: 0;
+}
+
+footer .footer-newsletter {
+    margin-top: calc(var(--spacing-small) - var(--spacing-medium));
+    width: 100%;
+}
+
+footer .footer-newsletter-cta::after {
+    content: "";
+    width: var(--footer-cta-icon-size);
+    height: var(--footer-cta-icon-size);
+    flex-shrink: 0;
+    background-color: currentcolor;
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-mask: url("../../icons/chevron-right.svg") center / contain no-repeat;
+    mask: url("../../icons/chevron-right.svg") center / contain no-repeat;
+}
+
+/* Wholesale partner box — Figma 2722:357802 */
+footer .footer-wholesale-body {
+    box-sizing: border-box;
+    width: 100%;
     background-color: var(--footer-wholesale-bg);
     border: var(--shape-border-width-1) solid var(--footer-wholesale-border);
     padding: var(--spacing-xsmall-plus);
+    color: var(--footer-text);
+    text-transform: uppercase;
 }
 
-footer .footer-wholesale p {
-    text-transform: uppercase;
+footer .footer-wholesale-lead {
+    margin: 0;
+    font: var(--footer-font-medium-strong);
+    letter-spacing: var(--footer-letter-spacing);
+}
+
+footer .footer-wholesale-lead a:any-link {
+    font: inherit;
+    letter-spacing: inherit;
+    font-weight: inherit;
     color: var(--footer-text);
+    text-transform: inherit;
+}
+
+footer .footer-wholesale-sub {
+    margin: 0;
+    font: var(--footer-font-small-caps);
+    letter-spacing: var(--footer-letter-spacing);
+    text-transform: uppercase;
 }
 
 /* Legal bar */
 footer .footer-legal {
     border-top: var(--shape-border-width-1) solid var(--footer-divider);
     padding-top: var(--spacing-small);
+    padding-bottom: var(--spacing-xsmall);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xsmall);
 }
 
-footer .footer-legal p {
-    text-transform: uppercase;
+footer .footer-legal-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xsmall);
 }
 
-footer .footer-legal a {
+footer .footer-legal-links a {
+    display: inline-flex;
+    padding: var(--spacing-xsmall) 0;
+    text-transform: none;
+}
+
+footer .footer-legal-copyright {
+    font: var(--footer-font-small-caps);
+    letter-spacing: var(--footer-letter-spacing);
     text-transform: uppercase;
 }
 
@@ -283,22 +437,20 @@ footer .footer-legal a {
     margin-bottom: var(--spacing-small);
 }
 
-/* Desktop layout (Figma: 1280 frame, 56px side padding, multi-column row) */
+/* Desktop — Figma 1280 frame */
 @media (min-width: 1280px) {
     footer .footer > div {
         box-sizing: border-box;
         width: 100%;
-        max-width: var(--grid-max-width); /* cap + center on the 1280 grid frame */
+        max-width: var(--grid-max-width);
         margin-inline: auto;
-        padding: var(--spacing-xxbig) var(--grid-margin); /* 48px / 56px grid margin */
+        padding: var(--spacing-xxbig) var(--grid-margin);
         display: grid;
-        grid-template-columns: 175px 1fr 272px;
-        gap: var(--grid-gutter); /* 24px grid gutter */
+        grid-template-columns: var(--footer-brand-col-width) 1fr var(--footer-sidebar-width);
+        gap: var(--grid-gutter);
         align-items: start;
     }
 
-    /* Allow the middle (links) track to shrink so the grid respects max-width
-       instead of expanding to its content's intrinsic min-width. */
     footer .footer > div > * {
         min-width: 0;
     }
@@ -309,12 +461,37 @@ footer .footer-legal a {
 
     footer .footer-links {
         grid-column: 2;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--grid-gutter); /* 24px grid gutter */
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-medium);
     }
 
-    /* Local Resources + Follow Us wrap onto a second row under the grid. */
+    footer .footer-links-row1 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--grid-gutter);
+    }
+
+    footer .footer-links-row2 {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: var(--grid-gutter);
+        border-top: var(--shape-border-width-1) solid var(--footer-divider-soft);
+        padding-top: var(--spacing-medium);
+    }
+
+    footer .footer-links-row2 .footer-column {
+        border-bottom: 0;
+        padding-bottom: 0;
+        flex: 0 1 var(--footer-row2-col-width);
+    }
+
+    footer .footer-links-row2 .footer-social {
+        flex: 0 1 auto;
+        padding: 0;
+    }
+
     footer .footer-column {
         border-bottom: 0;
         padding-bottom: 0;
@@ -326,19 +503,90 @@ footer .footer-legal a {
 
     footer .footer-column-title {
         display: block;
+        padding-bottom: var(--spacing-xxsmall);
+        font: var(--footer-font-medium-strong);
     }
 
     footer .footer-column:not(.footer-column--open) .footer-column-links {
         display: block;
     }
 
+    footer .footer-column-links a {
+        padding: var(--spacing-xsmall) 0;
+    }
+
+    footer .footer .footer-column-links a:any-link {
+        font: var(--footer-font-medium-default);
+    }
+
+    /* Desktop — Figma Nav & Footer Links hover: 2px white bottom border */
+    footer .footer .footer-column:not(.footer-social) .footer-column-links a:any-link:hover,
+    footer .footer .footer-column:not(.footer-social) .footer-column-links a:any-link:focus-visible,
+    footer .footer .footer-legal-links a:any-link:hover,
+    footer .footer .footer-legal-links a:any-link:focus-visible,
+    footer .footer .footer-wholesale a:any-link:hover,
+    footer .footer .footer-wholesale a:any-link:focus-visible {
+        color: var(--footer-text);
+        text-decoration: none;
+        box-shadow: inset 0 calc(-1 * var(--shape-border-width-3)) 0 var(--footer-text);
+    }
+
+    footer .footer-social .footer-column-links a:any-link:hover,
+    footer .footer-social .footer-column-links a:any-link:focus-visible {
+        text-decoration: none;
+        box-shadow: none;
+    }
+
+    footer .footer-newsletter {
+        margin-top: 0;
+    }
+
+    footer .footer-newsletter-cta {
+        text-decoration: none;
+    }
+
+    footer .footer-newsletter-cta:any-link:hover,
+    footer .footer-newsletter-cta:any-link:focus-visible {
+        color: var(--footer-text);
+        text-decoration: underline;
+        box-shadow: none;
+    }
+
+    footer .footer-social .footer-column-toggle {
+        display: none;
+    }
+
     footer .footer-social .footer-column-links {
+        display: grid;
+        grid-template-columns: repeat(3, var(--footer-icon-size));
+        gap: var(--spacing-medium);
+        width: auto;
         padding-top: var(--spacing-xsmall);
     }
 
-    footer .footer-newsletter,
-    footer .footer-wholesale {
+    footer .footer-sidebar {
         grid-column: 3;
+        grid-row: 1;
+        gap: var(--spacing-medium);
+        width: 100%;
+        max-width: var(--footer-sidebar-width);
+    }
+
+    footer .footer-sidebar .footer-newsletter {
+        margin-top: 0;
+    }
+
+    footer .footer-newsletter {
+        grid-column: unset;
+        grid-row: unset;
+    }
+
+    footer .footer-wholesale {
+        grid-column: unset;
+        grid-row: unset;
+        width: 100%;
+        max-width: none;
+        align-self: stretch;
     }
 
     footer .footer-legal {
@@ -346,5 +594,16 @@ footer .footer-legal a {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        padding-top: var(--spacing-small);
+        padding-bottom: var(--spacing-xsmall);
+    }
+
+    footer .footer-legal-links {
+        flex-direction: row;
+        gap: var(--spacing-medium);
+    }
+
+    footer .footer-legal-links a {
+        padding: var(--spacing-xsmall) 0;
     }
 }

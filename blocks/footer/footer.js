@@ -211,12 +211,32 @@ function decorateLinkColumns(container) {
   const socialColumn = columns.find((col) => /follow us/i.test(col.querySelector('.footer-column-title')?.textContent || ''));
   if (socialColumn) socialColumn.classList.add('footer-social');
 
+  const localCol = columns.find((col) => /local resources/i.test(
+    col.querySelector('.footer-column-title')?.textContent || '',
+  ));
+  const socialCol = columns.find((col) => col.classList.contains('footer-social'));
+  const primaryCols = columns.filter((col) => col !== localCol && col !== socialCol);
+  if (primaryCols.length) {
+    const row1 = document.createElement('div');
+    row1.className = 'footer-links-row1';
+    primaryCols[0].before(row1);
+    primaryCols.forEach((col) => row1.append(col));
+  }
+  if (localCol && socialCol) {
+    const row2 = document.createElement('div');
+    row2.className = 'footer-links-row2';
+    localCol.before(row2);
+    row2.append(localCol, socialCol);
+  }
+
   const applyResponsiveState = () => {
-    columns.forEach((column) => {
+    columns.forEach((column, index) => {
       if (column.classList.contains('footer-social')) {
         setColumnExpanded(column, true);
+      } else if (isDesktop.matches) {
+        setColumnExpanded(column, true);
       } else {
-        setColumnExpanded(column, isDesktop.matches);
+        setColumnExpanded(column, index === 0);
       }
     });
   };
@@ -225,6 +245,192 @@ function decorateLinkColumns(container) {
   isDesktop.addEventListener('change', applyResponsiveState);
 
   return columns;
+}
+
+/**
+ * Splits inline legal links into a list for stacked mobile / inline desktop layout.
+ * @param {Element} legalRegion The `.footer-legal` section
+ */
+function decorateLegalLinks(legalRegion) {
+  const linksParagraph = [...legalRegion.querySelectorAll('p')].find(
+    (p) => p.querySelector('a') && !/©|all rights reserved/i.test(p.textContent),
+  );
+  if (!linksParagraph) return;
+
+  const list = document.createElement('ul');
+  list.className = 'footer-legal-links';
+  linksParagraph.querySelectorAll('a').forEach((anchor) => {
+    const item = document.createElement('li');
+    item.append(anchor);
+    list.append(item);
+  });
+  linksParagraph.replaceWith(list);
+}
+
+const DEFAULT_WHOLESALE_LOGIN = '/wholesale/login';
+
+/**
+ * Reads wholesale copy from authored markup (plain HTML or CMS bold lines).
+ * @param {Element} wholesaleRegion The `.footer-wholesale` section
+ * @returns {{ titleText: string, loginText: string, loginHref: string, subText: string } | null}
+ */
+function readWholesaleContent(wholesaleRegion) {
+  const wrapper = wholesaleRegion.querySelector('.default-content-wrapper') || wholesaleRegion;
+  const paragraphs = [...wrapper.querySelectorAll(':scope > p')];
+  if (!paragraphs.length) return null;
+
+  let titleText = 'Hello, Wholesale Partners';
+  let loginText = 'Login Here';
+  let loginHref = DEFAULT_WHOLESALE_LOGIN;
+  let subText = 'for your personalized Experience';
+
+  if (paragraphs.length >= 2) {
+    titleText = paragraphs[0].textContent.trim();
+    const loginPara = paragraphs[1];
+    const loginAnchor = loginPara.querySelector('a');
+    if (loginAnchor) {
+      loginHref = loginAnchor.getAttribute('href') || DEFAULT_WHOLESALE_LOGIN;
+      loginText = loginAnchor.textContent.trim();
+    } else {
+      loginText = loginPara.textContent.trim();
+    }
+    if (paragraphs[2]) {
+      subText = paragraphs[2].textContent.trim();
+    }
+    return { titleText, loginText, loginHref, subText };
+  }
+
+  const source = paragraphs[0];
+  const strongs = [...source.querySelectorAll('strong')];
+  const loginAnchor = source.querySelector('a');
+  const subEl = source.querySelector('.footer-wholesale-sub');
+
+  if (strongs[0]) {
+    titleText = strongs[0].textContent.trim();
+  }
+
+  if (loginAnchor) {
+    loginHref = loginAnchor.getAttribute('href') || DEFAULT_WHOLESALE_LOGIN;
+    loginText = loginAnchor.textContent.trim();
+  } else if (strongs[1]) {
+    loginText = strongs[1].textContent.trim();
+  }
+
+  if (subEl) {
+    subText = subEl.textContent.trim();
+  } else {
+    const remainder = source.cloneNode(true);
+    remainder.querySelectorAll('strong, a, br, .footer-wholesale-sub').forEach((el) => el.remove());
+    const text = remainder.textContent.trim();
+    if (text) subText = text;
+  }
+
+  return { titleText, loginText, loginHref, subText };
+}
+
+/**
+ * Builds Figma wholesale callout markup (2722:357802).
+ * @param {Element} wholesaleRegion The `.footer-wholesale` section
+ */
+function decorateWholesale(wholesaleRegion) {
+  if (wholesaleRegion.querySelector('.footer-wholesale-body')) return;
+
+  const content = readWholesaleContent(wholesaleRegion);
+  if (!content) return;
+
+  const wrapper = wholesaleRegion.querySelector('.default-content-wrapper') || wholesaleRegion;
+  const { titleText, loginText, loginHref, subText } = content;
+
+  const body = document.createElement('div');
+  body.className = 'footer-wholesale-body';
+
+  const lead = document.createElement('p');
+  lead.className = 'footer-wholesale-lead';
+
+  lead.append(document.createTextNode(titleText), document.createElement('br'), document.createElement('br'));
+
+  const login = document.createElement('a');
+  login.href = loginHref;
+  login.textContent = loginText;
+  lead.append(login);
+
+  const sub = document.createElement('p');
+  sub.className = 'footer-wholesale-sub';
+  sub.textContent = subText;
+
+  body.append(lead, sub);
+  wrapper.querySelectorAll('p').forEach((p) => p.remove());
+  wrapper.append(body);
+}
+
+/**
+ * Groups newsletter + wholesale into Figma right sidebar column (2722:357788).
+ * @param {Element} footer The footer container element
+ */
+function decorateSidebar(footer) {
+  const newsletter = footer.querySelector('.footer-newsletter');
+  const wholesale = footer.querySelector('.footer-wholesale');
+  if (!newsletter || !wholesale || footer.querySelector('.footer-sidebar')) return;
+
+  const sidebar = document.createElement('div');
+  sidebar.className = 'footer-sidebar';
+  newsletter.before(sidebar);
+  sidebar.append(newsletter, wholesale);
+}
+
+/**
+ * Wraps newsletter copy and adds CTA class for Figma subscribe row.
+ * @param {Element} newsletterRegion The `.footer-newsletter` section
+ */
+function decorateNewsletter(newsletterRegion) {
+  if (newsletterRegion.querySelector('.footer-newsletter-card')) return;
+
+  const root = newsletterRegion.querySelector('.default-content-wrapper') || newsletterRegion;
+
+  const heading = root.querySelector('h2, h3, h4');
+  if (!heading) return;
+
+  const description = heading.nextElementSibling?.tagName === 'P' ? heading.nextElementSibling : null;
+  const ctaParagraph = [...root.querySelectorAll('p')].find((p) => p.querySelector('a'));
+  const cta = ctaParagraph?.querySelector('a');
+  if (!description || !cta || !ctaParagraph) return;
+
+  const imageParagraph = [...root.querySelectorAll(':scope > p')].find(
+    (p) => p.querySelector('img, picture') && p !== description && p !== ctaParagraph,
+  );
+
+  const card = document.createElement('div');
+  card.className = 'footer-newsletter-card';
+
+  const media = document.createElement('div');
+  media.className = 'footer-newsletter-media';
+
+  if (imageParagraph) {
+    media.append(...imageParagraph.childNodes);
+    imageParagraph.remove();
+  } else {
+    const picture = root.querySelector(':scope > picture');
+    const standaloneImg = root.querySelector(':scope > img');
+    if (picture) {
+      media.append(picture);
+    } else if (standaloneImg) {
+      media.append(standaloneImg);
+    }
+  }
+
+  if (media.childNodes.length) {
+    card.append(media);
+  }
+
+  const body = document.createElement('div');
+  body.className = 'footer-newsletter-body';
+  description.classList.add('footer-newsletter-desc');
+  cta.classList.add('footer-newsletter-cta');
+  body.append(heading, description, cta);
+  card.append(body);
+  ctaParagraph.remove();
+
+  root.append(card);
 }
 
 /**
@@ -300,6 +506,23 @@ export default async function decorate(block) {
   tagFooterRegions(footer);
   const linksRegion = footer.querySelector('.footer-links');
   if (linksRegion) decorateLinkColumns(linksRegion);
+
+  const newsletterRegion = footer.querySelector('.footer-newsletter');
+  if (newsletterRegion) decorateNewsletter(newsletterRegion);
+
+  const wholesaleRegion = footer.querySelector('.footer-wholesale');
+  if (wholesaleRegion) decorateWholesale(wholesaleRegion);
+
+  decorateSidebar(footer);
+
+  const legalRegion = footer.querySelector('.footer-legal');
+  if (legalRegion) {
+    decorateLegalLinks(legalRegion);
+    const copyright = [...legalRegion.querySelectorAll('p')].find(
+      (p) => /©|all rights reserved/i.test(p.textContent),
+    );
+    if (copyright) copyright.classList.add('footer-legal-copyright');
+  }
 
   block.append(footer);
 }
