@@ -365,16 +365,26 @@
   --form-field-cursor-disabled: not-allowed;
 
   /* Choice controls (checkbox / radio / toggle) */
-  --form-choice-size: 18px;
-  --form-choice-border: #626262;
+  --form-choice-size: 20px;
+  --form-choice-border: #a8a8a8;
   --form-choice-bg: #fff;
   --form-choice-checked-bg: #005640; /* GS Forest */
   --form-choice-checked-mark: #fff;
   --form-radio-radius: 50%;
-  --form-checkbox-radius: 4px;
-  --form-toggle-track-off: #d9d9d9;
+  --form-checkbox-radius: 2px;
+  --form-toggle-track-off: #a8a8a8;
   --form-toggle-track-on: #005640;
   --form-toggle-knob: #fff;
+
+  /* Choice control geometry (Figma) */
+  --form-choice-outer-size: 24px; /* radio outer diameter */
+  --form-choice-border-width: 1.4px; /* checkbox border */
+  --form-choice-border-width-radio: 2px; /* radio border */
+  --form-choice-border-focus: #4e4e4e; /* focus border */
+  --form-toggle-width: 32px;
+  --form-toggle-height: 20px;
+  --form-toggle-knob-size: 16px;
+  --form-toggle-padding: 2px;
 
   /* ===== Focus ring (WCAG AA) ===== */
   --focus-ring-color: #00b451; /* GS Green */
@@ -745,6 +755,112 @@ main label:not(.dropin-design *) {
     content: " *";
     color: var(--form-required-text);
   }
+}
+
+/* ===== Choice controls (radio / checkbox / toggle) — GS Form-Elements =====
+   Custom-styled native inputs via appearance:none. Scoped away from dropin
+   controls. Toggle = checkbox with role="switch". */
+
+/* Radio — 24px outer, 2px border, checked = Forest ring + inner dot */
+main input[type="radio"]:not(.dropin-design *) {
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--form-choice-outer-size);
+  height: var(--form-choice-outer-size);
+  margin: 0;
+  border: var(--form-choice-border-width-radio) solid var(--form-choice-border);
+  border-radius: var(--form-radio-radius);
+  background-color: var(--form-choice-bg);
+  cursor: pointer;
+}
+
+main input[type="radio"]:not(.dropin-design *):focus-visible {
+  border-color: var(--form-choice-border-focus);
+  outline: none;
+}
+
+main input[type="radio"]:not(.dropin-design *):checked {
+  border-color: var(--form-choice-checked-bg);
+  box-shadow: inset 0 0 0 4px var(--form-choice-checked-bg); /* inner dot inset from border */
+}
+
+main input[type="radio"]:not(.dropin-design *):disabled {
+  cursor: var(--form-field-cursor-disabled);
+  opacity: 0.5;
+}
+
+/* Checkbox — 20px, 1.4px border, 2px radius, checked = Forest bg + white tick */
+main input[type="checkbox"]:not([role="switch"], .dropin-design *) {
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--form-choice-size);
+  height: var(--form-choice-size);
+  margin: 0;
+  border: var(--form-choice-border-width) solid var(--form-choice-border);
+  border-radius: var(--form-checkbox-radius);
+  background-color: var(--form-choice-bg);
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+main input[type="checkbox"]:not([role="switch"], .dropin-design *):focus-visible {
+  border-color: var(--form-choice-border-focus);
+  outline: none;
+}
+
+main input[type="checkbox"]:not([role="switch"], .dropin-design *):checked {
+  border-color: var(--form-choice-checked-bg);
+  background-color: var(--form-choice-checked-bg);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-6"/></svg>');
+}
+
+main input[type="checkbox"]:not([role="switch"], .dropin-design *):disabled {
+  cursor: var(--form-field-cursor-disabled);
+  opacity: 0.5;
+}
+
+/* Toggle — checkbox[role="switch"] — 32x20 track, 16px knob, slides 12px */
+main input[type="checkbox"][role="switch"]:not(.dropin-design *) {
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--form-toggle-width);
+  height: var(--form-toggle-height);
+  margin: 0;
+  padding: var(--form-toggle-padding);
+  border: none;
+  border-radius: calc(var(--form-toggle-height) / 2);
+  background-color: var(--form-toggle-track-off);
+  cursor: pointer;
+}
+
+main input[type="checkbox"][role="switch"]:not(.dropin-design *)::before {
+  content: "";
+  display: block;
+  width: var(--form-toggle-knob-size);
+  height: var(--form-toggle-knob-size);
+  border-radius: 50%;
+  background-color: var(--form-toggle-knob);
+  transition: transform var(--transition-fast);
+}
+
+main input[type="checkbox"][role="switch"]:not(.dropin-design *):checked {
+  background-color: var(--form-toggle-track-on);
+}
+
+main input[type="checkbox"][role="switch"]:not(.dropin-design *):checked::before {
+  /* slide knob: track(32) - padding*2(4) - knob(16) = 12px */
+  transform: translateX(12px);
+}
+
+main input[type="checkbox"][role="switch"]:not(.dropin-design *):focus-visible {
+  outline: var(--focus-ring-width) var(--focus-ring-style) var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+main input[type="checkbox"][role="switch"]:not(.dropin-design *):disabled {
+  cursor: var(--form-field-cursor-disabled);
+  opacity: 0.5;
 }
 
 /* links */
@@ -1441,6 +1557,62 @@ main .section[data-margin="hero"] {
   padding: 0 var(--btn-padding-x-md);
   border-radius: var(--btn-radius-md);
   font-size: var(--btn-font-size-md);
+}
+
+/* ===== Dropin choice control alignment (checkbox / radio) =====
+   Dropins hide the native input (.__checkbox is display:none, .__input is
+   opacity:0) and render the visual via .__box and the label ::before/::after.
+   Override those rendered elements to the GS --form-choice-* tokens. Scoped
+   under .dropin-design; cascade order beats the injected rules (no !important). */
+
+/* Checkbox box → 20px, 1.4px GS-grey border, 2px radius.
+   flex-shrink:0 stops the flex parent (.__checkbox-icon) from squashing the
+   wider box back down to its original 14px-derived track width. */
+.dropin-design .dropin-checkbox__box {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: var(--form-choice-size);
+  height: var(--form-choice-size);
+  border: var(--form-choice-border-width) solid var(--form-choice-border);
+  border-radius: var(--form-checkbox-radius);
+}
+
+/* Checked → Forest Green fill behind the white checkmark */
+.dropin-design .dropin-checkbox__checkbox:checked
+  + .dropin-checkbox__checkbox-icon .dropin-checkbox__checkmark {
+  background: var(--form-choice-checked-bg);
+}
+
+/* Radio circle → 24px outer, 2px GS-grey border */
+.dropin-design .dropin-radio-button__label::before {
+  box-sizing: border-box;
+  width: var(--form-choice-outer-size);
+  height: var(--form-choice-outer-size);
+  border: var(--form-choice-border-width-radio) solid var(--form-choice-border);
+}
+
+/* Radio checked dot → Forest Green, re-centered within the 24px circle. */
+.dropin-design .dropin-radio-button__label::after {
+  width: 10px;
+  height: 10px;
+  margin-left: 0;
+  inset-inline-start: calc(var(--form-choice-outer-size) / 2 - 5px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--form-choice-checked-bg);
+  accent-color: var(--form-choice-checked-bg);
+}
+
+/* Match the dropin's checked compound specificity so the dot size/position
+   overrides win over …__input:checked + …__label::after. */
+.dropin-design .dropin-radio-button__input:checked + .dropin-radio-button__label::after {
+  width: 10px;
+  height: 10px;
+  margin-left: 0;
+  inset-inline-start: calc(var(--form-choice-outer-size) / 2 - 5px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--form-choice-checked-bg);
 }
 
 /* Layout: Columns */
