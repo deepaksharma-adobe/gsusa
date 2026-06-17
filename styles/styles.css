@@ -65,7 +65,7 @@
   --color-warning-500: #e79f5c;
   --color-warning-800: #cc7a2e;
   --color-alert-200: #ffebeb;
-  --color-alert-500: #db7070;
+  --color-alert-500: #ee3124; /* GS Poppy — form/error states (aligned to Figma) */
   --color-alert-800: #c35050;
   --color-button-active: var(--color-brand-700);
   --color-button-focus: var(--color-neutral-400);
@@ -253,6 +253,59 @@
   --btn-disabled-text: #a8a8a8;
   --btn-disabled-border: transparent;
   --btn-disabled-cursor: not-allowed;
+
+  /* ===== Girl Scouts form-element foundation (Figma Form-Elements) ===== */
+
+  /* Field sizing */
+  --form-field-height: 48px;
+  --form-field-padding-x: 12px;
+  --form-field-padding-y: 12px;
+  --form-field-radius: 6px;
+  --form-field-border-width: 1px;
+  --form-field-gap: 8px; /* gap between field and help text */
+
+  /* Field typography */
+  --form-field-font-family: var(--type-base-font-family);
+  --form-field-font-size: 1.4rem; /* 14px */
+  --form-field-line-height: 20px;
+  --form-label-font-size: 1.4rem; /* 14px (12px when floating above filled field) */
+  --form-label-line-height: 20px;
+  --form-help-font-size: 1.2rem; /* 12px */
+  --form-help-line-height: 17px;
+
+  /* Field colours */
+  --form-field-bg: #fff;
+  --form-field-text: #2d2e33; /* GS Dark Grey */
+  --form-field-placeholder: #626262;
+  --form-label-text: #626262;
+  --form-help-text: #626262;
+  --form-required-text: #c9281d;
+
+  /* Field borders by state */
+  --form-border-default: #d9d9d9; /* GS Cloud */
+  --form-border-hover: #8f8f8f;
+  --form-border-focus: #d5ca9f; /* GS Khaki */
+  --form-border-filled: #d5ca9f;
+  --form-border-error: #ee3124; /* GS Poppy */
+  --form-border-validated: #005640; /* GS Forest */
+
+  /* Disabled field */
+  --form-field-bg-disabled: #f7f7f7;
+  --form-field-text-disabled: #626262;
+  --form-border-disabled: #d9d9d9;
+  --form-field-cursor-disabled: not-allowed;
+
+  /* Choice controls (checkbox / radio / toggle) */
+  --form-choice-size: 18px;
+  --form-choice-border: #626262;
+  --form-choice-bg: #fff;
+  --form-choice-checked-bg: #005640; /* GS Forest */
+  --form-choice-checked-mark: #fff;
+  --form-radio-radius: 50%;
+  --form-checkbox-radius: 4px;
+  --form-toggle-track-off: #d9d9d9;
+  --form-toggle-track-on: #005640;
+  --form-toggle-knob: #fff;
 }
 
 @media (min-width: 768px) {
@@ -426,6 +479,88 @@ button {
   font: inherit;
 }
 
+/* ===== Native form elements (Girl Scouts Form-Elements foundation) =====
+   Scoped with :not(.dropin-design ...) so Commerce dropin inputs keep their
+   own injected styling; dropins instead inherit GS colour via the shared
+   --color-* tokens (e.g. --color-alert-500). Choice controls (checkbox /
+   radio) and the button-like inputs are excluded from the text-field rules. */
+main
+  :is(input, textarea, select):not(
+    [type="checkbox"],
+    [type="radio"],
+    [type="submit"],
+    [type="button"],
+    [type="reset"],
+    .dropin-design *
+  ) {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--form-field-height);
+  margin: 0;
+  padding: var(--form-field-padding-y) var(--form-field-padding-x);
+  border: var(--form-field-border-width) solid var(--form-border-default);
+  border-radius: var(--form-field-radius);
+  background-color: var(--form-field-bg);
+  color: var(--form-field-text);
+  font-family: var(--form-field-font-family);
+  font-size: var(--form-field-font-size);
+  line-height: var(--form-field-line-height);
+
+  &::placeholder {
+    color: var(--form-field-placeholder);
+    opacity: 1;
+  }
+
+  &:hover {
+    border-color: var(--form-border-hover);
+  }
+
+  &:focus,
+  &:focus-visible {
+    border-color: var(--form-border-focus);
+    outline: none;
+  }
+
+  &:not(:placeholder-shown) {
+    border-color: var(--form-border-filled);
+  }
+
+  &:user-invalid,
+  &[aria-invalid="true"] {
+    border-color: var(--form-border-error);
+  }
+
+  &:disabled {
+    border-color: var(--form-border-disabled);
+    background-color: var(--form-field-bg-disabled);
+    color: var(--form-field-text-disabled);
+    cursor: var(--form-field-cursor-disabled);
+  }
+}
+
+main textarea:not(.dropin-design *) {
+  min-height: calc(var(--form-field-height) * 1.5);
+  resize: vertical;
+}
+
+main label:not(.dropin-design *) {
+  display: inline-block;
+  margin-bottom: var(--spacing-xxsmall);
+  color: var(--form-label-text);
+  font-family: var(--form-field-font-family);
+  font-size: var(--form-label-font-size);
+  line-height: var(--form-label-line-height);
+
+  & .required {
+    color: var(--form-required-text);
+  }
+
+  &[data-required]::after {
+    content: " *";
+    color: var(--form-required-text);
+  }
+}
+
 /* links */
 a:not(.dropin-design a) {
   color: var(--color-brand-500);
@@ -587,10 +722,6 @@ main .btn-md button.button {
   padding: 0 var(--btn-padding-x-md);
   border-radius: var(--btn-radius-md);
   font-size: var(--btn-font-size-md);
-}
-
-main input:hover {
-  border: var(--shape-border-width-1) solid var(--color-neutral-700);
 }
 
 main blockquote {
