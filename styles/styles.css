@@ -787,6 +787,7 @@ main .field--floating input,
 main .field--floating textarea {
   height: 100%;
   min-height: unset;
+
   /* top pad = room for floated 12px label (6px top + 12px height + 4px gap) */
   padding: 24px var(--form-field-padding-x) 4px;
   margin: 0;
