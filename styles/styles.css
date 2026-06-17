@@ -337,8 +337,10 @@
   --form-field-font-family: var(--type-base-font-family);
   --form-field-font-size: 1.4rem; /* 14px */
   --form-field-line-height: 20px;
-  --form-label-font-size: 1.4rem; /* 14px (12px when floating above filled field) */
+  --form-label-font-size: 1.4rem;            /* 14px — standard label above field */
   --form-label-line-height: 20px;
+  --form-label-font-size-floating: 1.2rem;   /* 12px — floated inside field */
+  --form-label-line-height-floating: 1.68rem;/* 16.8px — Figma body-extra-small LH */
   --form-help-font-size: 1.2rem; /* 12px */
   --form-help-line-height: 17px;
 
@@ -755,6 +757,96 @@ main label:not(.dropin-design *) {
     content: " *";
     color: var(--form-required-text);
   }
+}
+
+/* ===== Floating label utility — opt-in per block =========================
+ * Wrap <input> + <label> in <div class="field--floating"> to get the
+ * Figma floating label pattern (label inside, floats up on focus/fill).
+ *
+ * Markup pattern:
+ *   <div class="field--floating">
+ *     <input type="text" id="name" placeholder=" " />
+ *     <label for="name">Full name <span class="required">*</span></label>
+ *   </div>
+ *
+ * IMPORTANT: placeholder=" " (single space) is required — the
+ * :not(:placeholder-shown) selector uses it to detect a filled state.
+ *
+ * Why opt-in: EDS native forms use label-above pattern (simpler,
+ * more accessible for authored content). Floating labels are for
+ * dropin-style forms and complex block forms only. */
+
+main .field--floating {
+  position: relative;
+  height: var(--form-field-height);   /* 48px fixed */
+}
+
+/* Input — .field--floating is never used inside .dropin-design so
+   no :not(.dropin-design *) guard needed; simpler selectors win. */
+main .field--floating input,
+main .field--floating textarea {
+  height: 100%;
+  min-height: unset;
+  /* top pad = room for floated 12px label (6px top + 12px height + 4px gap) */
+  padding: 24px var(--form-field-padding-x) 4px;
+  margin: 0;
+}
+
+main .field--floating textarea {
+  height: auto;
+  min-height: calc(var(--form-field-height) * 2);
+  padding-top: 24px;
+  resize: vertical;
+}
+
+/* Label — absolutely positioned inside 48px wrapper.
+ * Specificity note: global "main label:not(.dropin-design *)" has specificity
+ * (0,1,3) which would beat "main .field--floating label" (0,1,2).
+ * Prefixing with :root gives (0,2,2) — enough to win cleanly. */
+:root main .field--floating label {
+  position: absolute;
+  left: var(--form-field-padding-x);
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  font-size: var(--form-field-font-size);   /* 1.4rem = 14px */
+  line-height: 1;
+  color: var(--form-field-placeholder);     /* #626262 */
+  pointer-events: none;
+  white-space: nowrap;
+  transition:
+    top var(--transition-base),
+    font-size var(--transition-base),
+    transform var(--transition-base),
+    color var(--transition-base);
+}
+
+/* Floated: input focused OR has a value */
+:root main .field--floating input:focus ~ label,
+:root main .field--floating input:not(:placeholder-shown) ~ label,
+:root main .field--floating textarea:focus ~ label,
+:root main .field--floating textarea:not(:placeholder-shown) ~ label {
+  top: 6px;
+  transform: none;
+  font-size: var(--form-label-font-size-floating);      /* 1.2rem = 12px */
+  line-height: var(--form-label-line-height-floating);  /* 1.68rem */
+  color: var(--form-label-text);                        /* #626262 */
+}
+
+/* Focus — label turns GS Green */
+:root main .field--floating input:focus ~ label,
+:root main .field--floating textarea:focus ~ label {
+  color: var(--form-border-focus);   /* #00b451 */
+}
+
+/* Error — label turns GS Poppy */
+:root main .field--floating input[aria-invalid="true"] ~ label {
+  color: var(--form-border-error);   /* #ee3124 */
+}
+
+/* Disabled — label muted */
+:root main .field--floating input:disabled ~ label {
+  color: var(--form-field-text-disabled);
 }
 
 /* ===== Choice controls (radio / checkbox / toggle) — GS Form-Elements =====
@@ -1613,6 +1705,79 @@ main .section[data-margin="hero"] {
   top: 50%;
   transform: translateY(-50%);
   background: var(--form-choice-checked-bg);
+}
+
+/* ===== Dropin input field alignment =========================================
+ * Aligns Commerce dropin text inputs / selects / textareas with the GS Figma
+ * form-element spec (node 3498:141557).
+ *
+ * Two differences found by inspecting /customer/forgotpassword:
+ *   1. Border radius:  dropin = 3px (--shape-border-radius-1)  → should be 6px
+ *   2. Idle border:    dropin = #8f8f8f (neutral-600)           → should be #d9d9d9
+ *
+ * No !important needed — dropin CSS is injected BEFORE styles.css in the
+ * cascade (i.before(t) in dropin injection logic), so these rules win.
+ *
+ * Dropin input class map:
+ *   .dropin-input                    — the <input> element itself
+ *   .dropin-input-container          — outer wrapper
+ *   .dropin-input-label-container    — position:relative wrapper (contains input + label)
+ *   .dropin-input__label--floating   — the floating label
+ */
+
+/* Border radius — match --form-field-radius (6px) */
+.dropin-design .dropin-input {
+  border-radius: var(--form-field-radius);
+}
+
+/* Idle border color — match --form-border-default (#d9d9d9 Cloud) */
+.dropin-design .dropin-input--primary {
+  border-color: var(--form-border-default);
+}
+
+/* Hover border */
+.dropin-design .dropin-input--primary:hover {
+  border-color: var(--form-border-hover);
+}
+
+/* Focus border */
+.dropin-design .dropin-input--primary:focus,
+.dropin-design .dropin-input--primary:focus-within {
+  border-color: var(--form-border-focus);
+}
+
+/* Error border */
+.dropin-design .dropin-input--error {
+  border-color: var(--form-border-error);
+}
+
+/* Disabled */
+.dropin-design .dropin-input--disabled,
+.dropin-design .dropin-input:disabled {
+  background-color: var(--form-field-bg-disabled);
+  border-color: var(--form-border-disabled);
+}
+
+/* Floating label font sizes to match Figma */
+.dropin-design .dropin-input__label--floating {
+  font-size: var(--form-field-font-size);        /* 14px — placeholder size */
+  color: var(--form-field-placeholder);          /* #626262 */
+  transition:
+    top var(--transition-base),
+    font-size var(--transition-base),
+    color var(--transition-base);
+}
+
+/* Floated state — label shrinks to 12px */
+.dropin-design .dropin-input__label--floating.dropin-input__label--floating--active,
+.dropin-design .dropin-input__label--floating.dropin-input__label--floating--filled {
+  font-size: var(--form-label-font-size-floating);  /* 1.2rem — 12px */
+}
+
+/* Also align the picker/select dropin */
+.dropin-design .dropin-picker__select {
+  border-radius: var(--form-field-radius);
+  border-color: var(--form-border-default);
 }
 
 /* Layout: Columns */
