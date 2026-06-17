@@ -92,7 +92,7 @@
   --color-alert-500: #ee3124; /* GS Poppy — form/error states (aligned to Figma) */
   --color-alert-800: #c35050;
   --color-button-active: var(--color-brand-700);
-  --color-button-focus: var(--color-neutral-400);
+  --color-button-focus: #00b451; /* GS Green — matches --focus-ring-color */
   --color-button-hover: var(--color-brand-600);
   --color-action-button-active: var(--color-neutral-50);
   --color-action-button-hover: var(--color-neutral-300);
@@ -456,10 +456,30 @@
   }
 }
 
-/* Skeleton shimmer keyframes (uses --skeleton-* tokens) */
+/* ===== Skeleton / loading utility ===== */
 @keyframes skeleton-shimmer {
-  0% { background-position: -200px 0; }
-  100% { background-position: calc(200px + 100%) 0; }
+  0% { background-position: -400px 0; }
+  100% { background-position: calc(400px + 100%) 0; }
+}
+
+.skeleton {
+  background:
+    linear-gradient(
+      90deg,
+      var(--skeleton-bg) 25%,
+      var(--skeleton-highlight) 50%,
+      var(--skeleton-bg) 75%
+    );
+  background-size: 400px 100%;
+  animation: var(--skeleton-animation);
+  border-radius: var(--skeleton-radius);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background: var(--skeleton-bg);
+  }
 }
 
 /* fallback font */
@@ -886,20 +906,6 @@ button:focus-visible {
 /* Suppress the default outline only where focus-visible takes over */
 :focus:not(:focus-visible) {
   outline: none;
-}
-
-/* ===== Skeleton / loading utility ===== */
-.skeleton {
-  background:
-    linear-gradient(
-      90deg,
-      var(--skeleton-bg) 25%,
-      var(--skeleton-highlight) 50%,
-      var(--skeleton-bg) 75%
-    );
-  background-size: 400px 100%;
-  border-radius: var(--skeleton-radius);
-  animation: var(--skeleton-animation);
 }
 
 main blockquote {
