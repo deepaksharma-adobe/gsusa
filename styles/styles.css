@@ -258,14 +258,14 @@
   --btn-secondary-bg: transparent;
   --btn-secondary-bg-hover: #d9f3e3; /* light green tint */
   --btn-secondary-bg-active: #d9f3e3;
-  --btn-secondary-text: #00b451;
+  --btn-secondary-text: #005640;
   --btn-secondary-text-hover: #005640;
-  --btn-secondary-border: #00b451;
+  --btn-secondary-border: #005640;
   --btn-secondary-border-hover: #005640;
 
   /* Primary Text button — no border, no bg */
   --btn-text-primary-bg: transparent;
-  --btn-text-primary-text: #00b451;
+  --btn-text-primary-text: #005640;
   --btn-text-primary-hover: #005640;
   --btn-text-primary-underline: underline;
 
@@ -279,7 +279,7 @@
   --btn-violet-bg: #5c1f8b;
   --btn-violet-bg-hover: #4a1870;
   --btn-violet-text: #fff;
-  --btn-black-bg: #000;
+  --btn-black-bg: #4e4e4e; /* GS Black button — dark grey, not pure black (Figma) */
   --btn-black-bg-hover: #2d2e33;
   --btn-black-text: #fff;
   --btn-light-bg: #f6f3ec;
@@ -288,6 +288,32 @@
   --btn-white-bg: #fff;
   --btn-white-bg-hover: #f6f3ec;
   --btn-white-text: #00b451;
+
+  /* Extra ramp/border steps for existing black/light variants */
+  --btn-black-bg-active: #1a1a1a;
+  --btn-light-bg-active: #e0d9c8;
+  --btn-light-border: transparent;
+
+  /* White-on-Dark button — white bg, green text, for dark backgrounds */
+  --btn-white-on-dark-bg: #fff;
+  --btn-white-on-dark-bg-hover: #f6f3ec;
+  --btn-white-on-dark-bg-active: #e8f7ee;
+  --btn-white-on-dark-text: #005640;
+  --btn-white-on-dark-border: transparent;
+
+  /* Secondary Light — outlined cream, for use on dark backgrounds */
+  --btn-secondary-light-bg: transparent;
+  --btn-secondary-light-bg-hover: rgb(246 243 236 / 15%);
+  --btn-secondary-light-text: #f6f3ec;
+  --btn-secondary-light-border: #f6f3ec;
+
+  /* Secondary Text button — underline on hover only */
+  --btn-text-secondary-underline-hover: underline;
+
+  /* Text button white variant — for dark backgrounds */
+  --btn-text-white-text: #fff;
+  --btn-text-white-hover: rgb(255 255 255 / 80%);
+  --btn-text-white-underline: underline;
 
   /* Disabled */
   --btn-disabled-bg: #d9d9d9;
@@ -733,6 +759,44 @@ a:not(.dropin-design a):hover {
   text-decoration: underline;
 }
 
+/*
+ * GS BUTTON CLASSES — COMPLETE REFERENCE
+ * ─────────────────────────────────────────────────────────────
+ * Figma Type      Figma Colour     CSS Class
+ * ─────────────────────────────────────────────────────────────
+ * Primary         Green-Primary    .button  OR  .button.primary
+ * Primary         Violet-Secondary .button.accent
+ * Primary         White-on-Dark    .button.white-on-dark
+ * Primary         Black            .button.black
+ * Primary         Light            .button.light
+ * Primary         Disabled         [aria-disabled="true"]
+ * Secondary       Green-Primary    .button.secondary
+ * Secondary       Light            .button.secondary.light
+ * Primary Text    Green            .button.text
+ * Primary Text    White            .button.text.white
+ * Secondary Text  Green            .button.text-secondary
+ * Secondary Text  White            .button.text-secondary.white
+ *
+ * Size utilities (wrap button in a container with these classes):
+ *   .btn-sm  ->  36px height, 16px padding
+ *   .btn-md  ->  44px height, 24px padding
+ *   (default) -> 52px height, 32px padding (Large)
+ *
+ * Usage examples:
+ *   <a class="button" href="/shop">Shop Now</a>
+ *   <a class="button secondary" href="/learn">Learn More</a>
+ *   <a class="button accent" href="/donate">Donate</a>
+ *   <a class="button white-on-dark" href="/join">Join Us</a>
+ *   <a class="button text-secondary" href="/about">About</a>
+ *
+ * SCOPE — these --btn-* tokens and .button classes style EDS/authored
+ * buttons. Adobe Commerce dropin buttons (.dropin-button) render their own
+ * markup at runtime and inherit GS COLOUR via the --color-brand and
+ * --color-button tokens. Their SHAPE + TYPOGRAPHY are aligned to --btn-* by the
+ * ".dropin-button" override block further down (radius/uppercase/weight/
+ * height/centering), so dropin buttons visually follow the GS button style.
+ */
+
 /* buttons */
 p.button-wrapper {
   margin: var(--spacing-small) 0;
@@ -856,6 +920,122 @@ button.button.text:hover,
 button.button.text:focus-visible {
   background-color: var(--btn-text-primary-bg);
   color: var(--btn-text-primary-hover);
+}
+
+/* White-on-Dark — for use on dark/green backgrounds.
+   Anchor selectors are scoped under main to outrank the base
+   `main a.button:any-link` rule (same pattern as .secondary). */
+main a.button.white-on-dark,
+button.button.white-on-dark {
+  background-color: var(--btn-white-on-dark-bg);
+  color: var(--btn-white-on-dark-text);
+  border-color: var(--btn-white-on-dark-border);
+}
+
+main a.button.white-on-dark:hover,
+main a.button.white-on-dark:focus-visible,
+button.button.white-on-dark:hover,
+button.button.white-on-dark:focus-visible {
+  background-color: var(--btn-white-on-dark-bg-hover);
+}
+
+main a.button.white-on-dark:active,
+button.button.white-on-dark:active {
+  background-color: var(--btn-white-on-dark-bg-active);
+}
+
+/* Black — dark surface button */
+main a.button.black,
+button.button.black {
+  background-color: var(--btn-black-bg);
+  color: var(--btn-black-text);
+  border-color: transparent;
+}
+
+main a.button.black:hover,
+main a.button.black:focus-visible,
+button.button.black:hover,
+button.button.black:focus-visible {
+  background-color: var(--btn-black-bg-hover);
+}
+
+main a.button.black:active,
+button.button.black:active {
+  background-color: var(--btn-black-bg-active);
+}
+
+/* Light — cream/warm surface button */
+main a.button.light,
+button.button.light {
+  background-color: var(--btn-light-bg);
+  color: var(--btn-light-text);
+  border-color: var(--btn-light-border);
+}
+
+main a.button.light:hover,
+main a.button.light:focus-visible,
+button.button.light:hover,
+button.button.light:focus-visible {
+  background-color: var(--btn-light-bg-hover);
+}
+
+main a.button.light:active,
+button.button.light:active {
+  background-color: var(--btn-light-bg-active);
+}
+
+/* Secondary Light — outlined cream variant, for dark backgrounds */
+main a.button.secondary.light,
+button.button.secondary.light {
+  background-color: var(--btn-secondary-light-bg);
+  color: var(--btn-secondary-light-text);
+  border-color: var(--btn-secondary-light-border);
+}
+
+main a.button.secondary.light:hover,
+main a.button.secondary.light:focus-visible,
+button.button.secondary.light:hover,
+button.button.secondary.light:focus-visible {
+  background-color: var(--btn-secondary-light-bg-hover);
+}
+
+/* Text Secondary — link style, underline on hover only */
+main a.button.text-secondary,
+button.button.text-secondary {
+  height: auto;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: var(--btn-text-secondary-text);
+  text-decoration: none;
+  text-transform: none;
+  font-weight: var(--btn-font-weight);
+}
+
+main a.button.text-secondary:hover,
+main a.button.text-secondary:focus-visible,
+button.button.text-secondary:hover,
+button.button.text-secondary:focus-visible {
+  color: var(--btn-text-secondary-hover);
+  text-decoration: var(--btn-text-secondary-underline-hover);
+}
+
+/* Text White — underlined white text link, for dark backgrounds */
+main a.button.text.white,
+button.button.text.white,
+main a.button.text-secondary.white,
+button.button.text-secondary.white {
+  color: var(--btn-text-white-text);
+  text-decoration: var(--btn-text-white-underline);
+}
+
+main a.button.text.white:hover,
+main a.button.text.white:focus-visible,
+button.button.text.white:hover,
+button.button.text.white:focus-visible,
+main a.button.text-secondary.white:hover,
+button.button.text-secondary.white:hover {
+  color: var(--btn-text-white-hover);
 }
 
 /* Disabled state */
@@ -1198,6 +1378,41 @@ main .section[data-margin="hero"] {
 
 .dropin-input-date__icon {
   z-index: var(--z-raised);
+}
+
+/* ===== Dropin buttons follow the GS button style =====
+   Commerce dropins inject their own .dropin-button CSS (colour already GS via
+   --color-brand-*). These overrides align SHAPE + TYPOGRAPHY to the --btn-*
+   system: radius, uppercase, weight, height/padding and centered text.
+   Scoped under .dropin-design to outrank the injected dropin rules; colour,
+   variant borders and disabled states are left to the dropin CSS. */
+.dropin-design .dropin-button,
+.dropin-design a.dropin-button {
+  height: var(--btn-height-lg);
+  padding: 0 var(--btn-padding-x-lg);
+  border-radius: var(--btn-radius-lg);
+  font-family: var(--btn-font-family);
+  font-size: var(--btn-font-size-lg);
+  font-weight: var(--btn-font-weight);
+  line-height: var(--btn-line-height);
+  letter-spacing: var(--btn-letter-spacing);
+  text-transform: var(--btn-text-transform);
+  text-align: center;
+}
+
+/* Secondary/tertiary keep the dropin's transparent bg + border colour, but
+   the border width should match the GS 2px outline. */
+.dropin-design .dropin-button--secondary {
+  border-width: 2px;
+  padding: 0 var(--btn-padding-x-lg);
+}
+
+/* Medium size maps to the GS .btn-md step */
+.dropin-design .dropin-button--medium {
+  height: var(--btn-height-md);
+  padding: 0 var(--btn-padding-x-md);
+  border-radius: var(--btn-radius-md);
+  font-size: var(--btn-font-size-md);
 }
 
 /* Layout: Columns */

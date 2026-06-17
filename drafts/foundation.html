@@ -67,6 +67,21 @@
 
     .type-example p:last-child { margin: 0; }
 
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--spacing-small);
+      margin: 0 0 var(--spacing-medium);
+    }
+
+    /* Dark surface so white/light/text-white variants are visible */
+    .btn-row--dark {
+      padding: var(--spacing-medium);
+      border-radius: var(--radius-md);
+      background-color: var(--color-gs-forest);
+    }
+
     .spacing-example {
       display: flex;
       align-items: center;
@@ -291,6 +306,21 @@
         <a class="button secondary" href="#0" aria-disabled="true">Secondary</a>
         <a class="button accent" href="#0" aria-disabled="true">Accent</a>
       </p>
+
+      <p class="component-label">Additional colour variants</p>
+      <div class="btn-row">
+        <a class="button black" href="#0">Black</a>
+        <a class="button light" href="#0">Light</a>
+        <a class="button text-secondary" href="#0">Text Secondary (hover to see underline)</a>
+      </div>
+
+      <p class="component-label">On dark background — variants for dark/green surfaces</p>
+      <div class="btn-row btn-row--dark">
+        <a class="button white-on-dark" href="#0">White on Dark</a>
+        <a class="button secondary light" href="#0">Secondary Light</a>
+        <a class="button text white" href="#0">Text White</a>
+        <a class="button text-secondary white" href="#0">Text Secondary White</a>
+      </div>
     </div>
 
     <!-- SECTION 5 — FORMS -->
