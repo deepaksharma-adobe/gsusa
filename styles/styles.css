@@ -11,6 +11,30 @@
  */
 
 /* stylelint-disable no-empty-source */
+
+/*
+ * ─────────────────────────────────────────────────────────────────────────
+ * GIRL SCOUTS DESIGN FOUNDATION — TOKEN INVENTORY
+ * All design tokens live in the :root, .dropin-design block below.
+ * ─────────────────────────────────────────────────────────────────────────
+ *   Colour          --color-brand-*, --color-neutral-*, --color-gs-*,
+ *                   --color-positive/informational/warning/alert-*
+ *   Typography      --type-base/display-font-family, --type-display-*,
+ *                   --type-headline-*, --type-body-*, --type-button-*,
+ *                   --type-details-*   (brand fonts in styles/fonts.css)
+ *   Spacing         --spacing-* (none/2xs … xxhuge) + --spacing-gs-* aliases
+ *   Grid            --grid-*, --grid-columns/margin/gutter, --grid-max-width
+ *   Buttons         --btn-* (sizing, type, primary/secondary/violet, states)
+ *   Forms           --form-* (field, label, help, borders, choice controls)
+ *   Focus (WCAG)    --focus-ring-*
+ *   Motion          --transition-* (+ prefers-reduced-motion override)
+ *   Radius          --radius-* (additive; --shape-border-radius-* unchanged)
+ *   Shadow          --shadow-* (additive; --shape-shadow-* unchanged)
+ *   Commerce        --price-*, --badge-*, --rating-*, --loyalty-tier-*
+ *   Skeleton        --skeleton-* (+ @keyframes skeleton-shimmer, .skeleton)
+ *   Z-index         --z-* (below/base/raised/dropdown/sticky/overlay/modal/toast)
+ * ─────────────────────────────────────────────────────────────────────────
+ */
 :root, .dropin-design {
   /* Adobe Commerce Dropin design tokens — Girl Scouts brand overlay */
   --color-brand-300: #d5f267; /* GS Star Green */
@@ -301,7 +325,7 @@
   /* Field borders by state */
   --form-border-default: #d9d9d9; /* GS Cloud */
   --form-border-hover: #8f8f8f;
-  --form-border-focus: #d5ca9f; /* GS Khaki */
+  --form-border-focus: #00b451; /* GS Green — WCAG-visible focus (was Khaki #d5ca9f) */
   --form-border-filled: #d5ca9f;
   --form-border-error: #ee3124; /* GS Poppy */
   --form-border-validated: #005640; /* GS Forest */
@@ -323,6 +347,87 @@
   --form-toggle-track-off: #d9d9d9;
   --form-toggle-track-on: #005640;
   --form-toggle-knob: #fff;
+
+  /* ===== Focus ring (WCAG AA) ===== */
+  --focus-ring-color: #00b451; /* GS Green */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-style: solid;
+
+  /* ===== Motion / transition tokens ===== */
+  --transition-fast: 150ms ease; /* micro interactions */
+  --transition-base: 250ms ease; /* standard hover/focus */
+  --transition-slow: 400ms ease; /* panels, drawers */
+  --transition-bounce: 300ms cubic-bezier(0.34, 1.56, 0.64, 1); /* spring */
+
+  /* ===== GS border-radius scale (additive — does NOT redefine --shape-border-radius-*) ===== */
+  --radius-none: 0px;
+  --radius-xs: 4px; /* tags, chips, small badges */
+  --radius-sm: 6px; /* inputs, small buttons (matches --btn-radius-sm) */
+  --radius-md: 8px; /* cards, large buttons (matches --btn-radius-lg) */
+  --radius-lg: 12px; /* modals, panels, drawers */
+  --radius-xl: 16px; /* large cards, feature panels */
+  --radius-full: 9999px; /* pills, avatar circles */
+
+  /* ===== GS shadow scale (additive — does NOT redefine --shape-shadow-*) ===== */
+  --shadow-none: none;
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 6%); /* subtle lift */
+  --shadow-sm: 0 2px 4px rgb(0 0 0 / 8%); /* card default */
+  --shadow-md: 0 4px 16px rgb(0 0 0 / 10%); /* card hover */
+  --shadow-lg: 0 8px 32px rgb(0 0 0 / 12%); /* modal/drawer */
+  --shadow-xl: 0 16px 48px rgb(0 0 0 / 16%); /* full overlay */
+
+  /* ===== Commerce display tokens ===== */
+
+  /* Price display */
+  --price-font: var(--type-body-1-strong-font);
+  --price-color: #000;
+  --price-sale-color: #ee3124; /* GS Poppy */
+  --price-original-color: #a8a8a8; /* GS Stone — strikethrough */
+  --price-member-color: #004987; /* GS Navy — member price */
+  --price-loyalty-color: #5c1f8b; /* GS Purple — loyalty price */
+
+  /* Product badges */
+  --badge-font-size: 1.2rem;
+  --badge-font-weight: 600;
+  --badge-border-radius: var(--radius-xs);
+  --badge-padding: 2px 8px;
+  --badge-new-bg: #00b451; /* GS Green */
+  --badge-new-text: #fff;
+  --badge-sale-bg: #ee3124; /* GS Poppy */
+  --badge-sale-text: #fff;
+  --badge-soldout-bg: #d9d9d9; /* GS Cloud */
+  --badge-soldout-text: #666;
+  --badge-loyalty-bg: #5c1f8b; /* GS Purple */
+  --badge-loyalty-text: #fff;
+  --badge-member-bg: #004987; /* GS Navy */
+  --badge-member-text: #fff;
+
+  /* Star rating */
+  --rating-color: #f7be00; /* GS Gold */
+  --rating-empty-color: #d9d9d9; /* GS Cloud */
+  --rating-size: 1.6rem;
+
+  /* Loyalty tier indicators */
+  --loyalty-tier-1-color: #004987; /* Member — Navy */
+  --loyalty-tier-2-color: #5c1f8b; /* Loyalty — Purple */
+  --loyalty-tier-3-color: #a86b1d; /* VIP — Desert Gold */
+
+  /* ===== Skeleton / loading ===== */
+  --skeleton-bg: #f0f0f0;
+  --skeleton-highlight: #e0e0e0;
+  --skeleton-radius: var(--radius-xs);
+  --skeleton-animation: skeleton-shimmer 1.5s ease-in-out infinite;
+
+  /* ===== Z-index scale ===== */
+  --z-below: -1; /* background elements */
+  --z-base: 0; /* default flow */
+  --z-raised: 10; /* cards on hover, tooltips */
+  --z-dropdown: 100; /* nav dropdowns, select menus */
+  --z-sticky: 200; /* sticky header */
+  --z-overlay: 300; /* modal/drawer backdrop */
+  --z-modal: 400; /* modal content, mini-cart */
+  --z-toast: 500; /* notification toasts */
 }
 
 @media (min-width: 768px) {
@@ -339,6 +444,22 @@
     --grid-margin: var(--grid-3-margins); /* 56px desktop */
     --grid-gutter: var(--grid-3-gutters); /* 24px desktop */
   }
+}
+
+/* Motion — respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+    --transition-slow: 0ms;
+    --transition-bounce: 0ms;
+  }
+}
+
+/* Skeleton shimmer keyframes (uses --skeleton-* tokens) */
+@keyframes skeleton-shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
 }
 
 /* fallback font */
@@ -584,6 +705,7 @@ a:not(.dropin-design a) {
   letter-spacing: var(--type-body-1-strong-letter-spacing);
   text-decoration: none;
   overflow-wrap: break-word;
+  transition: color var(--transition-base);
 }
 
 a:not(.dropin-design a):hover {
@@ -622,6 +744,10 @@ button.button {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base);
 }
 
 main a.button:hover,
@@ -739,6 +865,41 @@ main .btn-md button.button {
   padding: 0 var(--btn-padding-x-md);
   border-radius: var(--btn-radius-md);
   font-size: var(--btn-font-size-md);
+}
+
+/* ===== Focus visible (WCAG AA) ===== */
+
+/* Global focus ring for all interactive elements */
+:focus-visible {
+  outline: var(--focus-ring-width) var(--focus-ring-style) var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Buttons get the same ring (scoped under main to match the base button
+   rule's specificity and satisfy no-descending-specificity) */
+main a.button:focus-visible,
+button:focus-visible {
+  outline: var(--focus-ring-width) var(--focus-ring-style) var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Suppress the default outline only where focus-visible takes over */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ===== Skeleton / loading utility ===== */
+.skeleton {
+  background:
+    linear-gradient(
+      90deg,
+      var(--skeleton-bg) 25%,
+      var(--skeleton-highlight) 50%,
+      var(--skeleton-bg) 75%
+    );
+  background-size: 400px 100%;
+  border-radius: var(--skeleton-radius);
+  animation: var(--skeleton-animation);
 }
 
 main blockquote {
@@ -1030,7 +1191,7 @@ main .section[data-margin="hero"] {
 }
 
 .dropin-input-date__icon {
-  z-index: 2;
+  z-index: var(--z-raised);
 }
 
 /* Layout: Columns */

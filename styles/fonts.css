@@ -1,4 +1,17 @@
-/* Girl Scouts brand fonts — display/headings */
+/* Girl Scouts brand fonts — display/headings
+ *
+ * NOTE: the .woff2 files below are NOT yet present in fonts/ (proprietary GS
+ * brand font — supply separately, do NOT substitute Google Fonts). Until the
+ * files are added, "Girl Scout" silently falls back to the next family in
+ * --type-display-font-family ("Trefoil Sans" -> roboto -> system-ui), so
+ * headings render in Trefoil Sans rather than breaking.
+ *
+ * Place these files in fonts/ when received from GS:
+ *   girl-scout-light.woff2     (300 — Display Light)
+ *   girl-scout-regular.woff2   (400)
+ *   girl-scout-medium.woff2    (500 — Text Medium)
+ *   girl-scout-bold.woff2      (700 — Text Bold)
+ */
 @font-face {
     font-family: "Girl Scout";
     src: url('../fonts/girl-scout-light.woff2') format('woff2');
