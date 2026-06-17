@@ -297,7 +297,12 @@ function readWholesaleContent(wholesaleRegion) {
     if (paragraphs[2]) {
       subText = paragraphs[2].textContent.trim();
     }
-    return { titleText, loginText, loginHref, subText };
+    return {
+      titleText,
+      loginText,
+      loginHref,
+      subText,
+    };
   }
 
   const source = paragraphs[0];
@@ -325,7 +330,12 @@ function readWholesaleContent(wholesaleRegion) {
     if (text) subText = text;
   }
 
-  return { titleText, loginText, loginHref, subText };
+  return {
+    titleText,
+    loginText,
+    loginHref,
+    subText,
+  };
 }
 
 /**
@@ -339,7 +349,12 @@ function decorateWholesale(wholesaleRegion) {
   if (!content) return;
 
   const wrapper = wholesaleRegion.querySelector('.default-content-wrapper') || wholesaleRegion;
-  const { titleText, loginText, loginHref, subText } = content;
+  const {
+    titleText,
+    loginText,
+    loginHref,
+    subText,
+  } = content;
 
   const body = document.createElement('div');
   body.className = 'footer-wholesale-body';
