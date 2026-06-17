@@ -777,18 +777,18 @@ main img {
 
 /* sections */
 main > .section {
-  margin: var(--spacing-xbig) 0; /* 40px mobile */
+  margin: var(--spacing-xxbig) 0; /* 48px mobile — GS 3XL */
 }
 
 @media (min-width: 768px) {
   main > .section {
-    margin: var(--spacing-large) 0; /* 64px tablet */
+    margin: var(--spacing-large) 0; /* 64px tablet — GS 4XL */
   }
 }
 
 @media (min-width: 1280px) {
   main > .section {
-    margin: var(--spacing-xxlarge) 0; /* 96px desktop */
+    margin: var(--spacing-xxlarge) 0; /* 96px desktop — GS 5XL */
   }
 }
 
@@ -884,6 +884,52 @@ main .section[data-padding="xxhuge"] {
     padding: var(--spacing-xxhuge) 0;
 }
 
+/* GS-scale padding overrides (abbreviated keys, Figma node 3:1005).
+   Coexist with the word-style keys above; authors may use either. */
+main .section[data-padding="none"] {
+    padding: var(--spacing-none) 0; /* 0px */
+}
+
+main .section[data-padding="2xs"] {
+    padding: var(--spacing-2xs) 0; /* 2px */
+}
+
+main .section[data-padding="xs"] {
+    padding: var(--spacing-xxsmall) 0; /* 4px */
+}
+
+main .section[data-padding="sm"] {
+    padding: var(--spacing-xsmall) 0; /* 8px */
+}
+
+main .section[data-padding="md"] {
+    padding: var(--spacing-small) 0; /* 16px */
+}
+
+main .section[data-padding="lg"] {
+    padding: var(--spacing-medium) 0; /* 24px */
+}
+
+main .section[data-padding="xl"] {
+    padding: var(--spacing-big) 0; /* 32px */
+}
+
+main .section[data-padding="2xl"] {
+    padding: var(--spacing-xxbig) 0; /* 48px */
+}
+
+main .section[data-padding="3xl"] {
+    padding: var(--spacing-large) 0; /* 64px */
+}
+
+main .section[data-padding="4xl"] {
+    padding: var(--spacing-xxlarge) 0; /* 96px */
+}
+
+main .section[data-padding="5xl"] {
+    padding: var(--spacing-huge) 0; /* 120px */
+}
+
 
 main .section[data-margin="small"] {
     margin: var(--spacing-xsmall) 0;
@@ -919,6 +965,61 @@ main .section[data-margin="xhuge"] {
 
 main .section[data-margin="xxhuge"] {
     margin: var(--spacing-xxhuge) 0;
+}
+
+/* GS-scale margin overrides (abbreviated keys, Figma node 3:1005).
+   Coexist with the word-style keys above; authors may use either. */
+main .section[data-margin="none"] {
+    margin: 0;
+}
+
+main .section[data-margin="2xs"] {
+    margin: var(--spacing-2xs) 0; /* 2px */
+}
+
+main .section[data-margin="xs"] {
+    margin: var(--spacing-xxsmall) 0; /* 4px */
+}
+
+main .section[data-margin="sm"] {
+    margin: var(--spacing-xsmall) 0; /* 8px */
+}
+
+main .section[data-margin="md"] {
+    margin: var(--spacing-small) 0; /* 16px */
+}
+
+/* default — responsive, mirrors the global default section margin */
+main .section[data-margin="default"] {
+    margin: var(--spacing-xxbig) 0; /* 48px mobile */
+}
+
+@media (min-width: 768px) {
+    main .section[data-margin="default"] {
+        margin: var(--spacing-large) 0; /* 64px tablet */
+    }
+}
+
+@media (min-width: 1280px) {
+    main .section[data-margin="default"] {
+        margin: var(--spacing-xxlarge) 0; /* 96px desktop */
+    }
+}
+
+/* lg — feature sections, scales up on desktop */
+main .section[data-margin="lg"] {
+    margin: var(--spacing-large) 0; /* 64px mobile */
+}
+
+@media (min-width: 1280px) {
+    main .section[data-margin="lg"] {
+        margin: var(--spacing-huge) 0; /* 120px desktop */
+    }
+}
+
+/* hero — full bleed, no margin at any viewport */
+main .section[data-margin="hero"] {
+    margin: 0;
 }
 
 /* section metadata - styles - end */
