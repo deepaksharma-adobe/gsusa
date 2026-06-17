@@ -118,6 +118,23 @@
   --spacing-huge: 120px;
   --spacing-xhuge: 144px;
   --spacing-xxhuge: 192px;
+
+  /* Girl Scouts spacing scale — missing base steps (Figma node 3:1005) */
+  --spacing-none: 0px; /* GS: None/Zero */
+  --spacing-2xs: 2px; /* GS: Extra Small */
+
+  /* GS semantic spacing aliases — map design-system names to base tokens. */
+  --spacing-gs-none: var(--spacing-none); /* 0px */
+  --spacing-gs-2xs: var(--spacing-2xs); /* 2px */
+  --spacing-gs-xs: var(--spacing-xxsmall); /* 4px */
+  --spacing-gs-sm: var(--spacing-xsmall); /* 8px */
+  --spacing-gs-md: var(--spacing-small); /* 16px */
+  --spacing-gs-lg: var(--spacing-medium); /* 24px */
+  --spacing-gs-xl: var(--spacing-big); /* 32px */
+  --spacing-gs-2xl: var(--spacing-xxbig); /* 48px */
+  --spacing-gs-3xl: var(--spacing-large); /* 64px */
+  --spacing-gs-4xl: var(--spacing-xxlarge); /* 96px */
+  --spacing-gs-5xl: var(--spacing-huge); /* 120px */
   --type-base-font-family: "Trefoil Sans", roboto, roboto-fallback, system-ui, sans-serif;
   --type-display-font-family: "Girl Scout", "Trefoil Sans", roboto, system-ui, sans-serif;
   --type-display-0-font: normal normal 300 7.2rem/8.6rem var(--type-display-font-family);
@@ -760,7 +777,19 @@ main img {
 
 /* sections */
 main > .section {
-  margin: var(--spacing-xbig) 0;
+  margin: var(--spacing-xbig) 0; /* 40px mobile */
+}
+
+@media (min-width: 768px) {
+  main > .section {
+    margin: var(--spacing-large) 0; /* 64px tablet */
+  }
+}
+
+@media (min-width: 1280px) {
+  main > .section {
+    margin: var(--spacing-xxlarge) 0; /* 96px desktop */
+  }
 }
 
 .section:empty {
@@ -773,8 +802,14 @@ main > .section > div {
   padding: 0 var(--grid-margin); /* 20px mobile -> 56px desktop (auto via alias) */
 }
 
+/* First section — no top gap ever */
 main > .section:first-of-type {
   margin-top: 0;
+}
+
+/* Last section — no bottom gap ever */
+main > .section:last-of-type {
+  margin-bottom: 0;
 }
 
 /*
