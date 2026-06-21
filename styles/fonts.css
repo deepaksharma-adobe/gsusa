@@ -1,3 +1,90 @@
+/* Girl Scouts brand fonts — display/headings
+ *
+ * NOTE: the .woff2 files below are NOT yet present in fonts/ (proprietary GS
+ * brand font — supply separately, do NOT substitute Google Fonts). Until the
+ * files are added, "Girl Scout" silently falls back to the next family in
+ * --type-display-font-family ("Trefoil Sans" -> roboto -> system-ui), so
+ * headings render in Trefoil Sans rather than breaking.
+ *
+ * Place these files in fonts/ when received from GS:
+ *   girl-scout-light.woff2     (300 — Display Light)
+ *   girl-scout-regular.woff2   (400)
+ *   girl-scout-medium.woff2    (500 — Text Medium)
+ *   girl-scout-bold.woff2      (700 — Text Bold)
+ */
+@font-face {
+    font-family: "Girl Scout";
+    src: url('../fonts/girl-scout-light.woff2') format('woff2');
+    font-display: swap;
+    font-style: normal;
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "Girl Scout";
+    src: url('../fonts/girl-scout-regular.woff2') format('woff2');
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Girl Scout";
+    src: url('../fonts/girl-scout-medium.woff2') format('woff2');
+    font-display: swap;
+    font-style: normal;
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Girl Scout";
+    src: url('../fonts/girl-scout-bold.woff2') format('woff2');
+    font-display: swap;
+    font-style: normal;
+    font-weight: 700;
+}
+
+/* Girl Scouts brand fonts — body/UI */
+@font-face {
+    font-family: "Trefoil Sans";
+    src: url('../fonts/trefoil-sans-light.woff2') format('woff2');
+    font-display: swap;
+    font-style: normal;
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "Trefoil Sans";
+    src: url('../fonts/trefoil-sans-regular.woff2') format('woff2');
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Trefoil Sans";
+    src: url('../fonts/trefoil-sans-medium.woff2') format('woff2');
+    font-display: swap;
+    font-style: normal;
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Trefoil Sans";
+    src: url('../fonts/trefoil-sans-semibold.woff2') format('woff2');
+    font-display: swap;
+    font-style: normal;
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Trefoil Sans";
+    src: url('../fonts/trefoil-sans-bold.woff2') format('woff2');
+    font-display: swap;
+    font-style: normal;
+    font-weight: 700;
+}
+
 @font-face {
     font-family: adobe-clean;
     src: url('../fonts/adobe-clean-normal-400.woff2') format('woff2');

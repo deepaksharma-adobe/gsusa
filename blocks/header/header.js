@@ -2,7 +2,7 @@
 import { events } from '@dropins/tools/event-bus.js';
 
 import { tryRenderAemAssetsImage } from '@dropins/tools/lib/aem/assets.js';
-import { getMetadata } from '../../scripts/aem.js';
+import { getMetadata, decorateIcons, toClassName } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 import { fetchPlaceholders, getProductLink, rootLink } from '../../scripts/commerce.js';
 
@@ -11,7 +11,7 @@ import { renderAuthDropdown } from './renderAuthDropdown.js';
 import renderSellerAssistedBuyingBanner from './renderSellerAssistedBuyingBanner.js';
 
 // media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
+const isDesktop = window.matchMedia('(min-width: 1280px)');
 
 const labels = await fetchPlaceholders();
 
@@ -130,6 +130,42 @@ const subMenuHeader = document.createElement('div');
 subMenuHeader.classList.add('submenu-header');
 subMenuHeader.innerHTML = '<h5 class="back-link">All Categories</h5><hr />';
 
+const EXPERIENCE_KEY = 'gs-experience';
+
+/**
+ * Builds the "For Everyone / For Leaders" experience toggle.
+ * Visual + persisted state only — no routing.
+ * @returns {Element} The toggle element
+ */
+function buildExperienceToggle() {
+  const current = localStorage.getItem(EXPERIENCE_KEY) || 'everyone';
+  const wrapper = document.createElement('div');
+  wrapper.className = 'gs-experience';
+  wrapper.innerHTML = `
+    <p class="gs-experience-label">Choose your experience</p>
+    <div class="gs-experience-toggle">
+      <button type="button" class="gs-experience-tab" data-experience="everyone">
+        <span>For Everyone</span>
+      </button>
+      <button type="button" class="gs-experience-tab" data-experience="leaders">
+        <span>For Leaders</span>
+      </button>
+    </div>
+  `;
+  const setActive = (value) => {
+    wrapper.querySelectorAll('.gs-experience-tab').forEach((tab) => {
+      tab.classList.toggle('gs-experience-tab--active', tab.dataset.experience === value);
+    });
+    localStorage.setItem(EXPERIENCE_KEY, value);
+  };
+  wrapper.querySelectorAll('.gs-experience-tab').forEach((tab) => {
+    tab.addEventListener('click', () => setActive(tab.dataset.experience));
+  });
+  setActive(current);
+  decorateIcons(wrapper);
+  return wrapper;
+}
+
 /**
  * Sets up the submenu
  * @param {navSection} navSection The nav section element
@@ -159,6 +195,53 @@ function setupSubmenu(navSection) {
 }
 
 /**
+ * Loads authored promo banners and tags each to its mega-menu item.
+ *
+ * Promos are authored independently in the /nav-promos fragment as
+ * `promo-banner` blocks, each carrying a `Menu` key that matches a nav item's
+ * stable slug (toClassName of its label). Banners are grouped by that key and
+ * injected into the matching item's submenu wrapper, so nav links can stay
+ * API-driven while promos are managed separately.
+ *
+ * @param {Element} navSections The decorated `.nav-sections` element
+ */
+async function decorateMegaMenuPromos(navSections) {
+  if (!navSections) return;
+
+  const promosMeta = getMetadata('nav-promos');
+  const promosPath = promosMeta ? new URL(promosMeta, window.location).pathname : '/nav-promos';
+  const fragment = await loadFragment(promosPath);
+  if (!fragment) return;
+
+  // Group any decorated promo block (banner | feature | tile) by its menu key.
+  const promosByMenu = new Map();
+  fragment.querySelectorAll('.promo-banner[data-menu], .promo-feature[data-menu], .promo-tile[data-menu]').forEach((promo) => {
+    const key = promo.dataset.menu;
+    if (!promosByMenu.has(key)) promosByMenu.set(key, []);
+    promosByMenu.get(key).push(promo);
+  });
+  if (!promosByMenu.size) return;
+
+  navSections
+    .querySelectorAll(':scope .default-content-wrapper > ul > li.nav-drop')
+    .forEach((navSection) => {
+      const label = navSection.querySelector(':scope > a, :scope > p, :scope > span')?.textContent
+        || navSection.firstChild?.textContent
+        || '';
+      const promos = promosByMenu.get(toClassName(label.trim()));
+      if (!promos) return;
+
+      const list = navSection.querySelector('.submenu-wrapper > ul');
+      if (!list) return;
+
+      const promoItem = document.createElement('li');
+      promoItem.className = 'nav-promo';
+      promos.forEach((promo) => promoItem.append(promo.cloneNode(true)));
+      list.append(promoItem);
+    });
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -174,6 +257,15 @@ export default async function decorate(block) {
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
 
+  // Authored offer banner (dismissible) — pulled out of the nav fragment and
+  // pinned above the nav inside the header wrapper (so it stays on top of the
+  // fixed mobile header without leaving a gap). Inserted into navWrapper below.
+  const offerBanner = fragment.querySelector('.offer-banner');
+  if (offerBanner) {
+    offerBanner.closest('.section')?.remove();
+    if (offerBanner.isConnected) offerBanner.remove();
+  }
+
   // decorate nav DOM
   block.textContent = '';
   const nav = document.createElement('nav');
@@ -186,18 +278,37 @@ export default async function decorate(block) {
     if (section) section.classList.add(`nav-${c}`);
   });
 
+  // The authored nav may omit the tools section; ensure one exists so the
+  // search/wishlist/cart/account tools always have a host element.
+  if (!nav.querySelector('.nav-tools')) {
+    const toolsSection = document.createElement('div');
+    toolsSection.classList.add('nav-tools');
+    nav.append(toolsSection);
+  }
+
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
+  const brandLink = navBrand?.querySelector('.button');
   if (brandLink) {
     brandLink.className = '';
     brandLink.closest('.button-container').className = '';
   }
+
+  // For Everyone / For Leaders experience toggle (top-bar left)
+  const experienceToggle = buildExperienceToggle();
+  if (navBrand) nav.insertBefore(experienceToggle, navBrand);
+  else nav.prepend(experienceToggle);
 
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
     navSections
       .querySelectorAll(':scope .default-content-wrapper > ul > li')
       .forEach((navSection) => {
+        // The "Account" entry is surfaced through the auth dropdown in the
+        // tools area; flag it so it can be hidden from the desktop nav bar.
+        const navLabel = navSection.firstElementChild?.textContent?.trim() || '';
+        if (/^account$/i.test(navLabel)) {
+          navSection.classList.add('nav-account');
+        }
         if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
         setupSubmenu(navSection);
         navSection.addEventListener('click', (event) => {
@@ -218,6 +329,9 @@ export default async function decorate(block) {
           }
         });
       });
+
+    // Inject authored promo banners into matching mega-menu items.
+    decorateMegaMenuPromos(navSections);
   }
 
   const navTools = nav.querySelector('.nav-tools');
@@ -502,8 +616,27 @@ export default async function decorate(block) {
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
+  if (offerBanner) navWrapper.append(offerBanner);
   navWrapper.append(nav);
   block.append(navWrapper);
+
+  // The GS header (offer banner + top bar + nav band) is taller than the
+  // boilerplate's reserved --nav-height, and on mobile the wrapper is fixed
+  // (out of flow). Reserve the wrapper's real height on the <header> element so
+  // page content never sits under the header (overlap) and doesn't jump when
+  // the header decorates in the lazy phase (CLS). Keep it in sync as the banner
+  // wraps/dismisses or the viewport resizes. Skip while the mobile drawer is
+  // open (the wrapper then fills the viewport and must not reserve that height).
+  const syncHeaderHeight = () => {
+    if (nav.getAttribute('aria-expanded') === 'true' && !isDesktop.matches) return;
+    // Set min-height (not height) so the reservation can only grow to fit the
+    // real header, never shrink below the CSS --gs-header-reserve floor — that
+    // way the header decoration can't pull page content upward (CLS).
+    block.parentElement.style.minHeight = `${navWrapper.offsetHeight}px`;
+  };
+  syncHeaderHeight();
+  new ResizeObserver(syncHeaderHeight).observe(navWrapper);
+  isDesktop.addEventListener('change', syncHeaderHeight);
 
   navWrapper.addEventListener('mouseout', (e) => {
     if (isDesktop.matches && !nav.contains(e.relatedTarget)) {

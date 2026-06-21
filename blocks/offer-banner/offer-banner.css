@@ -1,0 +1,96 @@
+/* Offer Banner — dismissible promo strip above the header (Figma 2697:346344).
+   Desktop: single row, bg #d5f267, 8px/56px padding, message + redeem on the
+   left, terms on the right, close at the far right. */
+.offer-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-small);
+  background-color: var(--gs-promo-bg);
+  color: var(--color-neutral-900);
+  padding: var(--spacing-xsmall) var(--spacing-small);
+  font: var(--type-body-2-default-font);
+  letter-spacing: var(--type-body-2-default-letter-spacing);
+}
+
+.offer-banner__content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xsmall);
+  flex: 1;
+  min-width: 0;
+}
+
+.offer-banner__sparkle {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  background-color: var(--color-gs-violet);
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-mask: url('../../icons/sparkle.svg') center / contain no-repeat;
+  mask: url('../../icons/sparkle.svg') center / contain no-repeat;
+}
+
+.offer-banner__message {
+  margin: 0;
+  font-weight: 500;
+}
+
+.offer-banner__redeem,
+.offer-banner__redeem:any-link {
+  color: var(--color-gs-forest);
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.offer-banner__terms,
+.offer-banner__terms:any-link {
+  color: var(--color-gs-forest);
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.offer-banner__close {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border: 0;
+  background: currentcolor;
+  cursor: pointer;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-mask: url('../../icons/close.svg') center / 20px no-repeat;
+  mask: url('../../icons/close.svg') center / 20px no-repeat;
+}
+
+/* Desktop: full-bleed green band, but keep content on the centered 1280 grid.
+   The side padding grows past 56px on screens wider than the grid frame so the
+   content edges line up with sections/header/footer. */
+@media (min-width: 1280px) {
+  .offer-banner {
+    padding: var(--spacing-xsmall)
+      max(var(--grid-margin), calc((100% - var(--grid-max-width)) / 2 + var(--grid-margin)));
+    gap: var(--spacing-xbig);
+  }
+}
+
+/* Mobile/tablet: stack message and actions on narrow screens */
+@media (max-width: 1279px) {
+  .offer-banner {
+    flex-wrap: wrap;
+    gap: var(--spacing-xxsmall) var(--spacing-xsmall);
+  }
+
+  .offer-banner__content {
+    flex-wrap: wrap;
+  }
+
+  .offer-banner__terms {
+    display: none;
+  }
+}
